@@ -1,65 +1,51 @@
-@extends('layouts.app')
+@extends('layouts.layout-login')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+@section('account_content')
+<div class="login-form">
+    <form method="POST" action="{{ route('update_password') }}">
+        @csrf
+        @if (session('status'))
+            <div class="alert alert-success text-center" role="alert">
+                {{ session('status') }}
+            </div>
+         @endif
+         @error('email')
+            <div class="alert alert-danger text-center" role="alert">
+                {{ $message }}
+            </div>
+        @enderror
+        @error('password')
+            <div class="alert alert-danger text-center" role="alert">
+                {{ $message }}
+            </div>
+        @enderror
+        <input type="hidden" name="token" value="{{ $token }}">
+        <input type="hidden" name="email" value="{{ $email }}">
+        <h3 class="login-head"><i class="fa fa-lg fa-fw fa-lock"></i>Quên mật khẩu ?</h3>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        <div class="form-group ">
+            <label class="control-label">MẬT KHẨU MỚI</label>
+            <div class="input-group">
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" 
+                name="password" required autocomplete="new-password" placeholder="Mật khẩu mới" onkeyup="check();">
             </div>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label class="control-label" style="float:left">NHẬP LẠI MẬT KHẨU</label>&nbsp;<span id="message-confirm"></span>
+            <div class="input-group validate-password" data-validate="Bạn cần nhập lại mật khẩu!">
+                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" 
+                required autocomplete="new-password" placeholder="Nhập lại mật khẩu" onkeyup="check();">
+            </div>
+        </div>
+
+        <div class="form-group btn-container">
+            <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-unlock fa-lg fa-fw"></i>RESET</button>
+        </div>
+
+        <div class="form-group mt-3">
+            <p class="semibold-text mb-0"><a href="/admin/signin"><i class="fa fa-angle-left fa-fw"></i> Quay lại</a></p>
+        </div>
+    </form>
 </div>
 @endsection
