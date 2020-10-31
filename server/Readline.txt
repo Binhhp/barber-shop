@@ -1,0 +1,3 @@
+composer update
+Create migration: php artisan migrate
+php artisan tinker => php artisan db:seed
