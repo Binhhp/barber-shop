@@ -52,39 +52,112 @@ Route::post('ResetPassword', [
     'uses' => 'Account\PasswordResetController@reset',
     'as' => 'update_password'
 ]);
-//Route menu
-Route::group(['prefix' => 'menu'], function(){
-    Route::get('getData',[
-        'uses' => 'MenuController@getData',
-        'as' => 'getData'
-    ]);
-    
-    Route::post('update',[
-        'uses' => 'MenuController@updateMenu',
-        'as' => 'update_menu'
-    ]);
-    
-    Route::get('delete/{id}', [
-        'uses' => 'MenuController@deleteMenu',
-        'as' => 'delete_menu'
-    ]);
-
-    Route::post('deleteAll', [
-        'uses' => 'MenuController@deleteAll',
-        'as' => 'delete_checkbox'
-    ]);
-    
-});
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth'] ], function(){
     Route::get('', [
-        'uses' => 'HomeAdminController@index',
+        'uses' => 'Admin\HomeAdminController@index',
         'as' => 'index'
     ]);
-    Route::get('menu', [
-        'uses' => 'MenuController@menu',
-        'as' => 'menu'
-    ]);
+
+    //Tag 
+    Route::group(['prefix' => 'tag'], function(){
+        Route::get('', [
+            'uses' => 'Admin\TagController@index',
+            'as' => 'tag'
+        ]);
+    
+        Route::get('getData', [
+            'uses' => 'Admin\TagController@getData',
+            'as' => 'tag.getData'
+        ]);
+    
+        Route::post('insert', [
+            'uses' => 'Admin\TagController@insert',
+            'as' => 'tag.insert'
+        ]);
+    
+        Route::post('update', [
+            'uses' => 'Admin\TagController@update',
+            'as' => 'tag.update'
+        ]);
+    
+        Route::get('delete/{id}', [
+            'uses' => 'Admin\TagController@delete',
+            'as' => 'tag.delete'
+        ]);
+    
+        Route::post('deleteAll', [
+            'uses' => 'Admin\TagController@deleteAll',
+            'as' => 'tag.deleteAll'
+        ]);
+    });
+
+
+    //Category Blog
+    Route::group(['prefix' => 'cate'], function(){
+        Route::get('', [
+            'uses' => 'Admin\CategoryBlogController@index',
+            'as' => 'cate.index'
+        ]);
+
+        Route::get('getData', [
+            'uses' => 'Admin\CategoryBlogController@getData',
+            'as' => 'cate.getData'
+        ]);
+    
+        Route::post('insert', [
+            'uses' => 'Admin\CategoryBlogController@insert',
+            'as' => 'cate.insert'
+        ]);
+    
+        Route::post('update', [
+            'uses' => 'Admin\CategoryBlogController@update',
+            'as' => 'cate.update'
+        ]);
+    
+        Route::get('delete/{id}', [
+            'uses' => 'Admin\CategoryBlogController@delete',
+            'as' => 'cate.delete'
+        ]);
+    
+        Route::post('deleteAll', [
+            'uses' => 'Admin\CategoryBlogController@deleteAll',
+            'as' => 'cate.deleteAll'
+        ]);
+    });
+
+    //Blog
+    Route::group(['prefix' => 'blog'], function(){
+        Route::get('', [
+            'uses' => 'Admin\BlogController@index',
+            'as' => 'web.blog'
+        ]);
+
+        Route::get('getData', [
+            'uses' => 'Admin\BlogController@getData',
+            'as' => 'blog.getData'
+        ]);
+    
+        Route::post('insert', [
+            'uses' => 'Admin\BlogController@insert',
+            'as' => 'blog.insert'
+        ]);
+    
+        Route::post('update', [
+            'uses' => 'Admin\BlogController@update',
+            'as' => 'blog.update'
+        ]);
+    
+        Route::get('delete/{id}', [
+            'uses' => 'Admin\BlogController@delete',
+            'as' => 'blog.delete'
+        ]);
+    
+        Route::post('deleteAll', [
+            'uses' => 'Admin\BlogController@deleteAll',
+            'as' => 'blog.deleteAll'
+        ]);
+    });
 
 });
 

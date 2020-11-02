@@ -63,10 +63,10 @@ class BlogController extends Controller
     public function cate_blog()
     {
         try{
-            $data = DB::table('category_blogs')
-                        ->join('blogs', 'blogs.cate_id', '=', 'category_blogs.id')
-                        ->select(DB::raw('count(blogs.id) as count_blog'), 'category_blogs.*')
-                        ->groupBy('category_blogs.name')
+            $data = CategoryBlog::join('blogs', 'blogs.cate_id', '=', 'category_blogs.id')
+                        ->select('category_blogs.id', 'category_blogs.name')
+                        ->selectRaw('sum(blogs.cate_id) as count_blog')
+                        ->groupBy('category_blogs.id', 'category_blogs.name')
                         ->get();
             return $this->respond($data);
         }

@@ -36,6 +36,7 @@ return [
         ApiCode::ERROR_GET_DATA => 'api.error_get_data',
         ApiCode::ERROR_REQUEST => 'api.error_request',
         ApiCode::VALIDATION_ERROR => 'api.validation_error',
+        ApiCode::ERROR_CREDENTIALS => 'api.error_incredential',
     ],
 
    

@@ -30,7 +30,8 @@ class BlogFactory extends Factory
             'content' => $this->faker->text(),
             'view' => $this->faker->numberBetween(1, 10000),
             'like' => $this->faker->numberBetween(1, 10000),
-            'cate_id' => $this->faker->numberBetween(1, 5)             
+            'cate_id' => $this->faker->numberBetween(1, 5),
+            'status' => '1',             
         ];
     }
 }
