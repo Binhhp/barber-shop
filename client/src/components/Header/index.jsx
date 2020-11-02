@@ -1,8 +1,10 @@
 import React from 'react';
 import Logo from '../../assets/img/logo.png';
 import Barber_text from '../../assets/img/banner/barber_text.png';
+import PropTypes from 'prop-types';
+import { Link, NavLink } from 'react-router-dom';
 import './styles.scss';
-const Header = () => {
+const Header = ({ isHome, title }) => {
   return (
     <React.Fragment>
       <div>
@@ -14,9 +16,9 @@ const Header = () => {
                 <div className='row align-items-center no-gutters'>
                   <div className='col-xl-3 col-lg-3'>
                     <div className='logo-img'>
-                      <a href='index.html'>
+                      <Link to=''>
                         <img src={Logo} alt='' />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className='col-xl-6 col-lg-6'>
@@ -24,41 +26,29 @@ const Header = () => {
                       <nav>
                         <ul id='navigation'>
                           <li>
-                            <a className='active' href='index.html'>
+                            <NavLink exact activeClassName='active' to=''>
                               home
-                            </a>
+                            </NavLink>
                           </li>
                           <li>
-                            <a href='about.html'>About</a>
+                            <NavLink activeClassName='active' to='/about'>
+                              About
+                            </NavLink>
+                          </li>
+                          {/* <li>
+                            <NavLink activeClassName='active' to='/service'>
+                              service
+                            </NavLink>
+                          </li> */}
+                          <li>
+                            <NavLink activeClassName='active' to='/blog'>
+                              Blog
+                            </NavLink>
                           </li>
                           <li>
-                            <a href='service.html'>service</a>
-                          </li>
-                          <li>
-                            <a href='#'>
-                              blog <i className='ti-angle-down' />
-                            </a>
-                            <ul className='submenu'>
-                              <li>
-                                <a href='blog.html'>blog</a>
-                              </li>
-                              <li>
-                                <a href='single-blog.html'>single-blog</a>
-                              </li>
-                            </ul>
-                          </li>
-                          <li>
-                            <a href='#'>
-                              pages <i className='ti-angle-down' />
-                            </a>
-                            <ul className='submenu'>
-                              <li>
-                                <a href='elements.html'>elements</a>
-                              </li>
-                            </ul>
-                          </li>
-                          <li>
-                            <a href='contact.html'>Contact</a>
+                            <NavLink activeClassName='active' to='/contact'>
+                              Contact
+                            </NavLink>
                           </li>
                         </ul>
                       </nav>
@@ -82,29 +72,43 @@ const Header = () => {
           </div>
         </header>
         {/* header-end */}
-        {/* slider_area_start */}
-        <div className='slider_area'>
-          <div className='single_slider d-flex align-items-center justify-content-center slider_bg_1 overlay2'>
-            <div className='container'>
-              <div className='row'>
-                <div className='col-xl-12'>
-                  <div className='slider_text text-center'>
-                    <img src={Barber_text} alt='' />
-                    <h3>
-                      Best Barber in <br />
-                      your Town
-                    </h3>
-                    <p>Professional Care</p>
+        {isHome ? (
+          <div className='slider_area'>
+            <div className='single_slider d-flex align-items-center justify-content-center slider_bg_1 overlay2'>
+              <div className='container'>
+                <div className='row'>
+                  <div className='col-xl-12'>
+                    <div className='slider_text text-center'>
+                      <img src={Barber_text} alt='' />
+                      <h3>
+                        Best Barber in <br />
+                        your Town
+                      </h3>
+                      <p>Professional Care</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        {/* slider_area_end */}
+        ) : (
+          <div className='bradcam_area breadcam_bg overlay2'>
+            <h3>{title}</h3>
+          </div>
+        )}
       </div>
     </React.Fragment>
   );
+};
+
+Header.propTypes = {
+  isHome: PropTypes.bool,
+  title: PropTypes.string,
+};
+
+Header.defaultProps = {
+  isHome: true,
+  title: 'Wellcome ',
 };
 
 export default Header;
