@@ -10,4 +10,5 @@ return [
     'error_get_data' => 'Không tim thấy bản ghi!',
     'error_request' => 'Lỗi xảy ra khi thực hiện!',
     'validation_error' => 'Validation Error',
+    'error_incredential' => 'Bản ghi đã tồn tại',
 ];

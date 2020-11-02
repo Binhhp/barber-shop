@@ -22,6 +22,7 @@ class CreateBlogsTable extends Migration
             $table->integer('view');
             $table->integer('like');
             $table->integer('cate_id');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

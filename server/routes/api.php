@@ -22,11 +22,11 @@ Route::apiResource('blog', 'BlogController')->only('index', 'show')->middleware(
 //get category blog
 Route::get('cate', 'BlogController@cate_blog')->name('cate_blog');
 //get blog by category
-Route::post('blog-cate/{cate}', 'BlogController@show_cate_blog')->name('blog_by_cate');
+Route::get('blog-cate/{cate}', 'BlogController@show_cate_blog')->name('blog_by_cate');
 //get tag blog
 Route::get('tag', 'BlogController@show_tag_blog')->name('tag_blog');
 //get blog by tag
-Route::post('blog-tag/{tag_id}', 'BlogController@show_blog_by_tag')->name('blog_by_tag');
+Route::get('blog-tag/{tag_id}', 'BlogController@show_blog_by_tag')->name('blog_by_tag');
 //search blog
 Route::post('blog-search', 'BlogController@search_blog')->name('blog_search');
 //get comment blog

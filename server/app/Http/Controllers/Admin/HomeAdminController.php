@@ -1,12 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Menu;
-use App\Models\Role;
-use App\Models\User;
-use App\Service\ApiCode;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class HomeAdminController extends Controller

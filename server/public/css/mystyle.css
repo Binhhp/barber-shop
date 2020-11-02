@@ -84,3 +84,10 @@
     position: relative;
 }
 
+.ck-editor__editable {
+    min-height: 250px;
+}
+.select2-container {
+    width: 100% !important;
+    padding: 0;
+}

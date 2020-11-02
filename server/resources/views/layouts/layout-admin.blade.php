@@ -27,6 +27,8 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::to('css/mystyle.css') }}">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Select2 CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ URL::to('css/select2.min.css') }}"> 
   </head>
   <body class="app sidebar-mini rtl">
     <!-- Navbar-->
@@ -109,6 +111,8 @@
     <script type="text/javascript" src="{{ URL::to('js/sweetalert2@9.js') }}"></script>
     <!-- The javascript plugin to display page loading on top-->
     <script src="{{ URL::to('js/plugins/pace.min.js') }}"></script>
+    <!-- Select2 CDN JS-->
+    <script src="{{ URL::to('js/select2.min.js') }}"></script>  
     @stack('scripts')
     <!-- Page specific javascripts-->
     <script type="text/javascript" src="{{ URL::to('js/plugins/chart.js') }}"></script>

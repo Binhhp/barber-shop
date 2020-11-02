@@ -8,4 +8,5 @@ class ApiCode {
     public const ERROR_GET_DATA              = 500;
     public const ERROR_REQUEST               = 404;     
     public const VALIDATION_ERROR            = 252;
+    public const ERROR_CREDENTIALS    = 401;
 }
