@@ -31,3 +31,9 @@ Route::get('blog-tag/{tag_id}', 'BlogController@show_blog_by_tag')->name('blog_b
 Route::post('blog-search', 'BlogController@search_blog')->name('blog_search');
 //get comment blog
 Route::post('blog-comment/{blog_id}', 'BlogController@get_comment_blog')->name('blog_comment');
+//get services
+Route::get('services', 'AppointmentController@show_services')->name('service');
+//get barbers
+Route::get('barbers', 'AppointmentController@show_barbers')->name('barbers');
+//register appointment
+Route::post('appointments', 'AppointmentController@register_appointment')->name('appointments');

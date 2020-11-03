@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\CategoryBlog;
+use App\Models\Service;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,5 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call(TagBlogSeeder::class);
         $this->call(CustomerSeeder::class);
         $this->call(CommentSeeder::class);
+        $this->call(ServiceSeeder::class);
+        $this->call(PositionSeeder::class);
+        $this->call(BarberSeeder::class);
     }
 }

@@ -3,19 +3,18 @@
 namespace Database\Factories;
 
 use App\Models\Model;
-use App\Models\Tag;
-use App\Models\TagBlog;
+use App\Models\Position;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class TagFactory extends Factory
+class PositionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Tag::class;
+    protected $model = Position::class;
 
     /**
      * Define the model's default state.
@@ -25,10 +24,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->randomElement([
-                'project', 'love', 'technology', 'travel', 'restaurant', 'life style', 'design', 'illustration'
-            ]),
-            'description' => $this->faker->text(50)
+            'name' => 'Massage Master'||'Mens Cut'||'Ladies Cut'
         ];
     }
 }
