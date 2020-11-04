@@ -79,7 +79,7 @@
                             <label for="maduan" class="col-sm-2 text-right"><strong>Category</strong><span style="color:red;">*</span></label>
                             <div class="col-md-4 text-left">
                                 <div class="input-group validate-input">
-                                    <select class="form-control" name="cate" id="cate" required>
+                                    <select class="form-control" name="cate_id" id="cate_id" required>
                                         <option value="0" disabled selected hide>Please choose</option>
                                         @foreach($cate as $i)
                                             <option value="{{ $i->id }}">{{ $i->name }}</option>

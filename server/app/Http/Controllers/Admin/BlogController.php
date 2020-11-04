@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AppointmentRequest;
+use App\Http\Requests\BlogRequest;
 use App\Models\Blog;
 use App\Models\CategoryBlog;
 use App\Models\Tag;
@@ -67,6 +69,41 @@ class BlogController extends Controller
                     ->make(true);
         }
     }
+
+    public function insert(BlogRequest $request)
+    {
+        try{
+            if($request->ajax()){
+                $check_data = Blog::where('title', '=', $request->title)->first();
+                if(!is_null($check_data)){
+                    return $this->respondWithError(ApiCode::ERROR_CREDENTIALS, 401);
+                }
+                $cate = CategoryBlog::where('id', '=', $request->cate_id)->first();
+                if(!is_null($cate)){
+                    $blog = new Blog([
+                        'title' => $request->name,
+                        'description' => $request->description,
+                        'content' => $request->content,
+                        'status' => $request->status,
+                        'imgPath' => $request->imgPath,
+                        'view' => 0,
+                        'like' => 0,
+                    ]);
+
+                    $cate->blogs()->save($blog);
+                    $blog->tags()->attach($request->tags === null ? [] : $request->tags);
+                }
+                return $this->respondWithSuccess(ApiCode::NOTIFICATION_INSERT_SUCCESS);
+            }
+            else{
+                return $this->respondRequest(ApiCode::ERROR_REQUEST);
+            }
+        }
+        catch(Exception $ex){
+            return $this->respondRequest(ApiCode::ERROR_REQUEST);
+        }
+    }
+
 
     public function delete($id)
     {

@@ -30,7 +30,7 @@ class AppointmentRequest extends FormRequest
             'barber_id' => 'required',
             'name' => 'required|string|max:50',
             'phone_number' => 'required',
-            'email' => 'required|email'
+            'email' => 'required|email',
         ];
     }
 
