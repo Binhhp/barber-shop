@@ -9,6 +9,20 @@ $(document).ready(function(){
         }
     });
 
+     // Your web app's Firebase configuration
+   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+   var firebaseConfig = {
+    apiKey: "AIzaSyDdPuctmLql-9vM-H-iRGswzhT6Dz2mlco",
+    authDomain: "barber-store-cadce.firebaseapp.com",
+    databaseURL: "https://barber-store-cadce.firebaseio.com",
+    projectId: "barber-store-cadce",
+    storageBucket: "barber-store-cadce.appspot.com",
+    messagingSenderId: "494533003845",
+    appId: "1:494533003845:web:10643d2a0333f1e7e9b12c",
+    measurementId: "G-X5QLSZ3G1V"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
     $('.select2').select2({
         dropdownParent: $('#myModal'),
         placeholder: "Select an option",
@@ -74,9 +88,8 @@ $(document).ready(function(){
 
         const _keyIput = '#_idIput';
         const _iIput = $(_keyIput).val();
-        const form_data = $("#form-input").serialize();
         if(_iIput != "" && _iIput != null){
-            updateData(form_data);
+            // updateData(form_data);
         }
         else{
             var fileUpload = $("#file").get(0).files;
@@ -124,44 +137,7 @@ $(document).ready(function(){
 
     alwaysCheck();
 });
-function uploadImg(files, file_name, file_meta){
-   // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyDdPuctmLql-9vM-H-iRGswzhT6Dz2mlco",
-    authDomain: "barber-store-cadce.firebaseapp.com",
-    databaseURL: "https://barber-store-cadce.firebaseio.com",
-    projectId: "barber-store-cadce",
-    storageBucket: "barber-store-cadce.appspot.com",
-    messagingSenderId: "494533003845",
-    appId: "1:494533003845:web:10643d2a0333f1e7e9b12c",
-    measurementId: "G-X5QLSZ3G1V"
-  };
-  var i = false;
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-    firebase.storage().ref('blogs/')
-                    .child(file_name)
-                    .put(files, file_meta)
-                    .then(function(){
-                        i = true;
-                    })
-                    .catch(error => {
-                       return alert(error.message); 
-                    });
-    if(i){
-         firebase.storage().ref('blogs/' + file_name)
-                                .getDownloadURL()
-                                .then(imgURL => {
-                                    console.log(imgURL);
-                                }).catch(error => {
-                                    alert(error.message);
-                                });      
-    }
-    else{
-        alert('Error 401!');
-    }
-};
+
 
  //Ck editor
 function showCkEditor(){
@@ -255,19 +231,6 @@ function showDialog(isShow){
 (function(){
      //Upload image firebase
 
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    var firebaseConfig = {
-        apiKey: "AIzaSyDdPuctmLql-9vM-H-iRGswzhT6Dz2mlco",
-        authDomain: "barber-store-cadce.firebaseapp.com",
-        databaseURL: "https://barber-store-cadce.firebaseio.com",
-        projectId: "barber-store-cadce",
-        storageBucket: "barber-store-cadce.appspot.com",
-        messagingSenderId: "494533003845",
-        appId: "1:494533003845:web:10643d2a0333f1e7e9b12c",
-        measurementId: "G-X5QLSZ3G1V"
-    };
-
         //Yajra Laravel
     function loadTables(){
         $('#myTable').DataTable({
@@ -303,6 +266,41 @@ function showDialog(isShow){
 function reloadTables() {
     $("#myTable").DataTable().ajax.reload();
 };
+function uploadImg(files, file_name, file_meta){
+   var task = null;
+    task = firebase.storage().ref('blogs/')
+                     .child(file_name)
+                     .put(files, file_meta)
+                     .catch(function() {
+                        return window.location.href = '/error404';
+                     });
+     if(task != null && task != undefined){
+         task.then(snapshot => snapshot.ref.getDownloadURL())
+                     .then(imgURL => {
+                         var form_data = $("#form-input").serialize() + '&' + 'imgPath=' + imgURL;
+                        //  insertData(form_data);
+                        console.log(form_data);
+                     }).catch((error) => {
+                        // A full list of error codes is available at
+                        // https://firebase.google.com/docs/storage/web/handle-errors
+                        switch (error.code) {
+                          case 'storage/unauthorized':
+                                return alert("User doesn't have permission to access the object");
+                            break;
+                          case 'storage/canceled':
+                                return alert("User canceled the upload");
+                            break;
+                          case 'storage/unknown':
+                                return alert("Unknown error occurred, inspect error.serverResponse");
+                            break;
+                        }
+                    });
+     }
+     else{
+         return window.location.href = '/error404';
+     }   
+ };
+
 //Insert data
 function insertData(form_data){
     $.ajax({

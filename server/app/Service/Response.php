@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Models\Customer;
 use MarcinOrlowski\ResponseBuilder\ResponseBuilder;
 
 //Create consisdent response builder
@@ -31,7 +32,7 @@ trait Response {
     {
         return $this->respondWithError($api_code, 400);
     }
-
+    
     public function respondUnAuthenticated($api_code)
     {
         return $this->respondWithError($api_code, 401);
@@ -41,4 +42,9 @@ trait Response {
     {
         return $this->respondWithError($api_code, 404);
     }
+
+    public function find_cus($email){
+        return Customer::where('email', '=', $email)->first();
+    }
+    
 };

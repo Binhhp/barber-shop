@@ -161,5 +161,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth'] ], function(){
 
 });
 
+Route::get('error404', function(){
+    return view('error.page_error');
+});
 
 Auth::routes();
