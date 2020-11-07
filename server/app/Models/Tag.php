@@ -10,7 +10,7 @@ class Tag extends Model
     use HasFactory;
 
     protected $fillable = [ 'name', 'description' ];
-    public function blog()
+    public function blogs()
     {
         return $this->belongsToMany(Blog::class, 'tag_blogs', 'tag_id', 'blog_id')->withTimestamps();
     }

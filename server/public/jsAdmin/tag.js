@@ -2,6 +2,9 @@ var mainApp = {};
 
 $(document).ready(function(){
 
+    $(".index").removeClass('active');
+    $('.blog').addClass('is-expanded').removeClass('blog');
+    $('.tag').addClass('active').removeClass('tag');
     //csrf token get ajax
     $.ajaxSetup({
         headers: {

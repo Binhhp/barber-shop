@@ -33,6 +33,12 @@ class BlogController extends Controller
         return view('blog', ['user_name' => $name, 'user_role' => $role, 'cate' => $cate, 'tags' => $tag]); 
     }
     
+    /**
+     * Display a listing of the resource.
+     * Get blog for table
+     * @param Request from ajax
+     * @return \Illuminate\Http\Response
+     */
     public function getData(Request $request)
     {
         if($request->ajax()){
@@ -56,13 +62,24 @@ class BlogController extends Controller
                         }
                     })
                     ->addColumn('action' ,function($data){
-                        $button = '<a href="javascript:void(0);" data-toggle="modal" data-target="#myModal"
-                        data-id="'.$data->id.'" data-title="'.$data->title.'" data-content="'.$data->content.'"
-                        data-imgPath="'.$data->imgPath.'" data-status="'.$data->status.'" data-cate="'.$data->name.'"
-                        data-action="edit" name="edit" class="edit btn btn-primary btn-sm">Edit</a>';
+                        
+                        $array = array();
+                        foreach($data->tags as $tag){
+                            array_push($array, $tag->id);
+                        }
 
-                        $button .= '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteData('.$data->id.')" 
-                        name="delete" class="delete btn btn-danger btn-sm">Delete</a>';
+                        $content = $data->content;
+                        $content = str_replace('"', '', $content);
+
+                        $button = '<a href="javascript:void(0);" data-toggle="modal" data-target="#myModal"
+                        data-id="'.$data->id.'" data-title="'.$data->title.'" data-description="'.$data->description.'" 
+                        data-content="'.$content.'" data-path="'.$data->imgPath.'" data-file="'.$data->imgName.'"
+                        data-status="'.$data->status.'" data-cate="'.$data->cate_id.'" 
+                        data-tags="'.json_encode($array).'" data-action="edit" name="edit" 
+                        class="edit btn btn-primary btn-sm">Edit</a>';
+
+                        $button .= '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteData(this)" data-id="'.$data->id.'"
+                        data-image="'.$data->imgName.'" name="delete" class="delete btn btn-danger btn-sm">Delete</a>';
                         return $button;
                     })         
                     ->rawColumns(['cbox', 'status', 'action'])
@@ -70,46 +87,109 @@ class BlogController extends Controller
         }
     }
 
+    /**
+     * Display a listing of the resource.
+     * Insert blog
+     * @param BlogRequest
+     * @return \Illuminate\Http\Response
+     */
     public function insert(BlogRequest $request)
     {
         try{
             if($request->ajax()){
-                $check_data = Blog::where('title', '=', $request->title)->first();
-                if(!is_null($check_data)){
-                    return $this->respondWithError(ApiCode::ERROR_CREDENTIALS, 401);
-                }
-                $cate = CategoryBlog::where('id', '=', $request->cate_id)->first();
+                $cate = CategoryBlog::find($request->cate_id);
                 if(!is_null($cate)){
+                    $check_blog = Blog::where('title', '=', $request->title)->first();
+                    
+                    if(!is_null($check_blog)){
+                        return $this->respondWithError(ApiCode::ERROR_CREDENTIALS, 401);
+                    }
+
                     $blog = new Blog([
-                        'title' => $request->name,
+                        'title' => $request->title,
                         'description' => $request->description,
-                        'content' => $request->content,
-                        'status' => $request->status,
+                        'content' => $request->contentEd,
                         'imgPath' => $request->imgPath,
+                        'imgName' => $request->fileName,
                         'view' => 0,
                         'like' => 0,
+                        'status' => $request->status
                     ]);
 
                     $cate->blogs()->save($blog);
                     $blog->tags()->attach($request->tags === null ? [] : $request->tags);
+
+                    return $this->respondWithSuccess(ApiCode::NOTIFICATION_INSERT_SUCCESS);
                 }
-                return $this->respondWithSuccess(ApiCode::NOTIFICATION_INSERT_SUCCESS);
+                else{
+                    return $this->respondWithError(ApiCode::ERROR_CREDENTIALS, 401);
+                }
             }
             else{
                 return $this->respondRequest(ApiCode::ERROR_REQUEST);
             }
         }
         catch(Exception $ex){
-            return $this->respondRequest(ApiCode::ERROR_REQUEST);
+            echo($ex->getMessage());
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     * Update blog
+     * @param BlogRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function update(BlogRequest $request)
+    {
+        try{
+            if($request->ajax()){
+
+                $blog = Blog::find($request->id);
+                
+                if(!is_null($blog)){
+
+                    $blog->title = $request->title;
+                    $blog->description = $request->description;
+                    $blog->content = $request->contentEd;
+                    $blog->imgPath = $request->imgPath;
+                    $blog->imgName = $request->fileName;
+                    $blog->status = $request->status;
+                    $blog->cate_id = $request->cate_id;
+
+                    $blog->save();
+                    
+                    $blog->tags()->sync($request->tags === null ? [] : $request->tags);
+
+                    return $this->respondWithSuccess(ApiCode::NOTIFICATION_UPDATE_SUCCESS);
+                }
+                else{
+                    return $this->respondNotFound(ApiCode::ERROR_REQUEST);
+                }
+            }
+            else{
+                return $this->respondRequest(ApiCode::ERROR_REQUEST);
+            }
+        }
+        catch(Exception $ex){
+            echo($ex->getMessage());
         }
     }
 
 
+    /**
+     * Display a listing of the resource.
+     * Delete blog
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
     public function delete($id)
     {
        try{
             $record = Blog::find($id);
             if(!is_null($record)){
+
+                $record->tags()->detach();
                 $record->delete();
                 return $this->respondWithSuccess(ApiCode::NOTIFICATION_DELETE_SUCCESS);
             }
@@ -122,19 +202,28 @@ class BlogController extends Controller
        }
     }
 
+    /**
+     * Display a listing of the resource.
+     * Delete blog for checkbox
+     * @param Request array
+     * @return \Illuminate\Http\Response
+     */
     public function deleteAll(Request $request)
     {
         if($request->ajax()){
             $data = $request->json()->all();
+            $array = [];
             if(is_array($data)){
                 foreach($data as $key){
                     $record = Blog::where('title', $key)->firstOrFail();
                     if(!is_null($record)){
+                        array_push($array, $record->imgName);
+                        $record->tags()->detach();
                         $record->delete();
                     }
                 }
                 $msg = 'Xóa ' . count($data) . ' thành công!';
-                return $this->respondWithMessage($msg);
+                return $this->respondAll($array ,$msg);
             }
             else{
                 return $this->respondWithError(ApiCode::ERROR_REQUEST, 400);

@@ -13,10 +13,11 @@ import AboutUs from './components/AboutUs';
 import ServiceArea from './components/ServiceArea';
 import Gallery from './components/Gallery';
 import NotFound from './components/NotFound';
-// import Appointment from './containers/Appointment';
+import Appointment from './containers/Appointment';
 import { configStore, getHistory } from './containers/configurationStore';
 import PublicRoutes from './containers/routes';
 import ScrollToTop from './utils/ScrollToTop';
+import VideoHome from './components/VideoHome';
 const store = configStore();
 const history = getHistory();
 function App() {
@@ -30,19 +31,21 @@ function App() {
               <Switch>
                 <PublicRoutes />
                 <Route component={NotFound} />
+                
               </Switch>
             </BrowserRouter>
           </Suspense>
         </ConnectedRouter>
       </Provider>
-      {/* <Header />
+      {/* <Appointment />
+      <Header />
       <AboutUs />
       <ServiceArea />
       <Gallery />
       <VideoHome />
       <CusterMaster />
       <FindUs />
-      <Appointment /> */}
+       */}
       <Footer />
     </React.Fragment>
   );

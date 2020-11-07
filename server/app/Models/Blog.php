@@ -9,7 +9,7 @@ class Blog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'title', 'description', 'content', 'imgPath', 'view', 'like', 'cate_id'];
+    protected $fillable = ['title', 'description', 'content', 'imgPath', 'imgName', 'view', 'like', 'status'];
     public function cates()
     {
         # code...
@@ -19,11 +19,11 @@ class Blog extends Model
     public function comments()
     {
         # code...
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, 'comments.blog_id', 'id');
     }
     
     public function tags()
     {
-        return $this->belongsToMany('App\Models\Tag', 'tag_blogs', 'blog_id', 'tag_id')->withPivot('tag_id')->withTimestamps();
+        return $this->belongsToMany(Tag::class, 'tag_blogs', 'blog_id', 'tag_id')->withPivot('tag_id')->withTimestamps();
     }
 }

@@ -36,10 +36,10 @@ return [
         ApiCode::ERROR_GET_DATA => 'api.error_get_data',
         ApiCode::ERROR_REQUEST => 'api.error_request',
         ApiCode::VALIDATION_ERROR => 'api.validation_error',
-        ApiCode::ERROR_CREDENTIALS => 'api.error_incredential',
+        ApiCode::ERROR_CREDENTIALS => 'api.error_credentials',
         ApiCode::SUCCESS_APPOINTMENT => 'api.success_appointment',
         ApiCode::ERROR_APPOINTMENT => 'api.error_appointment',
-        ApiCode::IS_CREDENTIALS => 'api.is_credentials',
+        ApiCode::ERROR_IS_CREDENTIALS => 'api.error_is_credentials',
     ],
 
    

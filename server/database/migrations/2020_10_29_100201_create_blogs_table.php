@@ -17,8 +17,9 @@ class CreateBlogsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('description');
-            $table->text('content');
+            $table->longText('content');
             $table->string('imgPath');
+            $table->string('imgName')->nullable();
             $table->integer('view');
             $table->integer('like');
             $table->integer('cate_id');

@@ -117,7 +117,7 @@
                             <label for="maduan" class="col-sm-2 text-right"><strong>Content</strong><span style="color:red;">*</span></label>
                             <div class="col-md-9 text-left">
                                 <div class="input-group validate-input">
-                                    <textarea type="text" class="form-control" placeholder="Content" name="content" id="content"></textarea>
+                                    <textarea type="text" placeholder="Content" name="content" id="content"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                             <label for="maduan" class="col-sm-2 text-right"><strong>Tag</strong><span style="color:red;">*</span></label>
                             <div class="col-md-9 text-left">
                                 <div class="input-group validate-input">
-                                    <select class="select2 form-control" multiple="multiple" name="tags[]" id="tag">
+                                    <select class="select2" multiple="multiple" name="tags[]" id="tag">
                                         @foreach($tags as $tag)
                                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                         @endforeach
@@ -137,6 +137,7 @@
                             <label for="maduan" class="col-sm-2 text-right"><strong>Upload file</strong><span style="color:red;">*</span></label>
                             <div class="col-md-9 text-left">
                                 <div class="input-group validate-input">
+                                    <image id="img" name="img" width="300" height="100" data-file=""></image>
                                     <input type="file" class="form-control-file" name="file" id="file"/>
                                 </div>
                             </div>
@@ -151,6 +152,13 @@
                 </div>
             </form>
         </div>
+    </div>
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen" aria-hidden="true">
+        <svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+        </svg>
     </div>
 </div>
 <div id="dialog-root" class="hidden-dialog">
@@ -170,13 +178,7 @@
             </aside>
         </div>
 </div>
-<!-- loader -->
-<div id="ftco-loader" class="show fullscreen" aria-hidden="true">
-    <svg class="circular" width="48px" height="48px">
-        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
-    </svg>
-</div>
+
 @endsection
 @push('scripts')
 <script src="{{ URL::to('jsAdmin/blog.js') }}"></script>

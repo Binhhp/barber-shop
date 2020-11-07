@@ -1,35 +1,80 @@
 <?php
-
 namespace App\Mail;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+use Exception;
+use GuzzleHttp\Client;
 
-class SendMail extends Mailable
+trait SendMail
 {
-    use Queueable, SerializesModels;
-
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($data)
+    //Send mail using mail jet
+    public function send_mail($mail)
     {
-        $this->data = $data;
-    }
+        try{
+            $temp = file_get_contents(base_path('public\mail\send_mail.html'));
+            
+                $search = [
+                    '{{ name }}', 
+                    '{{ phone_number }}', 
+                    '{{ time }}', 
+                    '{{ date }}', 
+                    '{{ service }}',
+                    '{{ barber }}', 
+                    '{{ address }}'
+                ];
+                $replace = [ 
+                    $mail['name'], 
+                    $mail['phone_number'], 
+                    $mail['time'], 
+                    $mail['date'], 
+                    $mail['service'], 
+                    $mail['barber'], 
+                    $mail['address'] 
+                ];
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        return $this->from("barbershop@gmail.com")->subject('Barber Salon')->view('mail.send_mail')->with([
-            'data' => $this->data
-        ]);
+                $result = str_replace($search, $replace, $temp);
+
+                $body = [
+                    'Messages' => [
+                        [
+                        'From' => [
+                            'Email' => env('MAIL_JET_FROM_ADDRESS'),
+                            'Name' => env('MAIL_JET_FROM_NAME')
+                        ],
+                        'To' => [
+                            [
+                            'Email' => $mail['email'],
+                            'Name' => $mail['name']
+                            ]
+                        ],
+                        'Subject' => "Thanks you from Barber Shop!",
+                        'HTMLPart' => $result
+                        ]
+                    ]
+                ];
+        
+                $client = new Client([
+                    // Base URI is used with relative requests
+                    'base_uri' => env('MAIL_JET_BASE_URI'),
+                ]);
+        
+                $response = $client->request('POST', 'send', [
+                    'json' => $body,
+                    'auth' => [env('MAIL_JET_API_KEY'), env('MAIL_JET_SECRET')]
+                ]);
+        
+                if($response->getStatusCode() == 200) {
+                    $body = $response->getBody();
+                    $response = json_decode($body);
+                    if ($response->Messages[0]->Status == 'success') {
+                        return true;
+                    }
+                }
+                else{
+                    return false;
+                }
+        }
+        catch(Exception $ex){
+            return false;
+        }
     }
 }
