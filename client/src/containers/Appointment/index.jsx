@@ -276,19 +276,19 @@ const Appointment = (props) => {
                       <div className='appointment'>
                         <Slider {...settinngAppoinment}>
                           <div className='appointment-time'>
-                            <button>8h00</button>
+                            <button className='active'>8h00</button>
+                          </div>
+                          <div className='appointment-time'>
+                            <button className='unavailable'>8h00</button>
+                          </div>
+                          <div className='appointment-time'>
+                            <button className='available'>8h00</button>
                           </div>
                           <div className='appointment-time'>
                             <button>8h00</button>
                           </div>
                           <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
+                            <button className='unavailable'>8h00</button>
                           </div>
                           <div className='appointment-time'>
                             <button>8h00</button>

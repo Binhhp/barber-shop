@@ -103,6 +103,20 @@
       border: none;
       outline: none;
       border-radius: 5px;
+      // font: 20px;
+      cursor: pointer;
+      &.active {
+        background: #4b360096;
+        color: white;
+      }
+      &.unavailable {
+        background: #e8e8e8;
+        border: 1px solid #d1d1d1;
+      }
+      &.available {
+        background: #fff;
+        border: 1px solid #000;
+      }
     }
   }
 }
