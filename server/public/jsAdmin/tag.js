@@ -2,6 +2,9 @@ var mainApp = {};
 
 $(document).ready(function(){
 
+    $(".index").removeClass('active');
+    $('.blog').addClass('is-expanded').removeClass('blog');
+    $('.tag').addClass('active').removeClass('tag');
     //csrf token get ajax
     $.ajaxSetup({
         headers: {
@@ -230,6 +233,15 @@ function insertData(form_data){
             }
         },
         error: function(error){
+            if(error != null){
+                var errors = error.responseJSON;
+                if($.isEmptyObject(errors) === false){
+                    $.each(errors.errors, function(key, value){
+                        var errorId = "#" + key + "Error";
+                        $(errorId).text(value);
+                    })
+                }
+            }
             alert(error.statusText);
         }
     })

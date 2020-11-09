@@ -25,6 +25,8 @@ class BarberFactory extends Factory
     {
         return [
             'name' => $this->faker->firstName(),
+            'imgPath' => $this->faker->imageUrl(),
+            'imgName' => 'image.jpg',
             'phone_number' => $this->faker->phoneNumber(),
             'address' => $this->faker->streetAddress(),
             'email' => $this->faker->regexify('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}'),

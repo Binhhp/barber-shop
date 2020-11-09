@@ -159,6 +159,71 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth'] ], function(){
         ]);
     });
 
+    //Blog
+    Route::group(['prefix' => 'barber'], function(){
+        Route::get('', [
+            'uses' => 'Admin\BarberController@index',
+            'as' => 'barber.index'
+        ]);
+
+        Route::get('getData', [
+            'uses' => 'Admin\BarberController@getData',
+            'as' => 'barber.getData'
+        ]);
+    
+        Route::post('insert', [
+            'uses' => 'Admin\BarberController@insert',
+            'as' => 'barber.insert'
+        ]);
+    
+        Route::post('update', [
+            'uses' => 'Admin\BarberController@update',
+            'as' => 'barber.update'
+        ]);
+    
+        Route::get('delete/{id}', [
+            'uses' => 'Admin\BarberController@delete',
+            'as' => 'barber.delete'
+        ]);
+    
+        Route::post('deleteAll', [
+            'uses' => 'Admin\BarberController@deleteAll',
+            'as' => 'barber.deleteAll'
+        ]);
+    });
+
+     //Blog
+     Route::group(['prefix' => 'service'], function(){
+        Route::get('', [
+            'uses' => 'Admin\ServiceController@index',
+            'as' => 'service.index'
+        ]);
+
+        Route::get('getData', [
+            'uses' => 'Admin\ServiceController@getData',
+            'as' => 'service.getData'
+        ]);
+    
+        Route::post('insert', [
+            'uses' => 'Admin\ServiceController@insert',
+            'as' => 'service.insert'
+        ]);
+    
+        Route::post('update', [
+            'uses' => 'Admin\ServiceController@update',
+            'as' => 'service.update'
+        ]);
+    
+        Route::get('delete/{id}', [
+            'uses' => 'Admin\ServiceController@delete',
+            'as' => 'service.delete'
+        ]);
+    
+        Route::post('deleteAll', [
+            'uses' => 'Admin\ServiceController@deleteAll',
+            'as' => 'service.deleteAll'
+        ]);
+    });
 });
 
 Route::get('error404', function(){

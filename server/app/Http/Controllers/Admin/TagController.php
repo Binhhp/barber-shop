@@ -63,7 +63,7 @@ class TagController extends Controller
             if($request->ajax()){
                 $data = Tag::where('name', '=', $request->name)->first();
                 if(!is_null($data)){
-                    return $this->respondWithError(ApiCode::ERROR_CREDENTIALS, 401);
+                    return $this->respondWithError(ApiCode::ERROR_CREDENTIALS, 404);
                 }
                 Tag::create($request->getAttributes());
                 return $this->respondWithSuccess(ApiCode::NOTIFICATION_INSERT_SUCCESS);
@@ -108,7 +108,7 @@ class TagController extends Controller
             }
        }
        catch(Exception $ex){
-            return $this->respondWithError(ApiCode::ERROR_REQUEST, 400);
+            return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);
        }
     }
 
@@ -127,7 +127,7 @@ class TagController extends Controller
                 return $this->respondWithMessage($msg);
             }
             else{
-                return $this->respondWithError(ApiCode::ERROR_REQUEST, 400);
+                return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);
             }
         }
     }

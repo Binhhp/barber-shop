@@ -3,8 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
-class BlogRequest extends FormRequest
+class BarberRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +27,15 @@ class BlogRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'description' => 'required',
-            'content' => 'required',
+            'imgName' => 'required',
             'imgPath' => 'required',
-            'cate_id' => 'required',
-            'status' => 'required',
-            'fileName' => 'required'
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'email' => 'required|email',
+            
         ];
     }
+
+
 }

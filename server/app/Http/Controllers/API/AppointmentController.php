@@ -4,15 +4,12 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentRequest;
-use App\Mail\SendMail;
 use App\Models\Appointment;
 use App\Models\Barber;
 use App\Models\Customer;
 use App\Models\Service;
 use App\Service\ApiCode;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class AppointmentController extends Controller
 {
@@ -29,7 +26,7 @@ class AppointmentController extends Controller
             return $this->respond($data);
         }
         catch(Exception $ex){
-            return $this->respondRequest(ApiCode::ERROR_REQUEST, 401);
+            return $this->respondRequest(ApiCode::ERROR_REQUEST, 402);
         }
     }
     
@@ -46,7 +43,7 @@ class AppointmentController extends Controller
             return $this->respond($data);
         }
         catch(Exception $ex){
-            return $this->respondRequest(ApiCode::ERROR_REQUEST, 401);
+            return $this->respondRequest(ApiCode::ERROR_REQUEST, 402);
         }
     }
 
@@ -63,7 +60,7 @@ class AppointmentController extends Controller
                         ->where('time', '=', $request->time)
                         ->first();
             if(!is_null($find_app)){
-                return $this->respondWithError(ApiCode::IS_CREDENTIALS, 404);
+                return $this->respondWithError(ApiCode::ERROR_IS_CREDENTIALS, 406);
             }
             $cus_id = $this->find_cus($request->email);
             $appointment = new Appointment([
@@ -90,7 +87,7 @@ class AppointmentController extends Controller
                     $cus_request->appointments()->save($appointment);
                 }
                 else{
-                    return $this->respondWithError(ApiCode::ERROR_APPOINTMENT, 401);
+                    return $this->respondWithError(ApiCode::ERROR_APPOINTMENT, 405);
                 }
             }
 
@@ -104,19 +101,30 @@ class AppointmentController extends Controller
                 'date' => $request->date,
                 'service' => $service->name,
                 'barber' => $barber->name,
-                'address' => '99 Nguyễn Chí Thanh, Láng Thượng, Đống Đa, Hà Nội'
+                'address' => '99 Nguyễn Chí Thanh, Láng Thượng, Đống Đa, Hà Nội',
+
             );
 
-            Mail::to($request->email)->send(new SendMail($email));
-            if(Mail::failures() != 0){
+            $response = $this->send_mail($email);
+            if($response == true){
                 return $this->respondWithSuccess(ApiCode::SUCCESS_APPOINTMENT);
             }
             else{
-                return $this->respond(ApiCode::ERROR_APPOINTMENT, 401);
+                return $this->respondWithError(ApiCode::ERROR_APPOINTMENT,405);
             }
         }
         catch(Exception $ex){
             return $this->respondWithMessage($ex->getMessage());
         }
     }
+
+    // public function show_times($barber_id)
+    // {
+    //     try{
+
+    //     }
+    //     catch(Exception $ex){
+    //         return $this->respondWithMessage(ApiCode::ERROR_REQUEST, 402);
+    //     }
+    // }
 }

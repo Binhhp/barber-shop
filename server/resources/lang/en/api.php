@@ -10,8 +10,8 @@ return [
     'error_get_data' => 'Không tim thấy bản ghi!',
     'error_request' => 'Lỗi xảy ra khi thực hiện!',
     'validation_error' => 'Validation Error',
-    'error_incredential' => 'Bản ghi đã tồn tại',
+    'error_credentials' => 'Bản ghi đã tồn tại',
     'success_appointment' => 'Đặt lịch hẹn thành công!',
     'error_appointment' => 'Đặt lịch hẹn thất bại!',
-    'is_credentials' => 'Lịch hẹn đã có người đặt! Bạn vui lòng đặt thời gian khác.',
+    'error_is_credentials' => 'Lịch hẹn đã có người đặt! Bạn vui lòng đặt thời gian khác.',
 ];
