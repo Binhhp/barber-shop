@@ -26,7 +26,7 @@ class AppointmentController extends Controller
             return $this->respond($data);
         }
         catch(Exception $ex){
-            return $this->respondRequest(ApiCode::ERROR_REQUEST, 401);
+            return $this->respondRequest(ApiCode::ERROR_REQUEST, 402);
         }
     }
     
@@ -43,7 +43,7 @@ class AppointmentController extends Controller
             return $this->respond($data);
         }
         catch(Exception $ex){
-            return $this->respondRequest(ApiCode::ERROR_REQUEST, 401);
+            return $this->respondRequest(ApiCode::ERROR_REQUEST, 402);
         }
     }
 
@@ -60,7 +60,7 @@ class AppointmentController extends Controller
                         ->where('time', '=', $request->time)
                         ->first();
             if(!is_null($find_app)){
-                return $this->respondWithError(ApiCode::IS_CREDENTIALS, 404);
+                return $this->respondWithError(ApiCode::ERROR_IS_CREDENTIALS, 406);
             }
             $cus_id = $this->find_cus($request->email);
             $appointment = new Appointment([
@@ -87,7 +87,7 @@ class AppointmentController extends Controller
                     $cus_request->appointments()->save($appointment);
                 }
                 else{
-                    return $this->respondWithError(ApiCode::ERROR_APPOINTMENT, 401);
+                    return $this->respondWithError(ApiCode::ERROR_APPOINTMENT, 405);
                 }
             }
 
@@ -110,11 +110,21 @@ class AppointmentController extends Controller
                 return $this->respondWithSuccess(ApiCode::SUCCESS_APPOINTMENT);
             }
             else{
-                return $this->respondWithError(ApiCode::ERROR_APPOINTMENT,401);
+                return $this->respondWithError(ApiCode::ERROR_APPOINTMENT,405);
             }
         }
         catch(Exception $ex){
             return $this->respondWithMessage($ex->getMessage());
         }
     }
+
+    // public function show_times($barber_id)
+    // {
+    //     try{
+
+    //     }
+    //     catch(Exception $ex){
+    //         return $this->respondWithMessage(ApiCode::ERROR_REQUEST, 402);
+    //     }
+    // }
 }

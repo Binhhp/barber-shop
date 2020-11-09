@@ -91,3 +91,6 @@
     width: 100% !important;
     padding: 0;
 }
+.form-group select option[value=""][disabled]{
+    display: none;
+}

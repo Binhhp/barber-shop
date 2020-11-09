@@ -11,8 +11,7 @@ use App\Models\TagBlog;
 use App\Service\ApiCode;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Mockery\CountValidator\Exact;
+
 
 class BlogController extends Controller
 {
@@ -145,7 +144,7 @@ class BlogController extends Controller
        }
        catch(Exception $ex)
        {
-            return $this->respondWithError(ApiCode::ERROR_REQUEST, 401);
+            return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);
        }
     }
 
@@ -163,7 +162,7 @@ class BlogController extends Controller
             return $this->respond($data);
         }
         catch(Exception $ex){
-            return $this->respondWithError(ApiCode::ERROR_REQUEST, 401);
+            return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);
         }
     }
 }

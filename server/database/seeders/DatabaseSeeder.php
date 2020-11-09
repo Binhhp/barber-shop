@@ -26,5 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ServiceSeeder::class);
         $this->call(PositionSeeder::class);
         $this->call(BarberSeeder::class);
+        $this->call(TimeSeeder::class);
+
     }
 }
