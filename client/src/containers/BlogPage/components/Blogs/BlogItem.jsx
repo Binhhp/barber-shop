@@ -15,6 +15,7 @@ const BlogItem = ({ img, title, desc, countComment }) => {
         <a className='d-inline-block' href='single-blog.html'>
           <h2>{title}</h2>
         </a>
+
         <p>{desc}</p>
         <ul className='blog-info-link'>
           <li>

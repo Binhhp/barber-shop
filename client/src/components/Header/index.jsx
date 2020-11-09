@@ -57,9 +57,9 @@ const Header = ({ isHome, title }) => {
                   <div className='col-xl-3 col-lg-3 d-none d-lg-block'>
                     <div className='book_room'>
                       <div className='book_btn d-none d-lg-block'>
-                        <a className='popup-with-form' href='#test-form'>
+                        <Link className='popup-with-form' to='/appointment'>
                           Make an Appointment
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
