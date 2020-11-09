@@ -46,5 +46,16 @@ trait Response {
     {
         return $this->respondWithError($api_code, 404);
     }
+
+    public function respondJson($array)
+    {
+        return response()->json([
+            'success' => true,
+            "code" => 0,
+            "locale" => "en",
+            "message" => "OK",
+            "data" => $array
+        ]);
+    }
     
 };

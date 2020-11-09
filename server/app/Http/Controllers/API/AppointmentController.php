@@ -4,13 +4,22 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentRequest;
+use App\Http\Requests\TimeRequest;
 use App\Models\Appointment;
 use App\Models\Barber;
 use App\Models\Customer;
 use App\Models\Service;
+use App\Models\Time;
 use App\Service\ApiCode;
 use Exception;
+use GuzzleHttp\Psr7\Request;
 
+class times{
+    public $id;
+    public $time;
+    public $time_des;
+    public $type;
+}
 class AppointmentController extends Controller
 {
 
@@ -39,7 +48,7 @@ class AppointmentController extends Controller
     {
         try{
             $data = Barber::join('positions', 'barbers.pos_id', '=', 'positions.id')
-                            ->get(['barbers.*', 'positions.name']);
+                            ->get(['barbers.*', 'positions.name_pos']);
             return $this->respond($data);
         }
         catch(Exception $ex){
@@ -118,13 +127,49 @@ class AppointmentController extends Controller
         }
     }
 
-    // public function show_times($barber_id)
-    // {
-    //     try{
+     /**
+     * Display the specified resource.
+     * Get barber
+     * @param TimeRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function show_times(TimeRequest $request)
+    {
+        try{
+            $array = array();
+            $times = Time::all();
 
-    //     }
-    //     catch(Exception $ex){
-    //         return $this->respondWithMessage(ApiCode::ERROR_REQUEST, 402);
-    //     }
-    // }
+            foreach($times as $i){
+                $appointment = Appointment::where([
+                    'time_id' => $i->id,
+                    'date' => $request->date,
+                    'barber_id' => $request->barber_id
+                ])->get();
+
+                $time = new times;
+                $time->id = $i->id;
+                $time->time = $i->h;
+                $time->time_des = $i->h_des;
+
+                if($appointment){
+                    $time->type = true;
+                }
+                else{
+                    $time->type = false;
+                }
+
+                $array[] = $time;
+
+            }
+            if(!is_null($array)){
+                return $this->respondJson($array);
+            }
+            else{
+                return $this->respondRequest(ApiCode::ERROR_REQUEST); 
+            }
+        }
+        catch(Exception $ex){
+            return $this->respondRequest(ApiCode::ERROR_REQUEST);
+        }
+    }
 }
