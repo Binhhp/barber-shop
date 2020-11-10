@@ -25,7 +25,7 @@ class AppointmentRequest extends FormRequest
     {
         return [
             'date' => 'required',
-            'time' => 'required',
+            'time_id' => 'required',
             'ser_id' => 'required',
             'barber_id' => 'required',
             'name' => 'required|string|max:50',
@@ -37,7 +37,7 @@ class AppointmentRequest extends FormRequest
     public function getAttributes()
     {
         return array_merge([
-            $this->only(['date', 'time', 'ser_id', 'barber_id', 'name', 'phone_number', 'email'])
+            $this->only(['date', 'time_id', 'ser_id', 'barber_id', 'name', 'phone_number', 'email'])
         ]);
     }
 }

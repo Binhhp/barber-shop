@@ -4,13 +4,22 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentRequest;
+use App\Http\Requests\TimeRequest;
 use App\Models\Appointment;
 use App\Models\Barber;
 use App\Models\Customer;
 use App\Models\Service;
+use App\Models\Time;
 use App\Service\ApiCode;
 use Exception;
+use GuzzleHttp\Psr7\Request;
 
+class times{
+    public $id;
+    public $time;
+    public $time_des;
+    public $type;
+}
 class AppointmentController extends Controller
 {
 
@@ -39,7 +48,7 @@ class AppointmentController extends Controller
     {
         try{
             $data = Barber::join('positions', 'barbers.pos_id', '=', 'positions.id')
-                            ->get(['barbers.*', 'positions.name']);
+                            ->get(['barbers.*', 'positions.name_pos']);
             return $this->respond($data);
         }
         catch(Exception $ex){
@@ -56,16 +65,18 @@ class AppointmentController extends Controller
     public function register_appointment(AppointmentRequest $request)
     {
         try{
-            $find_app = Appointment::where('date', '=', $request->date)
-                        ->where('time', '=', $request->time)
-                        ->first();
+            $find_app = Appointment::where([
+                'date' => $request->date,
+                'time_id' => $request->time_id
+                ])->first();
+
             if(!is_null($find_app)){
                 return $this->respondWithError(ApiCode::ERROR_IS_CREDENTIALS, 406);
             }
             $cus_id = $this->find_cus($request->email);
             $appointment = new Appointment([
                 'date' => $request->date,
-                'time' => $request->time,
+                'time_id' => $request->time_id,
                 'ser_id' => $request->ser_id,
                 'barber_id' => $request->barber_id,
             ]);
@@ -91,18 +102,20 @@ class AppointmentController extends Controller
                 }
             }
 
-            $service = Service::where('id', '=', $request->ser_id)->first();
-            $barber = Barber::where('id', '=', $request->barber_id)->first();
+            $service = Service::find($request->ser_id);
+            $barber = Barber::find($request->barber_id);
+            $time = Time::find($request->time_id);
 
             $email = array(
+                
+                'email' => $request->email,
                 'name' => $request->name,
                 'phone_number' => $request->phone_number,
-                'time' => $request->time,
+                'time' => $time->h_des,
                 'date' => $request->date,
                 'service' => $service->name,
                 'barber' => $barber->name,
                 'address' => '99 Nguyễn Chí Thanh, Láng Thượng, Đống Đa, Hà Nội',
-
             );
 
             $response = $this->send_mail($email);
@@ -118,13 +131,49 @@ class AppointmentController extends Controller
         }
     }
 
-    // public function show_times($barber_id)
-    // {
-    //     try{
+     /**
+     * Display the specified resource.
+     * Get barber
+     * @param TimeRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function show_times(TimeRequest $request)
+    {
+        try{
+            $array = array();
+            $times = Time::all();
 
-    //     }
-    //     catch(Exception $ex){
-    //         return $this->respondWithMessage(ApiCode::ERROR_REQUEST, 402);
-    //     }
-    // }
+            foreach($times as $i){
+                $appointment = Appointment::where([
+                    'time_id' => $i->id,
+                    'date' => $request->date,
+                    'barber_id' => $request->barber_id
+                ])->get();
+
+                $time = new times;
+                $time->id = $i->id;
+                $time->time = $i->h;
+                $time->time_des = $i->h_des;
+
+                if($appointment){
+                    $time->type = true;
+                }
+                else{
+                    $time->type = false;
+                }
+
+                $array[] = $time;
+
+            }
+            if(!is_null($array)){
+                return $this->respondJson($array);
+            }
+            else{
+                return $this->respondRequest(ApiCode::ERROR_REQUEST); 
+            }
+        }
+        catch(Exception $ex){
+            return $this->respondRequest(ApiCode::ERROR_REQUEST);
+        }
+    }
 }

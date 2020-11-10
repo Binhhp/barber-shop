@@ -8,7 +8,13 @@ trait Response {
 
     public function respond($data, $message = null)
     {
-        return ResponseBuilder::asSuccess()->withData($data)->withMessage($message)->build();
+        return response()->json([
+            'success' => true,
+            "code"=> 0,
+            "locale"=> "en",
+            "message" => "OK",
+            "data" => $data
+        ]);
     }
 
     public function respondAll($data, $message)
@@ -45,6 +51,17 @@ trait Response {
     public function respondNotFound($api_code)
     {
         return $this->respondWithError($api_code, 404);
+    }
+
+    public function respondJson($array)
+    {
+        return response()->json([
+            'success' => true,
+            "code" => 0,
+            "locale" => "en",
+            "message" => "OK",
+            "data" => $array
+        ]);
     }
     
 };
