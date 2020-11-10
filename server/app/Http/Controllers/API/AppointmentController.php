@@ -65,16 +65,18 @@ class AppointmentController extends Controller
     public function register_appointment(AppointmentRequest $request)
     {
         try{
-            $find_app = Appointment::where('date', '=', $request->date)
-                        ->where('time', '=', $request->time)
-                        ->first();
+            $find_app = Appointment::where([
+                'date' => $request->date,
+                'time_id' => $request->time_id
+                ])->first();
+
             if(!is_null($find_app)){
                 return $this->respondWithError(ApiCode::ERROR_IS_CREDENTIALS, 406);
             }
             $cus_id = $this->find_cus($request->email);
             $appointment = new Appointment([
                 'date' => $request->date,
-                'time' => $request->time,
+                'time_id' => $request->time_id,
                 'ser_id' => $request->ser_id,
                 'barber_id' => $request->barber_id,
             ]);
@@ -100,18 +102,20 @@ class AppointmentController extends Controller
                 }
             }
 
-            $service = Service::where('id', '=', $request->ser_id)->first();
-            $barber = Barber::where('id', '=', $request->barber_id)->first();
+            $service = Service::find($request->ser_id);
+            $barber = Barber::find($request->barber_id);
+            $time = Time::find($request->time_id);
 
             $email = array(
+                
+                'email' => $request->email,
                 'name' => $request->name,
                 'phone_number' => $request->phone_number,
-                'time' => $request->time,
+                'time' => $time->h_des,
                 'date' => $request->date,
                 'service' => $service->name,
                 'barber' => $barber->name,
                 'address' => '99 Nguyễn Chí Thanh, Láng Thượng, Đống Đa, Hà Nội',
-
             );
 
             $response = $this->send_mail($email);
