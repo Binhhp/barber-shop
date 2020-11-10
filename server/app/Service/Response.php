@@ -8,7 +8,13 @@ trait Response {
 
     public function respond($data, $message = null)
     {
-        return ResponseBuilder::asSuccess()->withData($data)->withMessage($message)->build();
+        return response()->json([
+            'success' => true,
+            "code"=> 0,
+            "locale"=> "en",
+            "message" => "OK",
+            "data" => $data
+        ]);
     }
 
     public function respondAll($data, $message)
