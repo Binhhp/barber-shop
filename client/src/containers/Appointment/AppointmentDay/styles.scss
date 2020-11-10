@@ -1,0 +1,13 @@
+.time-item {
+  text-align: center;
+  padding: 5px 10px;
+  border: solid 0.5px #0000004f;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  border: none;
+
+  &.active {
+    background-color: #4b360096;
+  }
+}

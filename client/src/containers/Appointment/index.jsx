@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import Header from '../../components/Header';
 import avatar from '../../assets/img/team/1.png';
 import checkYellow from '../../assets/img/checkYellow.svg';
 import './styles.scss';
+import AppointmentDay from './AppointmentDay';
 
 const Appointment = (props) => {
+  const [dateAppointment, setDateAppointment] = useState();
   const settings = {
     className: 'center',
     infinite: true,
@@ -29,6 +31,7 @@ const Appointment = (props) => {
     rows: 4,
     slidesPerRow: 5,
   };
+
   return (
     <React.Fragment>
       <Header isHome={false} title='Make Appointment' />
@@ -38,23 +41,11 @@ const Appointment = (props) => {
           <div className='d-none d-sm-block mb-5 pb-4'></div>
           <div className='row'>
             <div className='col-lg-8'>
-              <form>
-                <div class='form-group'>
-                  <h4 className='title-steps'>1. Chọn thời gian</h4>
-                  <div className='row'>
-                    <div className='col text-center'>
-                      <button className='time-item active'>
-                        Hôm nay 01/11
-                      </button>
-                    </div>
-                    <div className='col text-center'>
-                      <button className='time-item'>Hôm nay 01/11</button>
-                    </div>
-                    <div className='col text-center'>
-                      <button className='time-item'>Hôm nay 01/11</button>
-                    </div>
-                  </div>
-                </div>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                }}>
+                <AppointmentDay setDateAppointment={setDateAppointment} />
                 <div class='form-group'>
                   <h4 className='title-steps'>2. Chọn stylist</h4>
                   <div className='row px-5'>
@@ -187,60 +178,6 @@ const Appointment = (props) => {
                             <p className='name'>Trọng khoa</p>
                           </div>
                         </div>
-                        {/* <div>
-                          <div className='stylist-item'>
-                            <input
-                              className='check-stylist'
-                              type='radio'
-                              name='stylist'
-                              id='stylist3'
-                              defaultValue='option1'
-                            />
-                            <label
-                              className='form-check-label'
-                              htmlFor='stylist3'>
-                              <img className='avatar' src={avatar} alt='' />
-                              <img className='check' src={checkYellow} alt='' />
-                            </label>
-                            <p className='name'>Trọng khoa</p>
-                          </div>
-                        </div>
-                        <div>
-                          <div className='stylist-item'>
-                            <input
-                              className='check-stylist'
-                              type='radio'
-                              name='stylist'
-                              id='stylist3'
-                              defaultValue='option1'
-                            />
-                            <label
-                              className='form-check-label'
-                              htmlFor='stylist3'>
-                              <img className='avatar' src={avatar} alt='' />
-                              <img className='check' src={checkYellow} alt='' />
-                            </label>
-                            <p className='name'>Trọng khoa</p>
-                          </div>
-                        </div>
-                        <div>
-                          <div className='stylist-item'>
-                            <input
-                              className='check-stylist'
-                              type='radio'
-                              name='stylist'
-                              id='stylist3'
-                              defaultValue='option1'
-                            />
-                            <label
-                              className='form-check-label'
-                              htmlFor='stylist3'>
-                              <img className='avatar' src={avatar} alt='' />
-                              <img className='check' src={checkYellow} alt='' />
-                            </label>
-                            <p className='name'>Trọng khoa</p>
-                          </div>
-                        </div> */}
                       </Slider>
                     </div>
                   </div>
@@ -397,9 +334,48 @@ const Appointment = (props) => {
                     </div>
                   </div>
                 </div>
+                {/* <button type='submit' onclick={(e) => e.preventDefault()}>
+                  submit
+                </button> */}
               </form>
             </div>
-            <div className='col-lg-4'>Thông tin đặt lịch</div>
+            {/* <div className="col-lg-1"></div> */}
+            <div className='col-lg-4'>
+              <h4>Thông tin người dùng</h4>
+              <div className='form-group'>
+                {/* <label for="">Họ tên</label> */}
+                <input
+                  type='text'
+                  className='form-control'
+                  name=''
+                  id=''
+                  aria-describedby='helpId'
+                  placeholder=''
+                />
+              </div>
+              <div className='form-group'>
+                {/* <label for="">Email</label> */}
+                <input
+                  type='text'
+                  className='form-control'
+                  name=''
+                  id=''
+                  aria-describedby='helpId'
+                  placeholder=''
+                />
+              </div>
+              <div className='form-group'>
+                {/* <label for="">Phone</label> */}
+                <input
+                  type='text'
+                  className='form-control'
+                  name=''
+                  id=''
+                  aria-describedby='helpId'
+                  placeholder=''
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
