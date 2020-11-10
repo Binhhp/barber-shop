@@ -8,6 +8,7 @@ use App\Http\Requests\TimeRequest;
 use App\Models\Appointment;
 use App\Models\Barber;
 use App\Models\Customer;
+use App\Models\Position;
 use App\Models\Service;
 use App\Models\Time;
 use App\Service\ApiCode;
