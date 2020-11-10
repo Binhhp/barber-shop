@@ -4,7 +4,7 @@ import { isAuthenticated } from './permissionChecker';
 // Set up default config for http requests here
 // Please have a look at here `https://github.com/axios/axios#request- config` for the full list of configs
 const axiosClient = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: process.env.REACT_APP_API_URI,
   headers: {
     'content-type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -24,7 +24,7 @@ axiosClient.interceptors.request.use(async (config) => {
 axiosClient.interceptors.response.use(
   (response) => {
      if (response && response.data) {
-      return response.data;
+      return response.data; 
     }
     return response;
   },
