@@ -36,7 +36,7 @@ var data = {
       		highlight: "#FF5A5E",
       		label: "In-Progress"
       	}
-      ]
+      ];
       
       var ctxl = $("#lineChartDemo").get(0).getContext("2d");
       var lineChart = new Chart(ctxl).Line(data);

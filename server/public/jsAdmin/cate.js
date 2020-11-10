@@ -1,23 +1,19 @@
-var mainApp = {};
+
 
 $(document).ready(function(){
 
-    $(".index").removeClass('active');
-    $('.blog').addClass('is-expanded').removeClass('blog');
-    $('.cate').addClass('active').removeClass('cate');
-    //csrf token get ajax
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    changeClass('index', 'blog', 'cate');
+    //setting csrf token ajax
+    settingAjax();
+    //Show required element
+    showAllRequiredElement();
+    //load table
+    loadTables();
+    //show dialog element
+    showAllDialogElement();
+    //set always dialog
+    alwaysCheck();
 
-    $('#ftco-loader').removeClass('show');
-    //required html5
-    var elements = document.getElementsByTagName("INPUT");
-    var elementsArea = document.getElementsByTagName("textarea");
-    showRequired(elements);
-    showRequired(elementsArea);
     //Get update tag by id
     $('#myModal').on('show.bs.modal', function(e){
 
@@ -25,8 +21,14 @@ $(document).ready(function(){
         const keys = ['name', 'description', 'id'];
         
         keys.map(item => {
+
             array_obj.push($(e.relatedTarget).data(item));
+            
+            const errorKey = "#" + item + "Error";
+            $(errorKey).text("");
+
         });
+
         const action = $(e.relatedTarget).data('action');
 
         if(action != undefined){
@@ -73,56 +75,8 @@ $(document).ready(function(){
             insertData(form_data);
         }
     });
-    //Toastr notification
-    toastr.options = {
-        "closeButton": true,
-    };
-    //All checkbox
-    $(".checkAll").on('click', function () {
-        var rows = $("#myTable").DataTable().rows({ 'search': 'applied' }).nodes();
-        var check_box = $('input[type="checkbox"]', rows); 
-        check_box.prop('checked', this.checked);
-    });
-    //check all
-    $('#actionDialogCardSecondaryButton').on('click', function(){
-        showDialog(false);
-        const rows = $("#myTable").DataTable().rows({ 'search': 'applied' }).nodes();
-        const check_boxes = $('input[type="checkbox"]:checked', rows); 
-        check_boxes.prop('checked', false);
-    });
-    //delete checkbox all
-    $('#actionDialogCardPrimaryButton').on('click', function(){
-        Swal.fire({
-            title: "Bạn có muốn xóa không?",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            cancelButtonText: "Thoát",
-            confirmButtonText: "Xóa",
-        }).then(result => {
-            if(result.value){
-                deleteCheckBox();
-            }
-        })
-    });
-
-    alwaysCheck();
 });
-//changed required
-function showRequired(elements){
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].oninvalid = function(e) {
-            e.target.setCustomValidity("");
-            if (!e.target.validity.valid) {
-                e.target.setCustomValidity("Vui lòng điền vào ô trống");
-            }
-        };
-        elements[i].oninput = function(e) {
-            e.target.setCustomValidity("");
-        };
-    }
-};
+
 
 //delete checkbox
 function deleteCheckBox(){
@@ -155,61 +109,26 @@ function deleteCheckBox(){
     })
 };
 
-//show dialog
-function alwaysCheck(){
-    setInterval(function(){
-        const rows = $("#myTable").DataTable().rows({ 'search': 'applied' }).nodes();
-        const check_boxes = $('input[type="checkbox"]:checked', rows); 
-        const c = check_boxes.length;
-        if(c == 0){
-            showDialog(false);
-            return;
-        }
-        else{
-            showDialog(true);
-            $('#count_selected').html(c + ' selected');
-        }
-    }, 100);
+//Yajra Laravel
+function loadTables(){
+    $('#myTable').DataTable({
+        pageLength: 10,
+        processing: true,
+        serverSide: true,
+        "bSort": false,
+        "responsive": true,
+        ajax: {
+            url: "/admin/cate/getData",
+        },
+        columns : [
+            { data: 'cbox', name: 'cbox', 'className': 'animated-checkbox text-center' , orderable: false, 'searchable': false },   
+            { data: 'name', name: 'name', 'className': 'text-center', orderable: false },
+            { data: 'description', name: 'description', orderable: false},
+            { data: 'created_at', name: 'created_at', 'className': 'text-center', orderable: false }, 
+            { data: 'action', name: 'action', 'className': 'text-center' ,  orderable: false, 'searchable': false }
+        ]
+    });
 };
-
-function showDialog(isShow){
-    if(isShow){
-        $('#dialog-root').addClass('show-dialog');
-        $('#dialog-root').removeClass('hidden-dialog');
-        $('#dialog-root').removeClass('collapse');
-    }
-    else{
-        $('#dialog-root').removeClass('show-dialog');
-        $('#dialog-root').addClass('hidden-dialog');
-        $('#dialog-root').removeClass('collapse');
-    }
-};
-
-(function(){
-        //Yajra Laravel
-    function loadTables(){
-        $('#myTable').DataTable({
-            pageLength: 10,
-            processing: true,
-            serverSide: true,
-            "bSort": false,
-            "responsive": true,
-            ajax: {
-                url: "/admin/cate/getData",
-            },
-            columns : [
-                { data: 'cbox', name: 'cbox', 'className': 'animated-checkbox text-center' , orderable: false, 'searchable': false },   
-                { data: 'name', name: 'name', 'className': 'text-center', orderable: false },
-                { data: 'description', name: 'description', orderable: false},
-                { data: 'created_at', name: 'created_at', 'className': 'text-center', orderable: false }, 
-                { data: 'action', name: 'action', 'className': 'text-center' ,  orderable: false, 'searchable': false }
-            ]
-        });
-    };
-    
-    mainApp.loadTables = loadTables();
-
-})();
 
 //Reload tables  
 function reloadTables() {
@@ -233,7 +152,7 @@ function insertData(form_data){
             }
         },
         error: function(error){
-            alert(error.statusText);
+            showValidation(error);
         }
     })
 };
@@ -256,7 +175,7 @@ function updateData(form_data){
             }
         },
         error: function(error){
-            alert(error.statusText);
+            showValidation(error);
         }
     })
 };
@@ -282,9 +201,10 @@ function deleteData(id){
                     toastr['error'](msg.message);
                 }
             }).catch(error => {
-                console.log(error.message);
+                alert(error.message);
             })
         }
     })
 };
+
 

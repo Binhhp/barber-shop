@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
         return parent::render($request, $exception);
     }
 
-    public function respondwithValidationException($exception)
+    public function respondWithValidationException($exception)
     {
         return ResponseBuilder::asError(ApiCode::VALIDATION_ERROR)
                                 ->withData($exception->errors())

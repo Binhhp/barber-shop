@@ -1,34 +1,34 @@
-var mainApp = {};
 
 $(document).ready(function(){
 
-    $(".index").removeClass('active');
-    $('.blog').addClass('is-expanded').removeClass('blog');
-    $('.tag').addClass('active').removeClass('tag');
-    //csrf token get ajax
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $('#ftco-loader').removeClass('show');
-    //required html5
-    var elements = document.getElementsByTagName("INPUT");
-    var elementsArea = document.getElementsByTagName("textarea");
-    showRequired(elements);
-    showRequired(elementsArea);
+    changeClass('index', 'blog', 'tag');
+    //setting csrf token ajax
+    settingAjax();
+    //Show required element
+    showAllRequiredElement();
+    //load table
+    loadTables();
+    //show dialog element
+    showAllDialogElement();
+    //set always dialog
+    alwaysCheck();
     //Get update tag by id
     $('#myModal').on('show.bs.modal', function(e){
 
         const array_obj = [];
         const keys = ['name', 'description', 'id'];
-        
-        keys.map(item => {
-            array_obj.push($(e.relatedTarget).data(item));
-        });
-        const action = $(e.relatedTarget).data('action');
 
+        keys.map(item => {
+
+            array_obj.push($(e.relatedTarget).data(item));
+
+            const errorKey = "#" + item + "Error";
+            $(errorKey).text("");
+
+        });
+
+        const action = $(e.relatedTarget).data('action');
+        
         if(action != undefined){
             if(action == "edit"){
 
@@ -66,30 +66,16 @@ $(document).ready(function(){
         const _keyIput = '#_idIput';
         const _iIput = $(_keyIput).val();
         const form_data = $("#form-input").serialize();
+
         if(_iIput != "" && _iIput != null){
             updateData(form_data);
         }
         else{
+            console.log(form_data);
             insertData(form_data);
         }
     });
-    //Toastr notification
-    toastr.options = {
-        "closeButton": true,
-    };
-    //All checkbox
-    $(".checkAll").on('click', function () {
-        var rows = $("#myTable").DataTable().rows({ 'search': 'applied' }).nodes();
-        var check_box = $('input[type="checkbox"]', rows); 
-        check_box.prop('checked', this.checked);
-    });
-    //check all
-    $('#actionDialogCardSecondaryButton').on('click', function(){
-        showDialog(false);
-        const rows = $("#myTable").DataTable().rows({ 'search': 'applied' }).nodes();
-        const check_boxes = $('input[type="checkbox"]:checked', rows); 
-        check_boxes.prop('checked', false);
-    });
+
     //delete checkbox all
     $('#actionDialogCardPrimaryButton').on('click', function(){
         Swal.fire({
@@ -106,23 +92,8 @@ $(document).ready(function(){
             }
         })
     });
-
-    alwaysCheck();
 });
-//changed required
-function showRequired(elements){
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].oninvalid = function(e) {
-            e.target.setCustomValidity("");
-            if (!e.target.validity.valid) {
-                e.target.setCustomValidity("Vui lòng điền vào ô trống");
-            }
-        };
-        elements[i].oninput = function(e) {
-            e.target.setCustomValidity("");
-        };
-    }
-};
+
 
 //delete checkbox
 function deleteCheckBox(){
@@ -151,65 +122,35 @@ function deleteCheckBox(){
             else{
                 toastr['error'](msg.message);
             }
+        },
+        error: function(error){
+            alert(error.message);
         }
     })
 };
 
-//show dialog
-function alwaysCheck(){
-    setInterval(function(){
-        const rows = $("#myTable").DataTable().rows({ 'search': 'applied' }).nodes();
-        const check_boxes = $('input[type="checkbox"]:checked', rows); 
-        const c = check_boxes.length;
-        if(c == 0){
-            showDialog(false);
-            return;
-        }
-        else{
-            showDialog(true);
-            $('#count_selected').html(c + ' selected');
-        }
-    }, 100);
+
+
+//Yajra Laravel
+function loadTables(){
+    $('#myTable').DataTable({
+        pageLength: 10,
+        processing: true,
+        serverSide: true,
+        "bSort": false,
+        "responsive": true,
+        ajax: {
+            url: "/admin/tag/getData",
+        },
+        columns : [
+            { data: 'cbox', name: 'cbox', 'className': 'animated-checkbox text-center' , orderable: false, 'searchable': false },   
+            { data: 'name', name: 'name', 'className': 'text-center', orderable: false },
+            { data: 'description', name: 'description', orderable: false},
+            { data: 'created_at', name: 'created_at', 'className': 'text-center', orderable: false }, 
+            { data: 'action', name: 'action', 'className': 'text-center' ,  orderable: false, 'searchable': false }
+        ]
+    });
 };
-
-function showDialog(isShow){
-    if(isShow){
-        $('#dialog-root').addClass('show-dialog');
-        $('#dialog-root').removeClass('hidden-dialog');
-        $('#dialog-root').removeClass('collapse');
-    }
-    else{
-        $('#dialog-root').removeClass('show-dialog');
-        $('#dialog-root').addClass('hidden-dialog');
-        $('#dialog-root').removeClass('collapse');
-    }
-};
-
-(function(){
-        //Yajra Laravel
-    function loadTables(){
-        $('#myTable').DataTable({
-            pageLength: 10,
-            processing: true,
-            serverSide: true,
-            "bSort": false,
-            "responsive": true,
-            ajax: {
-                url: "/admin/tag/getData",
-            },
-            columns : [
-                { data: 'cbox', name: 'cbox', 'className': 'animated-checkbox text-center' , orderable: false, 'searchable': false },   
-                { data: 'name', name: 'name', 'className': 'text-center', orderable: false },
-                { data: 'description', name: 'description', orderable: false},
-                { data: 'created_at', name: 'created_at', 'className': 'text-center', orderable: false }, 
-                { data: 'action', name: 'action', 'className': 'text-center' ,  orderable: false, 'searchable': false }
-            ]
-        });
-    };
-    
-    mainApp.loadTables = loadTables();
-
-})();
 
 //Reload tables  
 function reloadTables() {
@@ -233,16 +174,7 @@ function insertData(form_data){
             }
         },
         error: function(error){
-            if(error != null){
-                var errors = error.responseJSON;
-                if($.isEmptyObject(errors) === false){
-                    $.each(errors.errors, function(key, value){
-                        var errorId = "#" + key + "Error";
-                        $(errorId).text(value);
-                    })
-                }
-            }
-            alert(error.statusText);
+            showValidation(error);
         }
     })
 };
@@ -265,7 +197,7 @@ function updateData(form_data){
             }
         },
         error: function(error){
-            alert(error.statusText);
+            showValidation(error);
         }
     })
 };
@@ -291,9 +223,10 @@ function deleteData(id){
                     toastr['error'](msg.message);
                 }
             }).catch(error => {
-                console.log(error.message);
+                alert(error.message);
             })
         }
     })
 };
+
 

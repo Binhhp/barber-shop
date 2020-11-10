@@ -1,3 +1,4 @@
 composer update
 Create migration: php artisan migrate
-php artisan tinker => php artisan db:seed
+Refresh migration: php artisan migrate:refresh
+php artisan db:seed

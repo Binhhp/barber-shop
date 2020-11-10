@@ -24,8 +24,7 @@ class TimeRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required',
-            'barber_id' => 'required'
+            'date' => 'required'
         ];
     }
 }

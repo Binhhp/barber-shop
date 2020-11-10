@@ -28,7 +28,11 @@ class TagController extends Controller
         }
         return view('tag', ['user_name' => $name, 'user_role' => $role]); 
     }
-    //get yajra table
+    /**
+     * Display the specified resource.
+     * get yajra datable tag for ajax
+     * @return \Illuminate\Http\Response
+     */
     public function getData(Request $request)
     {
         if($request->ajax()){
@@ -56,15 +60,23 @@ class TagController extends Controller
         }
     }
 
-    //insert data
+    /**
+     * Display the specified resource.
+     * Insert tag
+     * @param TagRequest
+     * @return \Illuminate\Http\Response
+     */
     public function insert(TagRequest $request)
     {
         try{
             if($request->ajax()){
+
                 $data = Tag::where('name', '=', $request->name)->first();
+                
                 if(!is_null($data)){
                     return $this->respondWithError(ApiCode::ERROR_CREDENTIALS, 404);
                 }
+
                 Tag::create($request->getAttributes());
                 return $this->respondWithSuccess(ApiCode::NOTIFICATION_INSERT_SUCCESS);
             }
@@ -76,7 +88,12 @@ class TagController extends Controller
             return $this->respondRequest(ApiCode::ERROR_REQUEST);
         }
     }
-    //update data
+    /**
+     * Display the specified resource.
+     * Update tag
+     * @param TagRequest
+     * @return \Illuminate\Http\Response
+     */
     public function update(TagRequest $request)
     {
         if($request->ajax()){
@@ -95,6 +112,12 @@ class TagController extends Controller
         }
     }
 
+    /**
+     * Display the specified resource.
+     * Delete tag
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
     public function delete($id)
     {
        try{
@@ -112,11 +135,20 @@ class TagController extends Controller
        }
     }
 
+    /**
+     * Display the specified resource.
+     * Delete tag
+     * @param Request
+     * @return \Illuminate\Http\Response
+     */
     public function deleteAll(Request $request)
     {
         if($request->ajax()){
+
             $data = $request->json()->all();
+            
             if(is_array($data)){
+                
                 foreach($data as $key){
                     $record = Tag::where('name', $key)->firstOrFail();
                     if(!is_null($record)){
@@ -124,6 +156,7 @@ class TagController extends Controller
                     }
                 }
                 $msg = 'Xóa ' . count($data) . ' thành công!';
+                
                 return $this->respondWithMessage($msg);
             }
             else{
