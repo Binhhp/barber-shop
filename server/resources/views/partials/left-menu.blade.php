@@ -10,6 +10,7 @@
           @endguest
         </div>
       </div>
+      
       <ul class="app-menu">
         <li><a class="app-menu__item active index" href="{{ route('index') }}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Home</span></a></li>
         <li class="treeview blog"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Blog</span><i class="treeview-indicator fa fa-angle-right"></i></a>

@@ -110,7 +110,7 @@
                             <label for="maduan" class="col-sm-2 text-right"><strong>Description</strong><span style="color:red;">*</span></label>
                             <div class="col-md-9 text-left">
                                 <div style="height: 100px;" class="input-group validate-input">
-                                    <input type="text" class="form-control" placeholder="Description" name="description" id="description" required/>
+                                    <textarea type="text" class="form-control" placeholder="Description" name="description" id="description" required></textarea>
                                 </div>
                             </div>
                         </div>

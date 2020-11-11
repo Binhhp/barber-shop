@@ -8,6 +8,7 @@ use App\Http\Requests\TimeRequest;
 use App\Models\Appointment;
 use App\Models\Barber;
 use App\Models\Customer;
+use App\Models\Position;
 use App\Models\Service;
 use App\Models\Time;
 use App\Service\ApiCode;
@@ -143,23 +144,39 @@ class AppointmentController extends Controller
             $array = array();
             $times = Time::all();
 
+            $a = 1.00;
+
             foreach($times as $i){
-                $appointment = Appointment::where([
-                    'time_id' => $i->id,
-                    'date' => $request->date,
-                    'barber_id' => $request->barber_id
-                ])->get();
+                $appointment = Appointment::join('services', 'appointments.ser_id', '=', 'services.id')
+                    ->where([
+                        'time_id' => $i->id,
+                        'date' => $request->date,
+                        'barber_id' => $request->barber_id
+                    ])->select(['appointments.*', 'services.time'])->first();
 
                 $time = new times;
                 $time->id = $i->id;
                 $time->time = $i->h;
                 $time->time_des = $i->h_des;
 
-                if($appointment){
+                if(!is_null($appointment)){
+
+                    $sum = (float)$appointment->time + (float)$i->h;
+                    $a += $sum;
                     $time->type = true;
+
                 }
                 else{
-                    $time->type = false;
+                    $tim = (float)$i->h;
+                    if($tim <= $a){
+                        if($tim == $a){
+                            $a = 1.00;
+                        }
+                        $time->type = true;
+                    }
+                    else{
+                        $time->type = false;
+                    }
                 }
 
                 $array[] = $time;

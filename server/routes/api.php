@@ -38,4 +38,4 @@ Route::get('barbers', 'AppointmentController@show_barbers')->name('barbers');
 //register appointment
 Route::post('appointments', 'AppointmentController@register_appointment')->name('appointments');
 //show time
-Route::post('get-times', 'AppointmentController@show_times')->name('show_times');
+Route::get('get-times', 'AppointmentController@show_times')->name('show_times');

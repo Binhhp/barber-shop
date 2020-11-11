@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PositionSeeder::class);
         $this->call(BarberSeeder::class);
         $this->call(TimeSeeder::class);
+        $this->call(AppointmentSeeder::class);
 
     }
 }

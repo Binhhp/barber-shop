@@ -113,6 +113,9 @@
     <script src="{{ URL::to('js/plugins/pace.min.js') }}"></script>
     <!-- Select2 CDN JS-->
     <script src="{{ URL::to('js/select2.min.js') }}"></script>  
+    <!-- General JS -->
+    <script src="{{ URL::to('jsAdmin/general.js') }}"></script>
+    
     @stack('scripts')
     <!-- Page specific javascripts-->
     <script type="text/javascript" src="{{ URL::to('js/plugins/chart.js') }}"></script>
