@@ -1,20 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import TimeItem from './TimeItem';
+import './styles.scss';
+import Slider from 'react-slick';
 
-const setting = {
-  className: 'center',
-  centerMode: true,
-  infinite: true,
-  centerPadding: '60px',
-  slidesToShow: 1,
-  speed: 500,
+const settings = {
+  className: "center",
+  infinite: false,
+  centerPadding: "60px",
+  slidesToShow: 5,
   rows: 4,
-  slidesPerRow: 5,
+
+  swipeToSlide: true,
+  afterChange: function (index) {
+    console.log(
+      `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
+    );
+  }
 };
+
 const AppointmentTime = ({ listTime }) => {
+  const gridTime = useSelector((state) => state.appointment.gridTime);
+  // useEffect(() => {
+  //   effect
+
+  // }, [gridTime])
   return (
-    <Slider {...setting}>
-      {listTime?.map((item) => (
+    <Slider {...settings}>
+      {gridTime?.map((item) => (
         <TimeItem item={item} />
       ))}
     </Slider>
