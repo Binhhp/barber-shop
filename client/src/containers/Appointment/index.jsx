@@ -1,37 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import Header from '../../components/Header';
 import avatar from '../../assets/img/team/1.png';
 import checkYellow from '../../assets/img/checkYellow.svg';
 import './styles.scss';
-import AppointmentDay from './AppointmentDay';
-
+import AppointmentDay from './components/AppointmentDay';
+import { fetchBarber } from './action';
+import { useDispatch, useSelector } from 'react-redux';
+import SlideBarber from './components/SlideBarber';
 const Appointment = (props) => {
   const [dateAppointment, setDateAppointment] = useState();
-  const settings = {
-    className: 'center',
-    infinite: true,
-    centerPadding: '60px',
-    slidesToShow: 5,
-    swipeToSlide: true,
-    afterChange: function (index) {
-      console.log(
-        `Slider Changed to: ${index + 1}, background: #222; color: #bada55`,
-      );
-    },
-  };
-  const settinngAppoinment = {
-    className: 'center',
-    centerMode: true,
-    infinite: true,
-    centerPadding: '60px',
-    slidesToShow: 1,
-    speed: 500,
-    rows: 4,
-    slidesPerRow: 5,
-  };
 
+  const barbers = useSelector((state) => state.appointment.barbers);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!barbers) {
+      dispatch(fetchBarber());
+    }
+  }, [barbers]);
   return (
     <React.Fragment>
       <Header isHome={false} title='Make Appointment' />
@@ -40,341 +27,57 @@ const Appointment = (props) => {
         <div className='container'>
           <div className='d-none d-sm-block mb-5 pb-4'></div>
           <div className='row'>
-            <div className='col-lg-8'>
+            <div className='col-12 text-center'>
+              <h2 className='contact-title'>Appointment Information</h2>
+            </div>
+            <div className='col-lg-8 mx-auto'>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
                 }}>
                 <AppointmentDay setDateAppointment={setDateAppointment} />
                 <div class='form-group'>
-                  <h4 className='title-steps'>2. Chọn stylist</h4>
+                  <h4 className='title-steps'>2. Stylists</h4>
                   <div className='row px-5'>
                     <div className='slide'>
-                      <Slider {...settings}>
-                        <div>
-                          <div className='stylist-item'>
-                            <input
-                              className='check-stylist'
-                              type='radio'
-                              name='stylist'
-                              id='stylist1'
-                              defaultValue='option1'
-                              defaultChecked
-                            />
-                            <label
-                              className='form-check-label'
-                              htmlFor='stylist1'>
-                              <img className='avatar' src={avatar} alt='' />
-                              <img className='check' src={checkYellow} alt='' />
-                            </label>
-                            <p className='name'>Trọng khoa</p>
-                          </div>
-                        </div>
-                        <div>
-                          <div className='stylist-item'>
-                            <input
-                              className='check-stylist'
-                              type='radio'
-                              name='stylist'
-                              id='stylist2'
-                              defaultValue='option1'
-                            />
-                            <label
-                              className='form-check-label'
-                              htmlFor='stylist2'>
-                              <img className='avatar' src={avatar} alt='' />{' '}
-                              <img className='check' src={checkYellow} alt='' />
-                            </label>
-                            <p className='name'>Trọng khoa</p>
-                          </div>
-                        </div>
-                        <div>
-                          <div className='stylist-item'>
-                            <input
-                              className='check-stylist'
-                              type='radio'
-                              name='stylist'
-                              id='stylist3'
-                              defaultValue='option1'
-                            />
-                            <label
-                              className='form-check-label'
-                              htmlFor='stylist3'>
-                              <img className='avatar' src={avatar} alt='' />
-                              <img className='check' src={checkYellow} alt='' />
-                            </label>
-                            <p className='name'>Trọng khoa</p>
-                          </div>
-                        </div>
-                        <div>
-                          <div className='stylist-item'>
-                            <input
-                              className='check-stylist'
-                              type='radio'
-                              name='stylist'
-                              id='stylist3'
-                              defaultValue='option1'
-                            />
-                            <label
-                              className='form-check-label'
-                              htmlFor='stylist3'>
-                              <img className='avatar' src={avatar} alt='' />
-                              <img className='check' src={checkYellow} alt='' />
-                            </label>
-                            <p className='name'>Trọng khoa</p>
-                          </div>
-                        </div>
-                        <div>
-                          <div className='stylist-item'>
-                            <input
-                              className='check-stylist'
-                              type='radio'
-                              name='stylist'
-                              id='stylist3'
-                              defaultValue='option1'
-                            />
-                            <label
-                              className='form-check-label'
-                              htmlFor='stylist3'>
-                              <img className='avatar' src={avatar} alt='' />
-                              <img className='check' src={checkYellow} alt='' />
-                            </label>
-                            <p className='name'>Trọng khoa</p>
-                          </div>
-                        </div>
-                        <div>
-                          <div className='stylist-item'>
-                            <input
-                              className='check-stylist'
-                              type='radio'
-                              name='stylist'
-                              id='stylist3'
-                              defaultValue='option1'
-                            />
-                            <label
-                              className='form-check-label'
-                              htmlFor='stylist3'>
-                              <img className='avatar' src={avatar} alt='' />
-                              <img className='check' src={checkYellow} alt='' />
-                            </label>
-                            <p className='name'>Trọng khoa</p>
-                          </div>
-                        </div>
-                        <div>
-                          <div className='stylist-item'>
-                            <input
-                              className='check-stylist'
-                              type='radio'
-                              name='stylist'
-                              id='stylist3'
-                              defaultValue='option1'
-                            />
-                            <label
-                              className='form-check-label'
-                              htmlFor='stylist3'>
-                              <img className='avatar' src={avatar} alt='' />
-                              <img className='check' src={checkYellow} alt='' />
-                            </label>
-                            <p className='name'>Trọng khoa</p>
-                          </div>
-                        </div>
-                      </Slider>
+                      <SlideBarber barbers={barbers} />
                     </div>
                   </div>
                 </div>
-
                 <div class='form-group time-hour'>
-                  <h4 className='title-steps'>3. Chọn giờ cắt</h4>
-
+                  <h4 className='title-steps'>3. Time</h4>
                   <div className='row'>
                     <div className='col-lg-12'>
                       <div className='row px-4'>
                         <div className='col'>
                           <div className='box'>
                             <div className='square unavailable'></div>
-                            Hết chỗ
+                            Unavailable
                           </div>
                         </div>
                         <div className='col'>
                           <div className='box'>
                             <div className='square available'></div>
-                            Còn chỗ
+                            Available
                           </div>
                         </div>
                         <div className='col'>
                           <div className='box'>
                             <div className='square active'></div>
-                            Đang chọn
+                            Actived
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className='col-lg-12'>
-                      <div className='appointment'>
-                        <Slider {...settinngAppoinment}>
-                          <div className='appointment-time'>
-                            <button className='active'>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button className='unavailable'>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button className='available'>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button className='unavailable'>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                          <div className='appointment-time'>
-                            <button>8h00</button>
-                          </div>
-                        </Slider>
-                      </div>
+                      <div className='appointment'></div>
                     </div>
                   </div>
                 </div>
-                {/* <button type='submit' onclick={(e) => e.preventDefault()}>
-                  submit
-                </button> */}
+                <div class='form-group service'>
+                  <h4 className='title-steps'>4. Services</h4>
+                </div>
               </form>
-            </div>
-            {/* <div className="col-lg-1"></div> */}
-            <div className='col-lg-4'>
-              <h4>Thông tin người dùng</h4>
-              <div className='form-group'>
-                {/* <label for="">Họ tên</label> */}
-                <input
-                  type='text'
-                  className='form-control'
-                  name=''
-                  id=''
-                  aria-describedby='helpId'
-                  placeholder=''
-                />
-              </div>
-              <div className='form-group'>
-                {/* <label for="">Email</label> */}
-                <input
-                  type='text'
-                  className='form-control'
-                  name=''
-                  id=''
-                  aria-describedby='helpId'
-                  placeholder=''
-                />
-              </div>
-              <div className='form-group'>
-                {/* <label for="">Phone</label> */}
-                <input
-                  type='text'
-                  className='form-control'
-                  name=''
-                  id=''
-                  aria-describedby='helpId'
-                  placeholder=''
-                />
-              </div>
             </div>
           </div>
         </div>

@@ -16,13 +16,13 @@ const AppointmentDay = ({ setDateAppointment }) => {
   };
   return (
     <div class='form-group'>
-      <h4 className='title-steps'>1. Chọn thời gian</h4>
+      <h4 className='title-steps'>1. Date</h4>
       <div className='row'>
         <div className='col text-center'>
           <button
             className={selectedDate === 1 ? 'time-item active' : 'time-item'}
             onClick={() => changeDate(today.format('YYYY/MM/DD'), 1)}>
-            Hôm nay&nbsp;
+            Today&nbsp;
             <Moment date={today} format='DD/MM' />
           </button>
         </div>
@@ -30,7 +30,7 @@ const AppointmentDay = ({ setDateAppointment }) => {
           <button
             className={selectedDate === 2 ? 'time-item active' : 'time-item'}
             onClick={() => changeDate(tomorrow.format('YYYY/MM/DD'), 2)}>
-            Hôm mai&nbsp;
+            Tomorrow&nbsp;
             <Moment date={tomorrow} format='DD/MM' />
           </button>
         </div>
@@ -38,10 +38,11 @@ const AppointmentDay = ({ setDateAppointment }) => {
           <button
             className={selectedDate === 3 ? 'time-item active' : 'time-item'}
             onClick={() => changeDate(nextTomorrow.format('YYYY/MM/DD'), 3)}>
-            Hôm kia&nbsp;
+            Next days&nbsp;
             <Moment date={nextTomorrow} format='DD/MM' />
           </button>
         </div>
+        <div className='offset-1'></div>
       </div>
     </div>
   );

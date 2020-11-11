@@ -5,7 +5,6 @@ import ServiceItem from './ServiceItem';
 import './styles.scss';
 import { useEffect } from 'react';
 const ServiceArea = ({ services }) => {
-
   return (
     <>
       {/* about_area_end */}
@@ -21,13 +20,14 @@ const ServiceArea = ({ services }) => {
           </div>
           <div className='white_bg_pos'>
             <div className='row'>
-              <div className='col-xl-6'>
-                {console.log(Array.from(services),services,'servicesservices')}
-                {services && Array.from(services).map(item => console.log(item,'hheeheh'))}
-              </div>
+              {/* {console.log(Array.from(services),services,'servicesservices')} */}
+              {services && services.map((item) => <ServiceItem item={item} />)}
+
               <div className='col-xl-12'>
                 <div className='book_btn text-center'>
-                  <Link className='boxed-btn3 popup-with-form' to='/appointment'>
+                  <Link
+                    className='boxed-btn3 popup-with-form'
+                    to='/appointment'>
                     Make an Appointment
                   </Link>
                 </div>
@@ -41,7 +41,7 @@ const ServiceArea = ({ services }) => {
 };
 
 ServiceArea.propTypes = {
-  services: PropTypes.array.isRequired
-}
+  services: PropTypes.array.isRequired,
+};
 
 export default ServiceArea;
