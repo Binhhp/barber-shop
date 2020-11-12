@@ -20,6 +20,7 @@ class CreateAppointmentsTable extends Migration
             $table->integer('ser_id');
             $table->integer('barber_id');
             $table->integer('cus_id');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

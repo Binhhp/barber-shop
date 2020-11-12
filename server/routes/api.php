@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -39,3 +40,7 @@ Route::get('barbers', 'AppointmentController@show_barbers')->name('barbers');
 Route::post('appointments', 'AppointmentController@register_appointment')->name('appointments');
 //show time
 Route::get('get-times', 'AppointmentController@show_times')->name('show_times');
+//check status appointment
+Route::get('complete-appointment/{id}', 'AppointmentController@check_status_appointments')->name('check_status_appointments');
+//check number
+Route::get('check-phone/{phone_number}', 'AppointmentController@check_appointment')->name('check-phone');
