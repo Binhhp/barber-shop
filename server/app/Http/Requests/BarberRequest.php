@@ -33,6 +33,7 @@ class BarberRequest extends FormRequest
             'phone' => 'required',
             'address' => 'required',
             'email' => 'required|email',
+            'position' => 'required',
             
         ];
     }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Barber extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'phone_number', 'address', 'email', 'pos_id'];
+    protected $fillable = ['name', 'phone_number', 'address', 'email', 'imgPath', 'imgName'];
     public function positions()
     {
         return $this->belongsTo(Position::class);

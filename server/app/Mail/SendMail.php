@@ -3,6 +3,7 @@ namespace App\Mail;
 
 use Exception;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 trait SendMail
 {
@@ -10,8 +11,8 @@ trait SendMail
     public function send_mail($mail)
     {
         try{
-            $temp = file_get_contents(base_path('public\mail\send_mail.html'));
-            
+            // $temp = file_get_contents(base_path('public\mail\send_mail.html'));
+                $temp = Http::get('https://firebasestorage.googleapis.com/v0/b/barber-store-cadce.appspot.com/o/mail.txt?alt=media&token=365a824e-37ca-4502-9c7a-cf46f2bbeea2');
                 $search = [
                     '{{ name }}', 
                     '{{ phone_number }}', 
