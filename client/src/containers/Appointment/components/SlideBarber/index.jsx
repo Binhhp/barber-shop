@@ -1,25 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Slider from 'react-slick';
 import BarberItem from './BarberItem';
+import Slider from "react-slick"; 
 import './styles.scss';
 const settings = {
-  className: 'center',
-  infinite: true,
-  centerPadding: '60px',
-  slidesToShow: 5,
-  swipeToSlide: true,
-  afterChange: function (index) {
-    console.log(
-      `Slider Changed to: ${index + 1}, background: #222; color: #bada55`,
-    );
-  },
+  // dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToScroll: 4,
+  slidesToShow: 4
 };
 const SlideBarber = ({ barbers }) => {
   return (
-    <Slider {...settings}>
+    <Slider {...settings}
+      >
       {barbers?.map((item) => (
-        <BarberItem item={item} />
+          <BarberItem key={item.id} item={item} />
       ))}
     </Slider>
   );

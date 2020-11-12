@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ServiceItem = ({ item: { name, imgPath, id, description, price } }) => {
-  console.log({ name, imgPath, id, description, price });
+  // console.log({ name, imgPath, id, description, price });
   return (
     <div className='col-xl-6'>
       <div className='single_service d-flex justify-content-between align-items-center'>

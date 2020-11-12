@@ -9,9 +9,10 @@ import AppointmentDay from './components/AppointmentDay';
 import { fetchBarber } from './action';
 import { useDispatch, useSelector } from 'react-redux';
 import SlideBarber from './components/SlideBarber';
+import AppointmentTime from './components/AppointmentTime';
+import ServiceAppointment from './components/ServiceAppointment';
+import InfoUser from './components/InfoUser';
 const Appointment = (props) => {
-  const [dateAppointment, setDateAppointment] = useState();
-
   const barbers = useSelector((state) => state.appointment.barbers);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -35,7 +36,7 @@ const Appointment = (props) => {
                 onSubmit={(e) => {
                   e.preventDefault();
                 }}>
-                <AppointmentDay setDateAppointment={setDateAppointment} />
+                <AppointmentDay />
                 <div class='form-group'>
                   <h4 className='title-steps'>2. Stylists</h4>
                   <div className='row px-5'>
@@ -70,12 +71,21 @@ const Appointment = (props) => {
                       </div>
                     </div>
                     <div className='col-lg-12'>
-                      <div className='appointment'></div>
+                      <div className='appointment'>
+                        <AppointmentTime />
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class='form-group service'>
-                  <h4 className='title-steps'>4. Services</h4>
+                <ServiceAppointment />
+                <div class='form-group'>
+                  <InfoUser />
+                </div>
+                <br />
+                <div className='col-xl-12'>
+                  <button type='submit' className='boxed-btn3 w-100'>
+                    Submit
+                  </button>
                 </div>
               </form>
             </div>

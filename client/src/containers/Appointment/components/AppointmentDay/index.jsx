@@ -3,17 +3,20 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Moment from 'react-moment';
 import './styles.scss';
-const AppointmentDay = ({ setDateAppointment }) => {
+import { SET_DATE_APPOINTMENT } from '../../constants';
+import { useDispatch } from 'react-redux';
+const AppointmentDay = () => {
+  const dispatch = useDispatch();
   const [selectedDate, setSelectedDate] = useState(1);
   const today = moment();
   const tomorrow = moment().add(1, 'd');
   const nextTomorrow = moment().add(2, 'd');
 
   const changeDate = (date, num) => {
-    setDateAppointment(date);
-    console.log(date);
+    dispatch({ type: SET_DATE_APPOINTMENT, payload: date });
     setSelectedDate(num);
   };
+  
   return (
     <div class='form-group'>
       <h4 className='title-steps'>1. Date</h4>
@@ -48,8 +51,8 @@ const AppointmentDay = ({ setDateAppointment }) => {
   );
 };
 
-AppointmentDay.propTypes = {
-  setDateAppointment: PropTypes.func,
-};
+// AppointmentDay.propTypes = {
+//   setDateAppointment: PropTypes.func,
+// };
 
 export default AppointmentDay;

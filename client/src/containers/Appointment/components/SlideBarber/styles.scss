@@ -6,15 +6,19 @@
     // text-align: center;
     // margin: 0 auto;
   }
+
   input {
     display: none;
+    visibility: hidden;
   }
+
   .avatar {
     height: 100px;
     width: 100px;
     object-fit: cover;
     border-radius: 50%;
   }
+
   .check {
     position: absolute;
     bottom: 5px;
@@ -35,4 +39,10 @@
       }
     }
   }
+}
+
+.slide {
+  // .swiper-slide {
+  //   width: auto;
+  // }
 }
