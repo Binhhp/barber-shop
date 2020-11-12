@@ -6,6 +6,7 @@ const AboutPage = React.lazy(() => import('./AboutPage'));
 const ContactPage = React.lazy(() => import('./ContactPage'));
 const BlogRoutes = React.lazy(() => import('./BlogPage/routes'));
 const AppointmentPage = React.lazy(() => import('./Appointment'));
+const HistoryAppointmentPage = React.lazy(() => import('./HistoryAppointment'));
 function routes() {
   return (
     <Switch>
@@ -14,6 +15,7 @@ function routes() {
       <Route exact path='/contact' component={ContactPage} />
       <Route exact path='/blog' component={BlogRoutes} />
       <Route exact path='/appointment' component={AppointmentPage} />
+      <Route exact path='/history' component={HistoryAppointmentPage} />
     </Switch>
   );
 }

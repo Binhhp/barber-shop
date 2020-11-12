@@ -5,6 +5,8 @@ import Header from '../../components/Header';
 import avatar from '../../assets/img/team/1.png';
 import checkYellow from '../../assets/img/checkYellow.svg';
 import './styles.scss';
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2';
 import AppointmentDay from './components/AppointmentDay';
 import { fetchBarber } from './action';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,10 +36,10 @@ const Appointment = (props) => {
       barber_id: appointment.barberId,
     };
     try {
-      console.log(data);
       const res = await makeAppointment(data);
-      console.log(res, '123123');
-      console.log(JSON.stringify(data));
+      if (res.success) {
+        Swal.fire('Success!', 'Your appointment has been accept.', 'success');
+      }
     } catch (error) {
       // console.log(error);
     }

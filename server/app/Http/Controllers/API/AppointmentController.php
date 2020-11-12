@@ -144,7 +144,7 @@ class AppointmentController extends Controller
                 'barber' => $barber->name,
                 'address' => '99 Nguyễn Chí Thanh, Láng Thượng, Đống Đa, Hà Nội',
             );
-
+            
             $response = $this->send_mail($email);
             if($response == true){
                 return $this->respondAll($email, "Đăng kí lịch hẹn thành công!");

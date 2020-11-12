@@ -2,12 +2,15 @@ import React from 'react';
 import Logo from '../../assets/img/logo.png';
 import Barber_text from '../../assets/img/banner/barber_text.png';
 import PropTypes from 'prop-types';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import api from '../../api/axiosClient';
 // ES6 Modules or TypeScript
 import Swal from 'sweetalert2';
 import './styles.scss';
+import { useDispatch } from 'react-redux';
 const Header = ({ isHome, title }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const checkAppointment = () => {
     Swal.fire({
       title: 'Submit your phone number',
@@ -20,27 +23,22 @@ const Header = ({ isHome, title }) => {
       showLoaderOnConfirm: true,
       preConfirm: (phone) => {
         return api
-          .get(`check-phone/${phone}`)
+          .get(`/check-phone/${phone}`)
           .then((response) => {
             console.log(response);
-            // if (!response.ok) {
-            //   throw new Error(response.statusText);
-            // }
-            // return response.json();
+            if (response.success) {
+              dispatch({ type: 'HISTORY_APPOINTMENT', payload: response.data });
+              history.push('/history');
+            } else {
+              Swal.showValidationMessage(`Your appointment not exists`);
+            }
           })
           .catch((error) => {
             Swal.showValidationMessage(`Request failed: ${error}`);
           });
       },
       allowOutsideClick: () => !Swal.isLoading(),
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: `${result.value.login}'s avatar`,
-          imageUrl: result.value.avatar_url,
-        });
-      }
-    });
+    }).then((result) => {});
   };
   return (
     <React.Fragment>
@@ -83,16 +81,16 @@ const Header = ({ isHome, title }) => {
                             </NavLink>
                           </li>
                           <li>
-                            <NavLink activeClassName='active' to='/contact'>
-                              Contact
-                            </NavLink>
-                          </li>
-                          <li>
                             <a
                               onClick={checkAppointment}
                               href='javascript:void(0)'>
                               Check Appointment
                             </a>
+                          </li>
+                          <li>
+                            <NavLink activeClassName='active' to='/contact'>
+                              Contact
+                            </NavLink>
                           </li>
                         </ul>
                       </nav>
