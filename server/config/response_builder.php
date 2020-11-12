@@ -40,6 +40,7 @@ return [
         ApiCode::SUCCESS_APPOINTMENT => 'api.success_appointment',
         ApiCode::ERROR_APPOINTMENT => 'api.error_appointment',
         ApiCode::ERROR_IS_CREDENTIALS => 'api.error_is_credentials',
+        ApiCode::ERROR_CHECK_APPOINTMENT => 'api.error_check_appointment',
     ],
 
    

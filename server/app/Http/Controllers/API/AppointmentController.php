@@ -195,7 +195,7 @@ class AppointmentController extends Controller
                     return $this->respond($array);       
                 }
                 else{
-                    return $this->respond($data);
+                    return $this->respondWithError(ApiCode::ERROR_CHECK_APPOINTMENT, 502);
                 }
             }
             else{
