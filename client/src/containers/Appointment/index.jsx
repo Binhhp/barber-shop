@@ -12,14 +12,39 @@ import SlideBarber from './components/SlideBarber';
 import AppointmentTime from './components/AppointmentTime';
 import ServiceAppointment from './components/ServiceAppointment';
 import InfoUser from './components/InfoUser';
+import { makeAppointment } from './services';
 const Appointment = (props) => {
   const barbers = useSelector((state) => state.appointment.barbers);
+  const appointment = useSelector((state) => state.appointment);
+  const [objAppointment, setObjAppointment] = useState({});
   const dispatch = useDispatch();
   useEffect(() => {
     if (!barbers) {
       dispatch(fetchBarber());
     }
   }, [barbers]);
+
+  const onHandleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      ...objAppointment,
+      date: appointment.date,
+      ser_id: appointment.serviceId,
+      time_id: appointment.time,
+      barber_id: appointment.barberId,
+    };
+    try {
+      console.log(data);
+      const res = await makeAppointment(data);
+      console.log(res, '123123');
+      console.log(JSON.stringify(data));
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+  const getInfoUser = (e) => {
+    setObjAppointment({ ...objAppointment, ...e });
+  };
   return (
     <React.Fragment>
       <Header isHome={false} title='Make Appointment' />
@@ -32,10 +57,7 @@ const Appointment = (props) => {
               <h2 className='contact-title'>Appointment Information</h2>
             </div>
             <div className='col-lg-8 mx-auto'>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                }}>
+              <form onSubmit={(e) => onHandleSubmit(e)}>
                 <AppointmentDay />
                 <div class='form-group'>
                   <h4 className='title-steps'>2. Stylists</h4>
@@ -79,7 +101,7 @@ const Appointment = (props) => {
                 </div>
                 <ServiceAppointment />
                 <div class='form-group'>
-                  <InfoUser />
+                  <InfoUser setObjAppointment={(e) => setObjAppointment(e)} />
                 </div>
                 <br />
                 <div className='col-xl-12'>

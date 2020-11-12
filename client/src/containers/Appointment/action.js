@@ -1,4 +1,4 @@
-import { getBarbers,getTimeAppointment } from './services';
+import { getBarbers, getTimeAppointment, postAppointment } from './services';
 import * as constants from './constants';
 export const fetchBarber = () => async (dispatch) => {
   try {
@@ -11,7 +11,7 @@ export const fetchBarber = () => async (dispatch) => {
   }
 };
 
-export const fetchTimeAppointment = (date, barberId) =>  async (dispatch)=>{
+export const fetchTimeAppointment = (date, barberId) => async (dispatch) => {
   try {
     const res = await getTimeAppointment(date, barberId);
     if (res.success) {
@@ -21,3 +21,14 @@ export const fetchTimeAppointment = (date, barberId) =>  async (dispatch)=>{
     console.log(error);
   }
 }
+
+// export const makeAppointment = (data) => async (dispatch) => {
+//   try {
+//     const res = await postAppointment(data);
+//     if (res.success) {
+//       dispatch({ type: constants.FETCH_TIME_APPOINTMENT, payload: res.data });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
