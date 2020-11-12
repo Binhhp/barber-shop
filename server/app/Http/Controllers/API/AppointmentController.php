@@ -173,26 +173,24 @@ class AppointmentController extends Controller
                                         'appointments.status' => true,
                                         'customers.phone_number' => $phone_number
                                     ])
-                                    ->orderBy('appointments.date', 'ASC')
-                                    ->get(['appointments.*', 'customers.*']);
+                                    ->orderBy('appointments.date', 'DESC')
+                                    ->get(['appointments.*', 'customers.name', 'customers.phone_number', 'customers.email']);
                 
                 if(count($data) > 0){
                     $array = array();
                     foreach($data as $item){
-                        $date = date('Y/m/d', strtotime($item['date']));
-                        if($date >= date("Y/m/d")){
-                            $app = new AppointmentHttpRequest();
-                            $app->id = $item['id'];
-                            $app->date = $item['date'];
-                            $app->time = Time::find($item['time_id'])->h_des;
-                            $app->service = Service::find($item['ser_id'])->name;
-                            $app->barber = Barber::find($item['barber_id'])->name;
-                            $app->name = $item['name'];
-                            $app->phone_number = $item['phone_number'];
-                            $app->email = $item['email'];
+
+                        $app = new AppointmentHttpRequest();
+                        $app->id = $item['id'];
+                        $app->date = $item['date'];
+                        $app->time = Time::find($item['time_id'])->h_des;
+                        $app->service = Service::find($item['ser_id'])->name;
+                        $app->barber = Barber::find($item['barber_id'])->name;
+                        $app->name = $item['name'];
+                        $app->phone_number = $item['phone_number'];
+                        $app->email = $item['email'];
                             
-                            $array[] = $app;
-                        }
+                        $array[] = $app;
                     }
                     return $this->respond($array);       
                 }
@@ -221,7 +219,7 @@ class AppointmentController extends Controller
             $array = array();
             $times = Time::all();
 
-            $a = 1.00;
+            $a = 0.00;
 
             foreach($times as $i){
                 $appointment = Appointment::join('services', 'appointments.ser_id', '=', 'services.id')
@@ -248,7 +246,7 @@ class AppointmentController extends Controller
                     $tim = (float)$i->h;
                     if($tim <= $a){
                         if($tim == $a){
-                            $a = 1.00;
+                            $a = 0.00;
                         }
                         $time->type = true;
                     }
