@@ -20,6 +20,7 @@ class AppointmentSeeder extends Seeder
         $appointment->ser_id = 2;
         $appointment->barber_id = 1;
         $appointment->cus_id = 1;
+        $appointment->status = 1;
         $appointment->save();
 
         $appointment = new Appointment();
@@ -28,6 +29,7 @@ class AppointmentSeeder extends Seeder
         $appointment->ser_id = 6;
         $appointment->barber_id = 1;
         $appointment->cus_id = 1;
+        $appointment->status = 1;
         $appointment->save();
 
         $appointment = new Appointment();
@@ -36,6 +38,7 @@ class AppointmentSeeder extends Seeder
         $appointment->ser_id = 6;
         $appointment->barber_id = 1;
         $appointment->cus_id = 1;
+        $appointment->status = 1;
         $appointment->save();
     }
 }

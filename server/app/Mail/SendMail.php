@@ -19,7 +19,8 @@ trait SendMail
                     '{{ date }}', 
                     '{{ service }}',
                     '{{ barber }}', 
-                    '{{ address }}'
+                    '{{ address }}',
+                    '{{ url }}',
                 ];
                 $replace = [ 
                     $mail['name'], 
@@ -28,7 +29,8 @@ trait SendMail
                     $mail['date'], 
                     $mail['service'], 
                     $mail['barber'], 
-                    $mail['address'] 
+                    $mail['address'],
+                    $mail['url'],
                 ];
 
                 $result = str_replace($search, $replace, $temp);
