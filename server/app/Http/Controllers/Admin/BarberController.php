@@ -51,7 +51,7 @@ class BarberController extends Controller
                         $button = '<a href="javascript:void(0);" data-toggle="modal" data-target="#myModal"
                         data-id="'.$data->id.'" data-name="'.$data->name.'" data-phone="'.$data->phone_number.'" 
                         data-address="'.$data->address.'" data-path="'.$data->imgPath.'" data-file="'.$data->imgName.'"
-                        data-pos="'.$data->name_pos.'" data-action="edit" name="edit" 
+                        data-pos="'.$data->pos_id.'" data-email="'.$data->email.'"  data-action="edit" name="edit" 
                         class="edit btn btn-primary btn-sm">Edit</a>';
 
                         $button .= '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteData(this)" data-id="'.$data->id.'"
@@ -63,37 +63,41 @@ class BarberController extends Controller
         }
     }
 
+    public function insert(BarberRequest $request)
+    {
+        # code...
+        if($request->ajax()){
+            echo('0');
+        }
+    }
     /**
      * Display a listing of the resource.
-     * Insert blog
-     * @param BlogRequest
+     * Insert data
+     * @param BarberRequest
      * @return \Illuminate\Http\Response
      */
-    public function insert(BarberRequest $request)
+    public function insertData(BarberRequest $request)
     {
         try{
             if($request->ajax()){
-                $cate = Barber::find($request->cate_id);
-                if(!is_null($cate)){
-                    $check_blog = Barber::where('title', '=', $request->title)->first();
+                $position = Position::find($request->position);
+                if(!is_null($position)){
+                    $check_barber = Barber::where('email', '=', $request->email)->first();
                     
-                    if(!is_null($check_blog)){
+                    if(!is_null($check_barber)){
                         return $this->respondWithError(ApiCode::ERROR_CREDENTIALS, 404);
                     }
 
-                    $blog = new Barber([
-                        'title' => $request->title,
-                        'description' => $request->description,
-                        'content' => $request->contentEd,
+                    $barber = new Barber([
+                        'name' => $request->name,
+                        'phone_number' => $request->phone,
+                        'address' => $request->address,
                         'imgPath' => $request->imgPath,
                         'imgName' => $request->fileName,
-                        'view' => 0,
-                        'like' => 0,
-                        'status' => $request->status
+                        'email' => $request->email,
                     ]);
 
-                    $cate->blogs()->save($blog);
-                    $blog->tags()->attach($request->tags === null ? [] : $request->tags);
+                    $position->barbers()->save($barber);
 
                     return $this->respondWithSuccess(ApiCode::NOTIFICATION_INSERT_SUCCESS);
                 }

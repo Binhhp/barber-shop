@@ -1,17 +1,19 @@
 
 $(document).ready(function(){
 
-    $(".index").removeClass('active');
-    $('.store').addClass('is-expanded').removeClass('store');
-    $('.barber').addClass('active').removeClass('barber');
-    //csrf token get ajax
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
+    changeClass('index', 'store', 'barber');
+    //setting csrf token ajax
+    settingAjax();
+    //Show required element
+    showAllRequiredElement();
+    //load table
     loadTables();
+    //show dialog element
+    showAllDialogElement();
+    //set always dialog
+    alwaysCheck();
+
+
      // Your web app's Firebase configuration
    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
    var firebaseConfig = {
@@ -26,14 +28,6 @@ $(document).ready(function(){
     };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-
-    //Hide loading
-    $('#ftco-loader').removeClass('show');
-    //required html5
-    var elements = document.getElementsByTagName("INPUT");
-    var elementsArea = document.getElementsByTagName("textarea");
-    showRequired(elements);
-    showRequired(elementsArea);
             
     //Get update tag by id
     $('#myModal').on('show.bs.modal', function(e){
@@ -76,42 +70,6 @@ $(document).ready(function(){
             await eventAdd();
         }
     });
-
-    //Toastr notification
-    toastr.options = {
-        "closeButton": true,
-    };
-    //All checkbox
-    $(".checkAll").on('click', function () {
-        var rows = $("#myTable").DataTable().rows({ 'search': 'applied' }).nodes();
-        var check_box = $('input[type="checkbox"]', rows); 
-        check_box.prop('checked', this.checked);
-    });
-    //check all
-    $('#actionDialogCardSecondaryButton').on('click', function(){
-        showDialog(false);
-        const rows = $("#myTable").DataTable().rows({ 'search': 'applied' }).nodes();
-        const check_boxes = $('input[type="checkbox"]:checked', rows); 
-        check_boxes.prop('checked', false);
-    });
-    //delete checkbox all
-    $('#actionDialogCardPrimaryButton').on('click', function(){
-        Swal.fire({
-            title: "Bạn có muốn xóa không?",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            cancelButtonText: "Thoát",
-            confirmButtonText: "Xóa",
-        }).then(result => {
-            if(result.value){
-                deleteCheckBox();
-            }
-        })
-    });
-
-    alwaysCheck();
 
     $("#file").change(function(){
         readURL(this);
@@ -189,20 +147,6 @@ function showAdd(){
     $('#img').attr('data-file', "");
 };
 
-//changed required
-function showRequired(elements){
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].oninvalid = function(e) {
-            e.target.setCustomValidity("");
-            if (!e.target.validity.valid) {
-                e.target.setCustomValidity("Vui lòng điền vào ô trống");
-            }
-        };
-        elements[i].oninput = function(e) {
-            e.target.setCustomValidity("");
-        };
-    }
-};
 
 async function eventAdd(){
     if($('#file').val() === ""){
@@ -219,36 +163,6 @@ async function eventAdd(){
                       $.param({ 'imgPath': imgPath}) + '&' + 
                       $("#form-input").serialize();
     insertData(form_data);
-};
-
-//show dialog
-function alwaysCheck(){
-    setInterval(function(){
-        const rows = $("#myTable").DataTable().rows({ 'search': 'applied' }).nodes();
-        const check_boxes = $('input[type="checkbox"]:checked', rows); 
-        const c = check_boxes.length;
-        if(c == 0){
-            showDialog(false);
-            return;
-        }
-        else{
-            showDialog(true);
-            $('#count_selected').html(c + ' selected');
-        }
-    }, 100);
-};
-
-function showDialog(isShow){
-    if(isShow){
-        $('#dialog-root').addClass('show-dialog');
-        $('#dialog-root').removeClass('hidden-dialog');
-        $('#dialog-root').removeClass('collapse');
-    }
-    else{
-        $('#dialog-root').removeClass('show-dialog');
-        $('#dialog-root').addClass('hidden-dialog');
-        $('#dialog-root').removeClass('collapse');
-    }
 };
 
 //Yajra Laravel

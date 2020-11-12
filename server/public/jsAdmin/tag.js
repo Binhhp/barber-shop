@@ -71,7 +71,6 @@ $(document).ready(function(){
             updateData(form_data);
         }
         else{
-            console.log(form_data);
             insertData(form_data);
         }
     });

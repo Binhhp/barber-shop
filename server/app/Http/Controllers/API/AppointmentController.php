@@ -281,7 +281,10 @@ class AppointmentController extends Controller
                 if(!is_null($appointment)){
                     $appointment->status = true;
                     $appointment->save();
-                    return view('success_appointment');
+                    return view('notification.success_appointment');
+                }
+                else{
+                    return $this->respondRequest(ApiCode::ERROR_GET_DATA);
                 }
             }
             else{

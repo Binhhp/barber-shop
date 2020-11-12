@@ -79,7 +79,7 @@
                             <label for="maduan" class="col-sm-2 text-right"><strong>Position</strong><span style="color:red;">*</span></label>
                             <div class="col-md-4 text-left">
                                 <div class="input-group validate-input">
-                                    <select class="form-control" name="cate_id" id="cate_id">
+                                    <select class="form-control" name="position" id="position">
                                         <option value="" disabled selected hidden>Please choose</option>
                                         @foreach($pos as $i)
                                             <option value="{{ $i->id }}">{{ $i->name_pos }}</option>
@@ -108,7 +108,7 @@
                             <label for="maduan" class="col-sm-2 text-right"><strong>Address</strong><span style="color:red;">*</span></label>
                             <div class="col-md-9 text-left">
                                 <div class="input-group validate-input">
-                                    <input class="form-control" type="text" placeholder="Address" name="Address" id="address"/>
+                                    <input class="form-control" type="text" placeholder="Address" name="address" id="address"/>
                                 </div>
                             </div>
                         </div>

@@ -41,6 +41,6 @@ Route::post('appointments', 'AppointmentController@register_appointment')->name(
 //show time
 Route::get('get-times', 'AppointmentController@show_times')->name('show_times');
 //check status appointment
-Route::get('complete-appointment/{id}', 'AppointmentController@check_status_appointments')->name('check_status_appointments');
+Route::get('confirm-appointment/{id}', 'AppointmentController@check_status_appointments')->name('check_status_appointments');
 //check number
 Route::get('check-phone/{phone_number}', 'AppointmentController@check_appointment')->name('check-phone');
