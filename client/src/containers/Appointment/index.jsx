@@ -10,7 +10,8 @@ import { fetchBarber } from './action';
 import { useDispatch, useSelector } from 'react-redux';
 import SlideBarber from './components/SlideBarber';
 import AppointmentTime from './components/AppointmentTime';
-import ServiceAppointment from './components/ServiceAppointment'
+import ServiceAppointment from './components/ServiceAppointment';
+import InfoUser from './components/InfoUser';
 const Appointment = (props) => {
   const barbers = useSelector((state) => state.appointment.barbers);
   const dispatch = useDispatch();
@@ -77,6 +78,15 @@ const Appointment = (props) => {
                   </div>
                 </div>
                 <ServiceAppointment />
+                <div class='form-group'>
+                  <InfoUser />
+                </div>
+                <br />
+                <div className='col-xl-12'>
+                  <button type='submit' className='boxed-btn3 w-100'>
+                    Submit
+                  </button>
+                </div>
               </form>
             </div>
           </div>

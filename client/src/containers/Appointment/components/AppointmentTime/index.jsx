@@ -9,18 +9,18 @@ import './styles.scss';
 import Slider from 'react-slick';
 
 const settings = {
-  className: "center",
+  className: 'center',
   infinite: false,
-  centerPadding: "60px",
+  centerPadding: '60px',
   slidesToShow: 5,
   rows: 4,
 
   swipeToSlide: true,
   afterChange: function (index) {
     console.log(
-      `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
+      `Slider Changed to: ${index + 1}, background: #222; color: #bada55`,
     );
-  }
+  },
 };
 
 const AppointmentTime = ({ listTime }) => {
@@ -32,7 +32,7 @@ const AppointmentTime = ({ listTime }) => {
   return (
     <Slider {...settings}>
       {gridTime?.map((item) => (
-        <TimeItem item={item} />
+        <TimeItem key={item.id} item={item} />
       ))}
     </Slider>
   );

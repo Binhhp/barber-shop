@@ -1,5 +1,9 @@
 const initialState = {
-  services: []
+  blogs: [],
+  blog: null,
+  currentPage: 1,
+  categories: [],
+  tags:[]
 }
 
 export default (state = initialState, { type, payload }) => {
