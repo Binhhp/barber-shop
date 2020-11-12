@@ -4,6 +4,7 @@ import { fetchServices } from '../../../HomePage/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import Select from 'react-select';
+import { SET_SERVICE_APPOINTMENT } from '../../constants';
 import ServiceItem from './ServiceItem';
 const ServiceAppointment = (props) => {
   const services = useSelector((state) => state.home.services);
@@ -22,6 +23,7 @@ const ServiceAppointment = (props) => {
   }, [services]);
   const handleChange = (value) => {
     console.log(value);
+    dispatch({ type: SET_SERVICE_APPOINTMENT, payload: value.value });
   };
   return (
     <div class='form-group service'>

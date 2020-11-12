@@ -4,6 +4,7 @@ const initialState = {
   gridTime: null,
   barberId: null,
   date: null,
+  serviceId: null
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -18,6 +19,10 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, barberId: payload };
     case constants.SET_TIME_APPOINTMENT:
       return { ...state, time: payload };
+    case constants.SET_SERVICE_APPOINTMENT:
+      return { ...state, serviceId: payload };
+    // case constants.POST_APPOINTMENT:
+    //   return { ...state, serviceId: payload };
     default:
       return state;
   }

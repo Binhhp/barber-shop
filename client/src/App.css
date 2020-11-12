@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.swal2-container.swal2-backdrop-show,
+.swal2-container.swal2-noanimation {
+  /* background: #4a3600 !important;
+  opacity: 0.6; */
+}

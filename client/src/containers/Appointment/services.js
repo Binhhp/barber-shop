@@ -14,3 +14,9 @@ export const getTimeAppointment = async (date, barberId) => {
   });
   return response;
 }
+
+export const makeAppointment = async (body) => {
+  console.log(JSON.stringify(body), 'body');
+  const response = await api.post('appointments', JSON.stringify(body));
+  return response;
+}

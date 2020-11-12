@@ -3,8 +3,45 @@ import Logo from '../../assets/img/logo.png';
 import Barber_text from '../../assets/img/banner/barber_text.png';
 import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
+import api from '../../api/axiosClient';
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2';
 import './styles.scss';
 const Header = ({ isHome, title }) => {
+  const checkAppointment = () => {
+    Swal.fire({
+      title: 'Submit your phone number',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off',
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Check',
+      showLoaderOnConfirm: true,
+      preConfirm: (phone) => {
+        return api
+          .get(`check-phone/${phone}`)
+          .then((response) => {
+            console.log(response);
+            // if (!response.ok) {
+            //   throw new Error(response.statusText);
+            // }
+            // return response.json();
+          })
+          .catch((error) => {
+            Swal.showValidationMessage(`Request failed: ${error}`);
+          });
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: `${result.value.login}'s avatar`,
+          imageUrl: result.value.avatar_url,
+        });
+      }
+    });
+  };
   return (
     <React.Fragment>
       <div>
@@ -49,6 +86,13 @@ const Header = ({ isHome, title }) => {
                             <NavLink activeClassName='active' to='/contact'>
                               Contact
                             </NavLink>
+                          </li>
+                          <li>
+                            <a
+                              onClick={checkAppointment}
+                              href='javascript:void(0)'>
+                              Check Appointment
+                            </a>
                           </li>
                         </ul>
                       </nav>
