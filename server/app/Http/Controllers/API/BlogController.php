@@ -15,21 +15,50 @@ use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * Get list blog
+        /**
+     * Display the specified resource.
+     * Get blog // blog by cate // blog by tag // blog by search
+     * @param  int  $cate_id
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function show_blog(Request $request)
     {
         try{
-            $data = Blog::join('category_blogs', 'category_blogs.id', '=', 'blogs.cate_id')
-                        ->orderBy('view', 'desc')
-                        ->paginate(5 ,['blogs.*', 'category_blogs.name']);
-            return $this->respond($data);
+            //get all blog
+            if($request->type == "all"){
+                $data = Blog::join('category_blogs', 'category_blogs.id', '=', 'blogs.cate_id')
+                            ->orderBy('view', 'desc')
+                            ->paginate(5 ,['blogs.*', 'category_blogs.name']);
+                return $this->respond($data);
+            }
+
+            //get blog by cate
+            if($request->type == "cate"){
+                $data = Blog::where('cate_id', $request->id)->paginate(5);
+                return $this->respond($data);
+            }
+
+            //get blog by tag
+            if($request->type == "tag"){
+                $id = $request->id;
+                $data = Blog::whereHas('tags', function($query) use($id){
+                    $query->where('tag_id', '=', $id);
+                })->orderBy('view', 'desc')->paginate(5);
+                return $this->respond($data);
+            }
+
+            //get blog by search
+            if($request->type == "search"){
+                $data = Blog::where('title', 'LIKE', '%' .$request->id. '%')
+                            ->orWhere('description', 'LIKE', '%' .$request->id. '%')
+                            ->orderBy('view', 'desc')
+                            ->paginate(5);
+                return $this->respond($data);
+            }
         }
         catch(Exception $ex){
-            return $this->respondWithError(ApiCode::ERROR_GET_DATA, 401);
+                return $this->respondWithError(ApiCode::ERROR_GET_DATA, 401);
         }
     }
     /**
@@ -38,7 +67,7 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_detail($id)
     {
        try{
             $record = Blog::join('category_blogs', 'category_blogs.id', '=', 'blogs.cate_id')
@@ -59,7 +88,7 @@ class BlogController extends Controller
      * Get category blog
      * @return \Illuminate\Http\Response
      */
-    public function cate_blog()
+    public function show_category()
     {
         try{
             $data = CategoryBlog::join('blogs', 'blogs.cate_id', '=', 'category_blogs.id')
@@ -73,30 +102,12 @@ class BlogController extends Controller
             return $this->respondWithError(ApiCode::ERROR_GET_DATA, 401);
         }
     }
-
-    /**
-     * Display the specified resource.
-     * Get blog by category blog
-     * @param  int  $cate_id
-     * @return \Illuminate\Http\Response
-     */
-    public function show_cate_blog($cate)
-    {
-        try{
-                $data = Blog::where('cate_id', $cate)->paginate(5);
-                return $this->respond($data);
-        }
-        catch(Exception $ex){
-                return $this->respondWithError(ApiCode::ERROR_GET_DATA, 401);
-        }
-    }
-
     /**
      * Display the specified resource.
      * Get tag blog
      * @return \Illuminate\Http\Response
      */
-    public function show_tag_blog()
+    public function show_tag()
     {
         try{
             $data = Tag::all();
@@ -107,46 +118,7 @@ class BlogController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     * Get blog by tag
-     * @param int $tag_id
-     * @return \Illuminate\Http\Response
-     */
-    public function show_blog_by_tag($tag_id)
-    {
-        try{
-            $data = Blog::whereHas('tags', function($query) use($tag_id){
-                $query->where('tag_id', '=', $tag_id);
-            })->orderBy('view', 'desc')->paginate(5);
-            return $this->respond($data);
-        }
-        catch(Exception $ex){
-            return $this->respondWithError(ApiCode::ERROR_GET_DATA, 401);
-        }
-    }
 
-     /**
-     * Display the specified resource.
-     * Get blog by search 
-     * @param string keys
-     * @return \Illuminate\Http\Response
-     */
-    public function search_blog(Request $request)
-    {
-       try{
-            $key = $request->keys;
-            $data = Blog::where('title', 'LIKE', '%' .$key. '%')
-                        ->orWhere('description', 'LIKE', '%' .$key. '%')
-                        ->orderBy('view', 'desc')
-                        ->paginate(5);
-            return $this->respond($data);
-       }
-       catch(Exception $ex)
-       {
-            return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);
-       }
-    }
 
     /**
      * Display the specified resource.
@@ -154,11 +126,12 @@ class BlogController extends Controller
      * @param string keys
      * @return \Illuminate\Http\Response
      */
-    public function get_comment_blog($blog_id)
+    public function show_comment($blog_id)
     {
         try{
             $data = Comment::join('customers', 'comments.cus_id', '=', 'customers.id')
-                            ->where('blog_id', $blog_id)->get();
+                            ->where('blog_id', '=', $blog_id)
+                            ->get(['comments.*','customers.name', 'customers.phone_number', 'customers.email']);
             return $this->respond($data);
         }
         catch(Exception $ex){

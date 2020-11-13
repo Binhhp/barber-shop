@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
 
-    changeClass('index', 'blog', 'blogs');
+    changeClass('index', 'store', 'service');
     //setting csrf token ajax
     settingAjax();
     //Show required element
@@ -12,6 +12,8 @@ $(document).ready(function(){
     showAllDialogElement();
     //set always dialog
     alwaysCheck();
+
+    validateNumber("price");
      // Your web app's Firebase configuration
    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
    var firebaseConfig = {
@@ -26,26 +28,6 @@ $(document).ready(function(){
     };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-    $('.select2').select2({
-        dropdownParent: $('#myModal'),
-        placeholder: "Select an option",
-        maximumSelectionLength: 5,
-    });
-
-    //CkEditor 5
-    var editor;
-    ClassicEditor.create( document.querySelector( '#content' ),{
-                cloudServices: {
-                    tokenUrl: 'https://75890.cke-cs.com/token/dev/481d871fd01f9b6dc8156dd1ad2c49c6a0874597ec2973256bf8e84a5fca',
-                    uploadUrl: 'https://75890.cke-cs.com/easyimage/upload/'
-                },                        
-            })
-            .then(e => {
-                editor = e;
-            })
-            .catch( error => {
-                console.error( error );
-            });
             
     //Get update tag by id
     $('#myModal').on('show.bs.modal', function(e){
@@ -56,23 +38,17 @@ $(document).ready(function(){
             if(action == "edit"){
                
                 const imgSrc = $(e.relatedTarget).data('path');
-                const content = $(e.relatedTarget).data('content');
                 const fileName =  $(e.relatedTarget).data('file');
-                const tags = $(e.relatedTarget).data('tags');
                 const array_obj = [];
-                const keys = ['cate' , 'status', 'title', 'description', 'id'];
+                const keys = ['name' , 'time', 'description', 'price', 'id'];
             
                 keys.map(item => {
                     array_obj.push($(e.relatedTarget).data(item));
                 });
-                //set data content to editor 
-                editor.setData(content);
                 //query input 
-                showEdit(imgSrc, fileName, tags, array_obj);
+                showEdit(imgSrc, fileName, array_obj);
             }
             if(action == "add"){
-                
-                editor.setData("");
 
                 showAdd();
             }
@@ -87,12 +63,11 @@ $(document).ready(function(){
         const _keyIput = '#_idIput';
         const _iIput = $(_keyIput).val();
 
-        var edi = editor.getData();
         if(_iIput != "" && _iIput != null){
-            await eventEdit(edi);
+            await eventEdit();
         }
         else{
-            await eventAdd(edi);
+            await eventAdd();
         }
     });
 
@@ -113,18 +88,21 @@ $(document).ready(function(){
         })
     });
 
-
     $("#file").change(function(){
         readURL(this);
     })
 });
 
 //When click edit show input record
-function showEdit(imgSrc, fileName, tags, array_obj){
+function showEdit(imgSrc, fileName, array_obj){
     
     var count = 0;
 
-    $('.modal-title').html('Update Blog');
+    $('.form-input .modal-body .text-danger').each(function() {
+        $(this).text("");
+    });
+    
+    $('.modal-title').html('Update Service');
                 
     $("#_save").html("Update");
 
@@ -138,20 +116,15 @@ function showEdit(imgSrc, fileName, tags, array_obj){
             break;
         }
     });
-    $('.form-input .modal-body .text-danger').each(function() {
-        $(this).text("");
-    });
 
     $("#img").attr('src', imgSrc);
     $("#img").attr('data-file', fileName);
 
-    $("#tag").val(tags);
-    $("#tag").trigger('change');
     $("#file").val("");
 
 };
 
-async function eventEdit(edi){
+async function eventEdit(){
     var imgPath;
     var old_file = $("#img").attr("data-file");
     var f;
@@ -175,10 +148,8 @@ async function eventEdit(edi){
             f = $.param({ 'fileName': file_name }) + '&'
     }
 
-    const content = edi;
 
-    const form_data = f + $.param({ 'contentEd': content}) + '&' + 
-                      $.param({ 'imgPath': imgPath}) + '&' + 
+    const form_data = f + $.param({ 'imgPath': imgPath}) + '&' + 
                       $("#form-input").serialize();
         
     updateData(form_data);
@@ -186,25 +157,21 @@ async function eventEdit(edi){
 
 //When click add show modal reset input
 function showAdd(){
-    $('.modal-title').html('Add Blog');
+    $('.modal-title').html('Add Service');
     $("#_save").html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Add');
     $('.form-input .modal-body .form-control').each(function(){
         $(this).val("");
     });
-
     $('.form-input .modal-body .text-danger').each(function() {
         $(this).text("");
     });
-
     $('#file').val("");
-    $('#content').val("");
     $("#img").attr('src', "");
     $('#img').attr('data-file', "");
-    $("#tag").val("");
-    $("#tag").trigger('change');
 };
-//Event add
-async function eventAdd(edi){
+
+
+async function eventAdd(){
     if($('#file').val() === ""){
         toastr['error']("Upload file image!");
     }
@@ -214,15 +181,13 @@ async function eventAdd(edi){
     const metadata = {
         contentType: file.type
     };
-    const content = edi;
-    const imgPath = await uploadImg(file, file_name, metadata, false);
+    var imgPath = await uploadImg(file, file_name, metadata, false);
+
     const form_data = $.param({ 'fileName': file_name}) + '&' +
-                      $.param({ 'contentEd': content}) + '&' + 
                       $.param({ 'imgPath': imgPath}) + '&' + 
                       $("#form-input").serialize();
     insertData(form_data);
 };
-
 
 //Yajra Laravel
 function loadTables() {
@@ -233,7 +198,7 @@ function loadTables() {
         "bSort": false,
         "responsive": true,
         ajax: {
-            url: "/admin/blog/getData",
+            url: "/admin/service/getData",
         },
         columns: [
             { data: 'cbox', name: 'cbox', 'className': 'animated-checkbox text-center', orderable: false, 'searchable': false },
@@ -244,10 +209,10 @@ function loadTables() {
                     return "<img src=\"" + data + "\" width=\"100\" height=\"80\"/>";
                 }
             },
-            { data: 'title', name: 'title', 'className': 'text-center', orderable: false },
             { data: 'name', name: 'name', 'className': 'text-center', orderable: false },
-            { data: 'description', name: 'description', orderable: false },
-            { data: 'status', name: 'status', 'className': 'text-center', orderable: false },
+            { data: 'time', name: 'time', orderable: false },
+            { data: 'description', name: 'description', 'className': 'text-center', orderable: false },
+            { data: 'price', name: 'price', 'className': 'text-center', orderable: false },
             { data: 'action', name: 'action', 'className': 'text-center', orderable: false, 'searchable': false }
         ]
     });
@@ -264,12 +229,12 @@ async function uploadImg(files, file_name, file_meta, isEdit, old_file){
     $('#ftco-loader').addClass('show');
 
     if(isEdit === true && old_file !== null && old_file !== "" && old_file !== "image.jpg"){
-        firebase.storage().ref().child('blogs/' + old_file).delete().catch(error => {
+        firebase.storage().ref().child('services/' + old_file).delete().catch(error => {
             return alert(error.message);
         })
     }
     var task = null;
-    task = firebase.storage().ref('blogs/')
+    task = firebase.storage().ref('services/')
                      .child(file_name)
                      .put(files, file_meta)
                      .catch(function() {
@@ -307,7 +272,7 @@ function insertData(form_data){
 
     $.ajax({
         method: 'POST',
-        url: '/admin/blog/insert',
+        url: '/admin/service/insert',
         data: form_data,
         dataType: 'json',
 
@@ -336,15 +301,17 @@ function insertData(form_data){
 function updateData(form_data){
     $.ajax({
         method: 'POST',
-        url: '/admin/blog/update',
+        url: '/admin/service/update',
         data: form_data,
         dataType: 'json',
 
         success: function(msg){
-            if(msg.success){
+            if(msg.success == true){
                 toastr['success'](msg.message);
                 $("#myModal").modal('toggle');
                 $('#ftco-loader').removeClass('show');
+                $("#img").attr('data', "");
+                $('#_idIput').val("");
                 reloadTables();
             }
         },
@@ -385,7 +352,7 @@ function deleteData(event){
     }).then(result => {
         if(result.value){
             var id = $(event).attr('data-id');
-            $.get('/admin/blog/delete/' + id).then(msg => {
+            $.get('/admin/service/delete/' + id).then(msg => {
                 if(msg.success){
                     toastr['success'](msg.message);
                     reloadTables(); 
@@ -398,7 +365,7 @@ function deleteData(event){
             })
             var fileName = $(event).attr('data-image');
             if(fileName != null && fileName != "" && fileName != "image.jpg"){
-                var del = firebase.storage().ref().child('blogs/' + fileName);
+                var del = firebase.storage().ref().child('service/' + fileName);
                 del.delete().catch(function(error) {
                    return alert(error.message);
                 });
@@ -421,7 +388,7 @@ function deleteCheckBox(){
 
     $.ajax({
         method: 'POST',
-        url: '/admin/blog/deleteAll',
+        url: '/admin/service/deleteAll',
         data: JSON.stringify(selectIds),
         dataType: 'json',
         contentType: 'application/json',
@@ -433,7 +400,7 @@ function deleteCheckBox(){
                 var data = Object.values(msg.data);
                 for(var i = 0; i < data.length; i++){
                     if(data[i] !== null && data[i] != "" && data[i] != "image.jpg"){
-                        firebase.storage().ref().child('blogs/' + data[i]).delete().catch(error => {
+                        firebase.storage().ref().child('services/' + data[i]).delete().catch(error => {
                             return alert(error.message);
                         })
                     }

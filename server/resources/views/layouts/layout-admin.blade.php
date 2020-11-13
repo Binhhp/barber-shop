@@ -117,8 +117,5 @@
     <script src="{{ URL::to('jsAdmin/general.js') }}"></script>
     
     @stack('scripts')
-    <!-- Page specific javascripts-->
-    <script type="text/javascript" src="{{ URL::to('js/plugins/chart.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::to('js/admin.js') }}"></script>
   </body>
 </html>

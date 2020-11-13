@@ -13,7 +13,7 @@ $(document).ready(function(){
     //set always dialog
     alwaysCheck();
 
-
+    validateNumber("phone");
      // Your web app's Firebase configuration
    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
    var firebaseConfig = {
@@ -71,6 +71,23 @@ $(document).ready(function(){
         }
     });
 
+    //delete checkbox all
+    $('#actionDialogCardPrimaryButton').on('click', function(){
+        Swal.fire({
+            title: "Bạn có muốn xóa không?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "Thoát",
+            confirmButtonText: "Xóa",
+        }).then(result => {
+            if(result.value){
+                deleteCheckBox();
+            }
+        })
+    });
+
     $("#file").change(function(){
         readURL(this);
     })
@@ -81,6 +98,10 @@ function showEdit(imgSrc, fileName, array_obj){
     
     var count = 0;
 
+    $('.form-input .modal-body .text-danger').each(function() {
+        $(this).text("");
+    });
+    
     $('.modal-title').html('Update Barber');
                 
     $("#_save").html("Update");
@@ -142,6 +163,10 @@ function showAdd(){
         $(this).val("");
     });
 
+    $('.form-input .modal-body .text-danger').each(function() {
+        $(this).text("");
+    });
+    
     $('#file').val("");
     $("#img").attr('src', "");
     $('#img').attr('data-file', "");
@@ -159,6 +184,7 @@ async function eventAdd(){
         contentType: file.type
     };
     const imgPath = await uploadImg(file, file_name, metadata, false);
+
     const form_data = $.param({ 'fileName': file_name}) + '&' +
                       $.param({ 'imgPath': imgPath}) + '&' + 
                       $("#form-input").serialize();
@@ -253,18 +279,22 @@ function insertData(form_data){
         dataType: 'json',
 
         success: function(msg){
-            if(msg.success == true){
+            if(msg.success){
                 toastr['success'](msg.message);
                 $("#myModal").modal('toggle');
                 $('#ftco-loader').removeClass('show');
                 reloadTables();
             }
-            else{
-                toastr['error'](msg.message);
-            }
         },
         error: function(error){
-            alert(error.statusText);
+            var err = error.responseJSON;
+            if(err.success == false){
+                toastr['error'](err.message);
+                if(err.data != null && err.data != undefined){
+                    showValidation(error);
+                }
+                $('#ftco-loader').removeClass('show');
+            }
         }
     })
 };
@@ -278,20 +308,22 @@ function updateData(form_data){
         dataType: 'json',
 
         success: function(msg){
-            if(msg.success == true){
+            if(msg.success){
                 toastr['success'](msg.message);
                 $("#myModal").modal('toggle');
                 $('#ftco-loader').removeClass('show');
-                $("#img").attr('data', "");
-                $('#_idIput').val("");
                 reloadTables();
-            }
-            else{
-                toastr['error'](msg.message);
             }
         },
         error: function(error){
-            alert(error.statusText);
+            var err = error.responseJSON;
+            if(err.success == false){
+                toastr['error'](err.message);
+                if(err.data != null && err.data != undefined){
+                    showValidation(error);
+                }
+                $('#ftco-loader').removeClass('show');
+            }
         }
     })
 };
@@ -377,6 +409,9 @@ function deleteCheckBox(){
             else{
                 toastr['error'](msg.message);
             }
+        },
+        error: function(error){
+            alert(error.message);
         }
     })
 };

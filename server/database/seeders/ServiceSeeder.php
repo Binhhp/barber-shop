@@ -33,7 +33,7 @@ class ServiceSeeder extends Seeder
         'Beard trimming','Beard and moustache'];
 
 
-        $times = [1.5, 2, 1, 1, 1, 1.5, 1, 1, 1, 1];
+        $times = [1.5, 0.5, 0.5, 1, 1, 1.5, 1, 0.5, 0.5, 1];
 
         $i = 0;
         $faker = \Faker\Factory::create();
@@ -44,6 +44,7 @@ class ServiceSeeder extends Seeder
             $service->description = $faker->text(100);
             $service->price = $faker->numberBetween(1, 100000);
             $service->imgPath = $arrImg[$i];
+            $service->imgName = ($i + 1).".png";
             $service->time = $times[$i];
             $i += 1;
             $service->save();

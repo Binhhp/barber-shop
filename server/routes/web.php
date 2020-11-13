@@ -58,7 +58,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth'] ], function(){
         'uses' => 'Admin\HomeAdminController@index',
         'as' => 'index'
     ]);
-
+    
+    Route::get('getParameter', 'Admin\HomeAdminController@getData')->name('getParameter');
     //Tag 
     Route::group(['prefix' => 'tag'], function(){
         Route::get('', [

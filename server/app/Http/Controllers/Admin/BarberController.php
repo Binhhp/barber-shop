@@ -62,21 +62,13 @@ class BarberController extends Controller
                     ->make(true);
         }
     }
-
-    public function insert(BarberRequest $request)
-    {
-        # code...
-        if($request->ajax()){
-            echo('0');
-        }
-    }
     /**
      * Display a listing of the resource.
      * Insert data
      * @param BarberRequest
      * @return \Illuminate\Http\Response
      */
-    public function insertData(BarberRequest $request)
+    public function insert(BarberRequest $request)
     {
         try{
             if($request->ajax()){
@@ -103,6 +95,46 @@ class BarberController extends Controller
                 }
                 else{
                     return $this->respondWithError(ApiCode::ERROR_CREDENTIALS, 404);
+                }
+            }
+            else{
+                return $this->respondRequest(ApiCode::ERROR_REQUEST);
+            }
+        }
+        catch(Exception $ex){
+            echo($ex->getMessage());
+        }
+    }
+
+      /**
+     * Display a listing of the resource.
+     * Update blog
+     * @param BlogRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function update(BarberRequest $request)
+    {
+        try{
+            if($request->ajax()){
+
+                $barber = Barber::find($request->id);
+                
+                if(!is_null($barber)){
+
+                    $barber->name = $request->name;
+                    $barber->phone_number = $request->phone;
+                    $barber->address = $request->address;
+                    $barber->imgPath = $request->imgPath;
+                    $barber->imgName = $request->fileName;
+                    $barber->email = $request->email;
+                    $barber->pos_id = $request->position;
+
+                    $barber->save();
+
+                    return $this->respondWithSuccess(ApiCode::NOTIFICATION_UPDATE_SUCCESS);
+                }
+                else{
+                    return $this->respondNotFound(ApiCode::ERROR_REQUEST);
                 }
             }
             else{

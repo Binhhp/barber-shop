@@ -46,6 +46,9 @@ $(document).ready(function(){
                         break;
                     }
                 });
+                $('.form-input .modal-body .text-danger').each(function() {
+                    $(this).text("");
+                });
 
                 $("#_save").html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Update');
             }
@@ -55,7 +58,10 @@ $(document).ready(function(){
                 var count = 0;
                 $('.form-input .modal-body .form-control').each(function(){
                     $(this).val("");
-                })
+                });
+                $('.form-input .modal-body .text-danger').each(function() {
+                    $(this).text("");
+                });
             }
         }
     });
@@ -74,6 +80,23 @@ $(document).ready(function(){
         else{
             insertData(form_data);
         }
+    });
+
+    //delete checkbox all
+    $('#actionDialogCardPrimaryButton').on('click', function(){
+        Swal.fire({
+            title: "Bạn có muốn xóa không?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "Thoát",
+            confirmButtonText: "Xóa",
+        }).then(result => {
+            if(result.value){
+                deleteCheckBox();
+            }
+        })
     });
 });
 
@@ -142,17 +165,22 @@ function insertData(form_data){
         data: form_data,
         dataType: 'json',
         success: function(msg){
-            if(msg.success == true){
+            if(msg.success){
                 toastr['success'](msg.message);
                 $("#myModal").modal('toggle');
+                $('#ftco-loader').removeClass('show');
                 reloadTables();
-            }
-            else{
-                toastr['error'](msg.message);
             }
         },
         error: function(error){
-            showValidation(error);
+            var err = error.responseJSON;
+            if(err.success == false){
+                toastr['error'](err.message);
+                if(err.data != null && err.data != undefined){
+                    showValidation(error);
+                }
+                $('#ftco-loader').removeClass('show');
+            }
         }
     })
 };
@@ -165,17 +193,22 @@ function updateData(form_data){
         data: form_data,
         dataType: 'json',
         success: function(msg){
-            if(msg.success == true){
+            if(msg.success){
                 toastr['success'](msg.message);
                 $("#myModal").modal('toggle');
+                $('#ftco-loader').removeClass('show');
                 reloadTables();
-            }
-            else{
-                toastr['error'](msg.message);
             }
         },
         error: function(error){
-            showValidation(error);
+            var err = error.responseJSON;
+            if(err.success == false){
+                toastr['error'](err.message);
+                if(err.data != null && err.data != undefined){
+                    showValidation(error);
+                }
+                $('#ftco-loader').removeClass('show');
+            }
         }
     })
 };

@@ -16,6 +16,7 @@ function showValidation(error){
                 var errorId = "#" + key + "Error";
                 $(errorId).text(value['0']);
             })
+            $('#ftco-loader').removeClass('show');
         }
         else{
             toastr['warning']("Error 404");
@@ -119,4 +120,16 @@ function settingAjax(){
     
 };
 
+function validateNumber(keyNumber){
+    $("#" + keyNumber).bind("keypress", function (e) {
+        var keyCode = e.which ? e.which : e.keyCode
+
+        if (!(keyCode >= 48 && keyCode <= 57)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    });
+}
 // --------------------------------------------- ------------------------------------------------ //

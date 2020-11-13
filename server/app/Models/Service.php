@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'description', 'price', 'imgPath'];
+    protected $fillable = ['name', 'time', 'description', 'price', 'imgPath', 'imgName'];
 
     public function appointments()
     {
-        return $this->hasMany(Appointment::class);
+        return $this->hasMany(Appointment::class, 'ser_id', 'id');
     }
 }
