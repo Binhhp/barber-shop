@@ -25,35 +25,40 @@ class BlogController extends Controller
     public function show_blog(Request $request)
     {
         try{
-            //get all blog
-            if($request->type == "all"){
-                $data = Blog::join('category_blogs', 'category_blogs.id', '=', 'blogs.cate_id')
-                            ->orderBy('view', 'desc')
-                            ->paginate(5 ,['blogs.*', 'category_blogs.name']);
-                return $this->respond($data);
-            }
-
             //get blog by cate
-            if($request->type == "cate"){
-                $data = Blog::where('cate_id', $request->id)->paginate(5);
+            if(!is_null($request->cateId)){
+                $data = Blog::where('cate_id', $request->cateId)
+                            ->orderBy('created_at', 'DESC')
+                            ->orderBY('view', 'DESC')
+                            ->paginate(5);
                 return $this->respond($data);
             }
 
             //get blog by tag
-            if($request->type == "tag"){
-                $id = $request->id;
+            if(!is_null($request->tagId)){
+                $id = $request->tagId;
                 $data = Blog::whereHas('tags', function($query) use($id){
                     $query->where('tag_id', '=', $id);
-                })->orderBy('view', 'desc')->paginate(5);
+                })->orderBy('created_at', 'DESC')
+                    ->orderBY('view', 'DESC')
+                    ->paginate(5);
                 return $this->respond($data);
             }
 
             //get blog by search
-            if($request->type == "search"){
-                $data = Blog::where('title', 'LIKE', '%' .$request->id. '%')
-                            ->orWhere('description', 'LIKE', '%' .$request->id. '%')
-                            ->orderBy('view', 'desc')
+            if(!is_null($request->key)){
+                $data = Blog::where('title', 'LIKE', '%' .$request->key. '%')
+                            ->orWhere('description', 'LIKE', '%' .$request->key. '%')
+                            ->orderBy('created_at', 'DESC')
+                            ->orderBY('view', 'DESC')
                             ->paginate(5);
+                return $this->respond($data);
+            }
+            else{
+                $data = Blog::join('category_blogs', 'category_blogs.id', '=', 'blogs.cate_id')
+                            ->orderBy('created_at', 'DESC')
+                            ->orderBY('view', 'DESC')
+                            ->paginate(5 ,['blogs.*', 'category_blogs.name']);
                 return $this->respond($data);
             }
         }
