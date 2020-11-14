@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const BlogItem = ({ img, title, desc, countComment }) => {
+const BlogItem = ({ id, img, title, desc, countComment }) => {
   return (
     <article className='blog_item'>
       <div className='blog_item_img'>
@@ -12,7 +12,7 @@ const BlogItem = ({ img, title, desc, countComment }) => {
         </a>
       </div>
       <div className='blog_details'>
-        <a className='d-inline-block' href='single-blog.html'>
+        <a className='d-inline-block' href={`/blog/${id}`}>
           <h2>{title}</h2>
         </a>
 
@@ -20,7 +20,7 @@ const BlogItem = ({ img, title, desc, countComment }) => {
         <ul className='blog-info-link'>
           <li>
             <a href='#'>
-              <i className='fa fa-user' /> {author}
+              <i className='fa fa-user' /> L.T.K
             </a>
           </li>
           <li>
@@ -39,6 +39,7 @@ BlogItem.propTypes = {
   title: PropTypes.string,
   desc: PropTypes.string,
   countComment: PropTypes.number,
+  id: PropTypes.number,
 };
 
 export default BlogItem;
