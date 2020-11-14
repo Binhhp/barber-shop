@@ -1,17 +1,19 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import BlogPage from './index';
-function routes() {
+function BlogRoutes() {
+  let { path, url } = useRouteMatch();
+  console.log(path, path, 'pathpathpathpathpath')
   return (
     <Switch>
-      <Route exact path='/' component={BlogPage} />
-      <Route path='/page/:page' component={BlogPage} />
-      <Route exact path='/tag/:tag' component={BlogPage} />
-      <Route path='/tag/:tag/page/:page' component={BlogPage} />
-      <Route exact path='/tag/:tag' component={BlogPage} />
-      <Route path='/category/:category/page/:page' component={BlogPage} />
+      <Route exact path={`${path}`} component={BlogPage} />
+      <Route path={`${path}/page/:pageId`} component={BlogPage} />
+      <Route exact path={`${path}/tag/:tagId`} component={BlogPage} />
+      <Route path={`${path}/tag/:tagId/page/:pageId`} component={BlogPage} />
+      <Route exact path={`${path}/category/:categoryId`} component={BlogPage} />
+      <Route path={`${path}/category/:categoryId/page/:pageId`} component={BlogPage} />
     </Switch>
   );
 }
 
-export default routes;
+export default BlogRoutes;
