@@ -16,13 +16,14 @@ const AppointmentDay = () => {
     dispatch({ type: SET_DATE_APPOINTMENT, payload: date });
     setSelectedDate(num);
   };
-  
+
   return (
     <div class='form-group'>
       <h4 className='title-steps'>1. Date</h4>
       <div className='row'>
         <div className='col text-center'>
           <button
+            type='button'
             className={selectedDate === 1 ? 'time-item active' : 'time-item'}
             onClick={() => changeDate(today.format('YYYY/MM/DD'), 1)}>
             Today&nbsp;
@@ -31,6 +32,7 @@ const AppointmentDay = () => {
         </div>
         <div className='col text-center'>
           <button
+            type='button'
             className={selectedDate === 2 ? 'time-item active' : 'time-item'}
             onClick={() => changeDate(tomorrow.format('YYYY/MM/DD'), 2)}>
             Tomorrow&nbsp;
@@ -39,6 +41,7 @@ const AppointmentDay = () => {
         </div>
         <div className='col text-center'>
           <button
+            type='button'
             className={selectedDate === 3 ? 'time-item active' : 'time-item'}
             onClick={() => changeDate(nextTomorrow.format('YYYY/MM/DD'), 3)}>
             Next days&nbsp;

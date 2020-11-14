@@ -42,3 +42,6 @@
   /* background: #4a3600 !important;
   opacity: 0.6; */
 }
+.swal2-styled.swal2-confirm {
+  background-color: #4a3806e0 !important;
+}

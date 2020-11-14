@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './styles.scss';
 const FindUs = () => {
   return (
@@ -39,9 +40,9 @@ const FindUs = () => {
                 </div>
                 <div className='single_find'>
                   <div className='book_btn'>
-                    <a className='popup-with-form' href='#test-form'>
+                    <Link className='popup-with-form' to='/appointment'>
                       Make an Appointment
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

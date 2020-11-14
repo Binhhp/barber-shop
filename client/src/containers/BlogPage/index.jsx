@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import Header from '../../components/Header';
 import Category from './components/Category';
 import Newsletter from './components/Newsletter';
@@ -7,6 +8,8 @@ import Search from './components/Search';
 import Tag from './components/Tag';
 
 const BlogPage = () => {
+  let { path, url } = useRouteMatch();
+  console.log(path, path, 'pathpathpathpathpath');
   return (
     <React.Fragment>
       <Header isHome={false} title='Blog' />
