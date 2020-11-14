@@ -32,6 +32,9 @@ $(document).ready(function(){
         if(action != undefined){
             if(action == "edit"){
 
+                $('.form-input .modal-body .text-danger').each(function() {
+                    $(this).text("");
+                });
                 $('.modal-title').html('Update Tag');
                 var count = 0;
                 $('.form-input .modal-body .form-control').map(function() {
@@ -54,6 +57,9 @@ $(document).ready(function(){
                 $('.form-input .modal-body .form-control').each(function(){
                     $(this).val("");
                 })
+                $('.form-input .modal-body .text-danger').each(function() {
+                    $(this).text("");
+                });
             }
         }
     });
@@ -163,17 +169,22 @@ function insertData(form_data){
         data: form_data,
         dataType: 'json',
         success: function(msg){
-            if(msg.success == true){
+            if(msg.success){
                 toastr['success'](msg.message);
                 $("#myModal").modal('toggle');
+                $('#ftco-loader').removeClass('show');
                 reloadTables();
-            }
-            else{
-                toastr['error'](msg.message);
             }
         },
         error: function(error){
-            showValidation(error);
+            var err = error.responseJSON;
+            if(err.success == false){
+                toastr['error'](err.message);
+                if(err.data != null && err.data != undefined){
+                    showValidation(error);
+                }
+                $('#ftco-loader').removeClass('show');
+            }
         }
     })
 };
@@ -186,17 +197,22 @@ function updateData(form_data){
         data: form_data,
         dataType: 'json',
         success: function(msg){
-            if(msg.success == true){
+            if(msg.success){
                 toastr['success'](msg.message);
                 $("#myModal").modal('toggle');
+                $('#ftco-loader').removeClass('show');
                 reloadTables();
-            }
-            else{
-                toastr['error'](msg.message);
             }
         },
         error: function(error){
-            showValidation(error);
+            var err = error.responseJSON;
+            if(err.success == false){
+                toastr['error'](err.message);
+                if(err.data != null && err.data != undefined){
+                    showValidation(error);
+                }
+                $('#ftco-loader').removeClass('show');
+            }
         }
     })
 };

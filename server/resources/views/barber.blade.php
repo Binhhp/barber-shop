@@ -94,6 +94,9 @@
                                 <div class="input-group validate-input">
                                     <input type="text" class="form-control" placeholder="Name" name="name" id="name" required/>
                                 </div>
+                                <div>
+                                    <span class="text-danger" id="nameError"></span>
+                                </div>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -102,13 +105,19 @@
                                 <div class="input-group validate-input">
                                     <input type="text" class="form-control" placeholder="Phone number" name="phone" id="phone" required/>
                                 </div>
+                                <div>
+                                    <span class="text-danger" id="phoneError"></span>
+                                </div>
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="maduan" class="col-sm-2 text-right"><strong>Address</strong><span style="color:red;">*</span></label>
                             <div class="col-md-9 text-left">
                                 <div class="input-group validate-input">
-                                    <input class="form-control" type="text" placeholder="Address" name="address" id="address"/>
+                                    <input class="form-control" type="text" placeholder="Address" name="address" id="address" required/>
+                                </div>
+                                <div>
+                                    <span class="text-danger" id="addressError"></span>
                                 </div>
                             </div>
                         </div>
@@ -117,6 +126,9 @@
                             <div class="col-md-9 text-left">
                                 <div class="input-group validate-input">
                                     <input type="text" class="form-control" placeholder="Email" name="email" id="email" required/>
+                                </div>
+                                <div>
+                                    <span class="text-danger" id="emailError"></span>
                                 </div>
                             </div>
                         </div>

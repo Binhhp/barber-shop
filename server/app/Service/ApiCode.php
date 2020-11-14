@@ -12,4 +12,5 @@ class ApiCode {
     public const SUCCESS_APPOINTMENT         = 204;
     public const ERROR_APPOINTMENT           = 405;
     public const ERROR_IS_CREDENTIALS        = 406;
+    public const ERROR_CHECK_APPOINTMENT     = 502;
 }

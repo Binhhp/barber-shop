@@ -19,6 +19,7 @@ class CreateServicesTable extends Migration
             $table->float('time');
             $table->string('description');
             $table->string('imgPath');
+            $table->string('imgName')->unique();
             $table->integer('price');
             $table->timestamps();
         });

@@ -3,13 +3,13 @@
 
 <div class="app-title">
     <div>
-        <h1><i class="fa fa-th-list"></i> Blog</h1>
-          <p>Table Blog</p>
+        <h1><i class="fa fa-th-list"></i> Service</h1>
+          <p>Table Service</p>
     </div>
     <ul class="app-breadcrumb breadcrumb side">
         <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-        <li class="breadcrumb-item">Blog</li>
-        <li class="breadcrumb-item active"><a href="#">Blog</a></li>
+        <li class="breadcrumb-item">Service</li>
+        <li class="breadcrumb-item active"><a href="#">Service</a></li>
     </ul>
 </div>
 <div class="row">
@@ -44,10 +44,10 @@
                                     </div>
                                 </th>
                                 <th width="15%">Image</th>
-                                <th width="15%">Title</th>
-                                <th width="15%">Category</th>
+                                <th width="15%">Name</th>
+                                <th width="15%">Time</th>
                                 <th width="20%">Description</th>
-                                <th width="15%">Status</th>
+                                <th width="15%">Price</th>
                                 <th width="20%">Action</th>
                             </tr>
                         </thead>
@@ -66,7 +66,7 @@
         <div class="modal-content" style="width:100%; margin: 0 auto;">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    Blog
+                    Service
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -76,44 +76,39 @@
                 <div class="modal-body">
                         {{ csrf_field() }}
                         <div class="row form-group">
-                            <label for="maduan" class="col-sm-2 text-right"><strong>Category</strong><span style="color:red;">*</span></label>
-                            <div class="col-md-4 text-left">
+                            <label for="maduan" class="col-sm-2 text-right"><strong>Name</strong><span style="color:red;">*</span></label>
+                            <div class="col-md-9 text-left">
                                 <div class="input-group validate-input">
-                                    <select class="form-control" name="cate_id" id="cate_id">
-                                        <option value="" disabled selected hidden>Please choose</option>
-                                        @foreach($cate as $i)
-                                            <option value="{{ $i->id }}">{{ $i->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" class="form-control" placeholder="Name" name="name" id="name" required/>
                                 </div>
-                            </div>
-                            <label for="maduan" class="col-sm-1"><strong>Status</strong><span style="color:red;">*</span></label>
-                            <div class="col-md-4 text-left">
-                                <div class="input-group validate-input">
-                                    <select class="form-control" name="status" id="status">
-                                        <option value="" disabled selected hidden>Please choose</option>
-                                        <option value="0">Don't post</option>
-                                        <option value="1">Post</option>
-                                    </select>
+                                <div>
+                                    <span class="text-danger" id="nameError"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label for="maduan" class="col-sm-2 text-right"><strong>Title</strong><span style="color:red;">*</span></label>
-                            <div class="col-md-9 text-left">
+                            <label for="maduan" class="col-sm-2 text-right"><strong>Time</strong><span style="color:red;">*</span></label>
+                            <div class="col-md-4 text-left">
                                 <div class="input-group validate-input">
-                                    <input type="text" class="form-control" placeholder="Title" name="title" id="title" required/>
-                                </div>
-                                <div>
-                                    <span class="text-danger" id="titleError"></span>
+                                    <select class="form-control" name="time" id="time">
+                                        <option value="" disabled selected hidden>Please choose</option>
+                                        <option value="0.25">15 minute</option>
+                                        <option value="0.5">30 minute</option>
+                                        <option value="0.75">45 minute</option>
+                                        <option value="1">1 hours</option>
+                                        <option value="1.5">1 hours 30 minute</option>
+                                        <option value="2">2 hours</option>
+                                        <option value="2.5">2 hours 30 minute</option>
+                                        <option value="3">3 hours</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="maduan" class="col-sm-2 text-right"><strong>Description</strong><span style="color:red;">*</span></label>
                             <div class="col-md-9 text-left">
-                                <div style="height: 100px;" class="input-group validate-input">
-                                    <textarea type="text" class="form-control" placeholder="Description" name="description" id="description" required></textarea>
+                                <div class="input-group validate-input">
+                                    <input type="text" class="form-control" placeholder="Description" name="description" id="description" required/>
                                 </div>
                                 <div>
                                     <span class="text-danger" id="descriptionError"></span>
@@ -121,22 +116,13 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label for="maduan" class="col-sm-2 text-right"><strong>Content</strong><span style="color:red;">*</span></label>
+                            <label for="maduan" class="col-sm-2 text-right"><strong>Price</strong><span style="color:red;">*</span></label>
                             <div class="col-md-9 text-left">
                                 <div class="input-group validate-input">
-                                    <textarea type="text" placeholder="Content" name="content" id="content"></textarea>
+                                    <input class="form-control" type="text" placeholder="Price" name="price" id="price" required/>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <label for="maduan" class="col-sm-2 text-right"><strong>Tag</strong><span style="color:red;">*</span></label>
-                            <div class="col-md-9 text-left">
-                                <div class="input-group validate-input">
-                                    <select class="select2" multiple="multiple" name="tags[]" id="tag">
-                                        @foreach($tags as $tag)
-                                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                                        @endforeach
-                                    </select>
+                                <div>
+                                    <span class="text-danger" id="priceError"></span>
                                 </div>
                             </div>
                         </div>
@@ -188,10 +174,7 @@
 
 @endsection
 @push('scripts')
-<script src="{{ URL::to('jsAdmin/blog.js') }}"></script>
-<!-- CKEditor CDN --->
-<script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
-<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="{{ URL::to('jsAdmin/service.js') }}"></script>
 <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>

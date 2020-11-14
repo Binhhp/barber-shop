@@ -3,11 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
 
-class BarberRequest extends FormRequest
+class ServiceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,14 +25,11 @@ class BarberRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'email' => 'required|email',
-            'position' => 'required',
+            'time' => 'required',
+            'description' => 'required',
+            'price' => 'required',
             'fileName' => 'required',
             'imgPath' => 'required',
         ];
     }
-
-
 }

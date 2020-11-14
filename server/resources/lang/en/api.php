@@ -14,4 +14,5 @@ return [
     'success_appointment' => 'Đặt lịch hẹn thành công!',
     'error_appointment' => 'Đặt lịch hẹn thất bại!',
     'error_is_credentials' => 'Lịch hẹn đã có người đặt! Bạn vui lòng đặt thời gian khác.',
+    'error_check_appointment' => 'Bạn chưa có lịch hẹn!',
 ];

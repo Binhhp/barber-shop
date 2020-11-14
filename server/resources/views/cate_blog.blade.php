@@ -77,6 +77,9 @@
                                 <div class="input-group validate-input">
                                     <input type="text" class="form-control" placeholder="Category Name" name="name" id="name" required/>
                                 </div>
+                                <div>
+                                    <span class="text-danger" id="nameError"></span>
+                                </div>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -84,6 +87,9 @@
                             <div class="col-md-9 text-left">
                                 <div style="height: 200px;" class="input-group validate-input">
                                     <textarea type="text" class="form-control" placeholder="Description" name="description" id="description" required></textarea>
+                                </div>
+                                <div>
+                                    <span class="text-danger" id="descriptionError"></span>
                                 </div>
                             </div>
                         </div>
