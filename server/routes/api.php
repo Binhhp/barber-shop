@@ -19,9 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 //get blog
-Route::get('blog', 'BlogController@show_blog');
+Route::get('blogs', 'BlogController@show_blog')->name('blogs');
 //get detail blog
-Route::get('blog/{id}', 'BlogController@show_detail')->name('show_detail');
+Route::get('blogs/{id}', 'BlogController@show_detail')->name('show_detail');
 //get category blog
 Route::get('cates', 'BlogController@show_category')->name('cate');
 //get tag blog
