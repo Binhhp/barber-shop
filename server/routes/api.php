@@ -19,13 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 //get blog
-Route::get('article', 'BlogController@show_blog')->name('blogs');
+Route::get('article', 'ArticleController@show_blog')->name('article');
 //get detail blog
-Route::get('article/{id}', 'BlogController@show_detail')->name('show_detail');
+Route::get('article/{id}', 'ArticleController@show_detail')->name('show_detail');
 //get category blog
-Route::get('cates', 'BlogController@show_category')->name('cate');
+Route::get('cates', 'ArticleController@show_category')->name('cate');
 //get tag blog
-Route::get('tags', 'BlogController@show_tag')->name('tag');
+Route::get('tags', 'ArticleController@show_tag')->name('tag');
 //get comment blog
 Route::get('comments/{blog_id}', 'BlogController@show_comment')->name('show_comment');
 //get services
