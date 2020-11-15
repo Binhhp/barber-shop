@@ -1,46 +1,27 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategory } from '../../action';
+import { Link } from 'react-router-dom';
 const Category = () => {
+  const Categories = useSelector((state) => state.blog.categories);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (Categories.length === 0) {
+      dispatch(fetchCategory());
+    }
+  }, [Categories]);
   return (
     <aside className='single_sidebar_widget post_category_widget'>
       <h4 className='widget_title'>Category</h4>
       <ul className='list cat-list'>
-        <li>
-          <a href='#' className='d-flex'>
-            <p>Resaurant food</p>
-            <p>(37)</p>
-          </a>
-        </li>
-        <li>
-          <a href='#' className='d-flex'>
-            <p>Travel news</p>
-            <p>(10)</p>
-          </a>
-        </li>
-        <li>
-          <a href='#' className='d-flex'>
-            <p>Modern technology</p>
-            <p>(03)</p>
-          </a>
-        </li>
-        <li>
-          <a href='#' className='d-flex'>
-            <p>Product</p>
-            <p>(11)</p>
-          </a>
-        </li>
-        <li>
-          <a href='#' className='d-flex'>
-            <p>Inspiration</p>
-            <p>21</p>
-          </a>
-        </li>
-        <li>
-          <a href='#' className='d-flex'>
-            <p>Health Care (21)</p>
-            <p>09</p>
-          </a>
-        </li>
+        {Categories?.map((item) => (
+          <li>
+            <Link to={`/blog/category/${item.id}`} className='d-flex'>
+              <p>{item.name}</p>
+              <p>({item.count_blog}))</p>
+            </Link>
+          </li>
+        ))}
       </ul>
     </aside>
   );

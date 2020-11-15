@@ -1,17 +1,37 @@
 import api from '../../api/axiosClient';
-export const getBlogsByPage = (page) => {
-  const response = await api.get('blog', {
-    params:{
-      page: page
+export const getBlogsByPage = async (page, cateId, tagId, key) => {
+  const response = await api.get('article', {
+    params: {
+      page: page,
+      cateId: cateId,
+      tagId: tagId,
+      key: key
     }
   });
   return response;
 }
-export const getBlogDetail = (id) => {
+export const getBlogsById = async (id) => {
+  const response = await api.get(`/article/${id}`);
+  return response;
+}
+
+export const getBlogDetail = async (id) => {
   const response = await api.get('blog', {
-    params:{
+    params: {
       id: id
     }
   });
+  return response;
+}
+
+
+export const getCategory = async () => {
+  const response = await api.get('cates');
+  return response;
+}
+
+
+export const getTag = async () => {
+  const response = await api.get('tags');
   return response;
 }

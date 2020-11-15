@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import Header from '../../components/Header';
 import Category from './components/Category';
@@ -6,10 +7,19 @@ import Newsletter from './components/Newsletter';
 import RecentPost from './components/RecentPost';
 import Search from './components/Search';
 import Tag from './components/Tag';
-
+import { fetchBlogs } from './action';
+import BlogItem from './components/Blogs/BlogItem';
 const BlogPage = () => {
-  let { pageId, tagId, categoryId } = useParams();
+  let { pageId, tagId, categoryId, key } = useParams();
 
+  const blogs = useSelector((state) => state.blog.blogs);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (blogs.length === 0) {
+      // console.log(pageId, categoryId, tagId, undefined);
+      dispatch(fetchBlogs(pageId, categoryId, tagId, undefined));
+    }
+  }, [blogs, pageId, tagId, categoryId, key]);
   return (
     <React.Fragment>
       <Header isHome={false} title='Blog' />
@@ -18,6 +28,9 @@ const BlogPage = () => {
         <div className='container'>
           <div className='row'>
             <div className='col-lg-8 mb-5 mb-lg-0'>
+              {blogs?.map((item) => (
+                <BlogItem item={item} />
+              ))}
               <div className='blog_left_sidebar'>
                 <nav className='blog-pagination justify-content-center d-flex'>
                   <ul className='pagination'>

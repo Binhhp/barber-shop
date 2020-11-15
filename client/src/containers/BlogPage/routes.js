@@ -12,6 +12,8 @@ function BlogRoutes() {
       <Route path={`${path}/page/:pageId`} component={BlogPage} />
       <Route exact path={`${path}/tag/:tagId`} component={BlogPage} />
       <Route path={`${path}/tag/:tagId/page/:pageId`} component={BlogPage} />
+      <Route exact path={`${path}/key/:keySearch`} component={BlogPage} />
+      <Route path={`${path}/key/:keySearch/page/:pageId`} component={BlogPage} />
       <Route exact path={`${path}/category/:categoryId`} component={BlogPage} />
       <Route path={`${path}/category/:categoryId/page/:pageId`} component={BlogPage} />
     </Switch>

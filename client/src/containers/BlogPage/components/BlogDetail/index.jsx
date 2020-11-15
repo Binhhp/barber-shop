@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Comment from './Comment';
 import Newsletter from '../Newsletter';
@@ -8,21 +8,34 @@ import Category from '../Category';
 import Search from '../Search';
 import Header from '../../../../components/Header';
 import CommentForm from './CommentForm';
-
-const BlogDetail = ({ title, imgPath, content, id }) => {
+import { fetchBlogById } from '../../action';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+const BlogDetail = () => {
+  const blog = useSelector((state) => state.blog.blog);
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(blog, 'blog');
+    if (!blog) {
+      dispatch(fetchBlogById(id));
+    }
+  }, [blog]);
   return (
     <React.Fragment>
-      <Header isHome={false} title={title} />
-      {/*================Blog Area =================*/}
+      <Header isHome={false} title={blog?.title} />
       <section className='blog_area section-padding'>
         <div className='container'>
           <div className='row'>
             <div class='col-lg-8 posts-list'>
               <div className='single-post'>
                 <div className='feature-img'>
-                  <img className='img-fluid' src={imgPath} alt='' />
+                  <img className='img-fluid' src={blog?.imgPath} alt='' />
                 </div>
-                <div className='blog_details'>{content}</div>
+                <div className='blog_details'>
+                  <h2>{blog?.description}</h2>
+                  {blog?.content}
+                </div>
               </div>
 
               <Comment />
@@ -40,16 +53,17 @@ const BlogDetail = ({ title, imgPath, content, id }) => {
           </div>
         </div>
       </section>
-      {/*================Blog Area =================*/}
+      ){/*================Blog Area =================*/}
     </React.Fragment>
   );
 };
 
-BlogDetail.propTypes = {
-  title: PropTypes.string,
-  imgPath: PropTypes.string,
-  content: PropTypes.string,
-  id: PropTypes.number,
-};
+// BlogDetail.propTypes = {
+//   title: PropTypes.string,
+//   imgPath: PropTypes.string,
+//   content: PropTypes.string,
+//   id: PropTypes.number,
+//   description: PropTypes.string,
+// };
 
 export default BlogDetail;
