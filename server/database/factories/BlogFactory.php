@@ -27,6 +27,7 @@ class BlogFactory extends Factory
             'title' => $this->faker->sentence(),
             'description' => $this->faker->text(100),
             'imgPath' => $this->faker->imageUrl(),
+            'imgName' => "image.jpg",
             'content' => $this->faker->text(),
             'view' => $this->faker->numberBetween(1, 10000),
             'like' => $this->faker->numberBetween(1, 10000),
