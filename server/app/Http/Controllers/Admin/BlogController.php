@@ -7,11 +7,13 @@ use App\Http\Requests\AppointmentRequest;
 use App\Http\Requests\BlogRequest;
 use App\Models\Blog;
 use App\Models\CategoryBlog;
+use App\Models\Customer;
 use App\Models\Tag;
 use App\Service\ApiCode;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\Facades\DataTables;
 
 class BlogController extends Controller
@@ -115,10 +117,25 @@ class BlogController extends Controller
                         'like' => 0,
                         'status' => $request->status
                     ]);
-
+                    
                     $cate->blogs()->save($blog);
                     $blog->tags()->attach($request->tags === null ? [] : $request->tags);
 
+                    if($request->status == true){
+                        $customers = Customer::where('type', '=', true)->get();
+                        if(count($customers) > 0){
+                            foreach($customers as $item){
+                                $url = "http://localhost:3000/";
+                                $array = [
+                                    'url' => $url,
+                                    'email' => $item->email,
+                                    'name' => $item->name
+                                ];
+
+                                $result = $this->send_notification($array);
+                            }
+                        }
+                    }
                     return $this->respondWithSuccess(ApiCode::NOTIFICATION_INSERT_SUCCESS);
                 }
                 else{

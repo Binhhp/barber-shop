@@ -27,8 +27,7 @@ class CommentFactory extends Factory
             'content' => $this->faker->text(150),
             'status' => true,
             'cus_id' => $this->faker->numberBetween(1, 5),
-            'blog_id' => $this->faker->numberBetween(1, 20),
-            'parent_id' => $this->faker->numberBetween(1, 5),
+            'blog_id' => $this->faker->numberBetween(1, 20)
         ];
     }
 }

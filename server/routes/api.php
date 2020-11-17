@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 //get blog
 Route::get('article', 'ArticleController@show_blog')->name('article');
+//get recent blog
+Route::get('recent-article', 'ArticleController@show_blog_recent')->name('show_blog_recent');
 //get detail blog
 Route::get('article/{id}', 'ArticleController@show_detail')->name('show_detail');
 //get category blog
@@ -40,3 +42,9 @@ Route::get('get-times', 'AppointmentController@show_times')->name('show_times');
 Route::get('confirm-appointment/{id}', 'AppointmentController@check_status_appointments')->name('check_status_appointments');
 //check number
 Route::get('check-phone/{phone_number}', 'AppointmentController@check_appointment')->name('check-phone');
+//register newsletter
+Route::get('newsletter', 'ArticleController@register_subscribe')->name('register_subscribe');
+//comment
+Route::post('comments', 'ArticleController@comments')->name('comments');
+//contact
+Route::post('contacts', 'HomeController@contacts')->name('contacts');

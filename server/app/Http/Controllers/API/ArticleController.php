@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\CategoryBlog;
 use App\Models\Comment;
+use App\Models\Customer;
 use App\Models\Tag;
 use App\Models\TagBlog;
 use App\Service\ApiCode;
@@ -63,6 +64,23 @@ class ArticleController extends Controller
         }
         catch(Exception $ex){
                 return $this->respondWithError(ApiCode::ERROR_GET_DATA, 401);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     * Get recent blog
+     * @return \Illuminate\Http\Response
+     */
+    public function show_blog_recent()
+    {
+        try{
+            
+            $data = Blog::orderBy('created_at', 'DESC')->take(5)->get();
+            return $this->respond($data);
+        }
+        catch(Exception $ex){
+            return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);
         }
     }
     /**
@@ -137,6 +155,98 @@ class ArticleController extends Controller
                             ->where('blog_id', '=', $blog_id)
                             ->get(['comments.*','customers.name', 'customers.phone_number', 'customers.email']);
             return $this->respond($data);
+        }
+        catch(Exception $ex){
+            return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     * Get blog by search 
+     * @param Request
+     * @return \Illuminate\Http\Response
+     */
+    public function register_subscribe(Request $request)
+    {
+        try{
+            $customer = Customer::where('email', '=', $request->email)->first();
+            if(!is_null($customer)){
+                $customer->type = true;
+                $customer->save();
+            }
+            else{
+
+                $dataset = new Customer([
+                    'name' => 'A',
+                    'phone_number' => '1',
+                    'email' => $request->email,
+                    'type' => true
+                ]);
+                
+                $dataset->save();
+
+            }
+            return $this->respondWithSuccess(ApiCode::SUCCESS_NEWSLETTER);
+        }
+        catch(Exception $ex){
+            return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     * Comment blog
+     * @param Request
+     * @return \Illuminate\Http\Response
+     */
+    public function comments(Request $request)
+    {
+        try{
+            $data = $request->json()->all();
+            if(!is_null($data)){
+                $customer = Customer::where('email', '=', $data['email'])->first();
+                if(is_null($customer)){
+                   Customer::create([
+                       'name' => $data['name'],
+                       'phone_number' => $data['phone_number'],
+                       'email' => $data['email'],
+                       'type' => false
+                   ]);
+
+                   
+                   $record = Customer::where([
+                        'name' => $data['name'],
+                        'phone_number' => $data['phone_number'],
+                        'email' => $data['email'],
+                        'type' => false
+                   ])->first();
+
+                   if(!is_null($record)){
+
+                        $comment = new Comment([
+                            'content' => $data['content'],
+                            'status' => true,
+                            'blog_id' => $data['blog_id']
+                        ]);
+                       $record->comments()->save($comment);
+                   }
+                }
+                else{
+                    $comment = new Comment([
+                        'content' => $data['content'],
+                        'status' => true,
+                        'blog_id' => $data['blog_id']
+                    ]);
+    
+                    $customer->comments()->save($comment);
+                }
+
+                return $this->respondWithSuccess(ApiCode::SUCCESS_COMMENT);
+            }
+            else{
+                return $this->respondRequest(ApiCode::VALIDATION_ERROR);
+            }
         }
         catch(Exception $ex){
             return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);

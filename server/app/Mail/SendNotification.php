@@ -5,36 +5,16 @@ use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 
-trait SendMail
+trait SendNotification
 {
     //Send mail using mail jet
-    public function send_mail($mail)
+    public function send_notification($mail)
     {
         try{
 
-                $temp = Http::get('https://firebasestorage.googleapis.com/v0/b/barber-store-cadce.appspot.com/o/mail.txt?alt=media&token=365a824e-37ca-4502-9c7a-cf46f2bbeea2');
-                $search = [
-                    '{{ name }}', 
-                    '{{ phone_number }}', 
-                    '{{ time }}', 
-                    '{{ date }}', 
-                    '{{ service }}',
-                    '{{ barber }}', 
-                    '{{ address }}',
-                    '{{ url }}',
-                ];
-                $replace = [ 
-                    $mail['name'], 
-                    $mail['phone_number'], 
-                    $mail['time'], 
-                    $mail['date'], 
-                    $mail['service'], 
-                    $mail['barber'], 
-                    $mail['address'],
-                    $mail['url'],
-                ];
+                $temp = Http::get('https://firebasestorage.googleapis.com/v0/b/barber-store-cadce.appspot.com/o/icon%2Fnewsletter.txt?alt=media&token=67834ec3-4137-4b5a-bc84-a5e7f73a1474');
 
-                $result = str_replace($search, $replace, $temp);
+                $result = str_replace('{{ url_base }}', $mail['url'], $temp);
 
                 $body = [
                     'Messages' => [
@@ -49,7 +29,7 @@ trait SendMail
                             'Name' => $mail['name']
                             ]
                         ],
-                        'Subject' => "Thanks you from Barber Shop!",
+                        'Subject' => "🎉Thông báo từ Barber Shop!",
                         'HTMLPart' => $result
                         ]
                     ]

@@ -94,6 +94,7 @@ class AppointmentController extends Controller
             }
 
             $cus_id = $this->find_cus($data['email']);
+
             $appointment = new Appointment([
                 'date' => $data['date'],
                 'time_id' => $data['time_id'],
@@ -103,6 +104,10 @@ class AppointmentController extends Controller
             ]);
             
             if(!is_null($cus_id)){
+                
+                $cus_id->name = $data['name'];
+                $cus_id->phone_number = $data['phone_number'];
+                $cus_id->save();
                 $cus_id->appointments()->save($appointment);
             }
             else{
@@ -110,7 +115,7 @@ class AppointmentController extends Controller
                     'name' => $data['name'],
                     'phone_number' => $data['phone_number'],
                     'email' => $data['email'],
-                    'password' => '1',
+                    'type' => false
                 ]);
                    
                 $saved = $customer->save();
@@ -175,7 +180,7 @@ class AppointmentController extends Controller
                                     ])
                                     ->orderBy('appointments.date', 'DESC')
                                     ->get(['appointments.*', 'customers.name', 'customers.phone_number', 'customers.email']);
-                
+                                    
                 if(count($data) > 0){
                     $array = array();
                     foreach($data as $item){
