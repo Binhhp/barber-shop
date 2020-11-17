@@ -1,0 +1,4 @@
+composer update
+Create migration: php artisan migrate
+Refresh migration: php artisan migrate:refresh
+php artisan db:seed

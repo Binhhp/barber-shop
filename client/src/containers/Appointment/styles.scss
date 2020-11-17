@@ -1,0 +1,78 @@
+.appointment-section {
+  padding: 70px 0 50px;
+}
+
+.slide {
+  width: 100%;
+  .slick-next:before {
+    color: #000;
+  }
+  .slick-prev:before {
+    color: #000;
+  }
+}
+
+.title-steps {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.time-hour {
+  .box {
+    display: flex;
+  }
+  .square {
+    width: 40px;
+    height: 24px;
+    border-radius: 4px;
+    margin-right: 8px;
+
+    &.unavailable {
+      background: #e8e8e8;
+      border: 1px solid #d1d1d1;
+    }
+    &.available {
+      background: #fff;
+      border: 1px solid #000;
+    }
+    &.active {
+      background: #4b360096;
+    }
+  }
+}
+.appointment {
+  width: 100%;
+  padding: 20px 10px;
+
+  &-time {
+    text-align: center;
+    // margin: 10px;
+    padding: 10px 0;
+    button {
+      padding: 10px 20px;
+      border: 1px solid #000;
+      border: none;
+      outline: none;
+      border-radius: 5px;
+      // font: 20px;
+      cursor: pointer;
+      &.active {
+        background: #4b360096;
+        color: white;
+      }
+      &.unavailable {
+        background: #e8e8e8;
+        border: 1px solid #d1d1d1;
+      }
+      &.available {
+        background: #fff;
+        border: 1px solid #000;
+      }
+    }
+  }
+
+  .swiper-slide {
+    width: auto;
+  }
+}

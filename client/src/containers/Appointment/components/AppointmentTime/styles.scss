@@ -1,0 +1,28 @@
+.appointment-time {
+  input[name='time-appointmemt'] {
+    display: none;
+  }
+  .form-check-label {
+    border-radius: 4px;
+    padding: 8px 13px;
+
+    background: #e8e8e8;
+    border: 1px solid #d1d1d1;
+
+    &.available {
+      background: #fff;
+      border: 1px solid #000;
+    }
+    &.unavailable {
+      background: #e8e8e8;
+      border: 1px solid #d1d1d1;
+    }
+  }
+
+  input[name='time-appointmemt']:checked {
+    & + label {
+      background: #4b360096;
+      color: #fff;
+    }
+  }
+}

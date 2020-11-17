@@ -1,0 +1,168 @@
+// {
+//   "editor.suggestSelection": "first",
+//   "editor.dragAndDrop": true,
+//   "editor.formatOnType": true,
+//   "editor.fontSize": 14,
+//   "editor.lineHeight": 26,
+//   "editor.fontFamily": "Fira Code",
+//   "editor.wordWrapColumn": 100,
+//   "editor.fontLigatures": true,
+//   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+//   "workbench.colorTheme": "Dracula",
+//   "workbench.iconTheme": "material-icon-theme",
+//   "vsicons.projectDetection.autoReload": true,
+//   "window.zoomLevel": 1,
+//   "terminal.integrated.shell.osx": "zsh",
+//   "terminal.integrated.fontFamily": "Source Code Pro for PowerLine",
+//   // Set the default
+//   "editor.formatOnSave": true,
+//   "editor.defaultFormatter": "esbenp.prettier-vscode",
+//   // Enable per-language
+//   "[javascript]": {
+//     "editor.formatOnSave": true,
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   "terminal.integrated.rendererType": "canvas",
+//   "terminal.integrated.fontSize": 14,
+//   "terminal.integrated.lineHeight": 1.1,
+//   "prettier.jsxBracketSameLine": true,
+//   "prettier.jsxSingleQuote": true,
+//   "prettier.proseWrap": "always",
+//   "prettier.singleQuote": true,
+//   "tslint.alwaysShowStatus": true,
+//   "files.autoSave": "off",
+//   "prettier.disableLanguages": ["js"],
+//   "eslint.validate": [
+//     "javascript",
+//     "javascriptreact",
+//     "typescript",
+//     "typescriptreact"
+//   ],
+//   "[json]": {
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   "[typescript]": {
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   "[scss]": {
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   "[css]": {
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   "prettier.trailingComma": "all",
+//   "[jsonc]": {
+//     "editor.defaultFormatter": "HookyQR.beautify"
+//   },
+//   "[html]": {
+//     "editor.defaultFormatter": "vscode.html-language-features"
+//   },
+//   "git.ignoreMissingGitWarning": true,
+//   "editor.fontWeight": "500",
+//   "terminal.integrated.fontWeight": "200",
+//   "terminal.integrated.fontWeightBold": "200",
+//   "git.confirmSync": false,
+//   "explorer.confirmDelete": false,
+//   "debug.console.fontSize": 18,
+//   "markdown.preview.fontSize": 18,
+//   "vsicons.dontShowNewVersionMessage": true,
+//   "workbench.startupEditor": "welcomePage",
+//   "javascript.updateImportsOnFileMove.enabled": "always",
+//   "editor.wordWrap": "bounded",
+//   "editor.tabSize": 2,
+//   "editor.minimap.enabled": false,
+//   "editor.minimap.renderCharacters": false,
+//   "editor.wrappingIndent": "same",
+//   "editor.quickSuggestionsDelay": 0,
+//   "eslint.autoFixOnSave": true,
+//   "eslint.alwaysShowStatus": true,
+//   "beautify.ignore": ["**/*.js", "**/*.jsx"],
+//   "[javascriptreact]": {
+//     "editor.defaultFormatter": "esbenp.prettier-vscode"
+//   },
+//   "liveServer.settings.donotShowInfoMsg": true,
+//   "editor.codeActionsOnSave": {
+//     "source.fixAll": true,
+//     // For ESLint
+//     "source.fixAll.eslint": true,
+//     // For TSLint
+//     "source.fixAll.tslint": true,
+//     // For Stylelint
+//     "source.fixAll.stylelint": true
+//     // "source.organizeImports": true
+//   },
+//   // "prettier.useTabs": false,
+//   "prettier.jsonEnable": [], // Will disable Prettier Misc on JSON files
+//   "prettier.openOutput": false,
+//   //sass
+//   "liveSassCompile.settings.formats": [
+//     {
+//       "format": "compressed",
+//       "extensionName": ".min.css",
+//       "savePath": "./css"
+//     }
+//   ],
+//   "liveSassCompile.settings.autoprefix": [
+//     "> 1%",
+//     "last 2 versions",
+//     "last 1 version",
+//     "IE 10"
+//   ],
+//   "liveSassCompile.settings.generateMap": false,
+//   "css.remoteStyleSheets": [
+//     "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+//   ],
+//   // "emmet.showExpandedAbbreviation": "never",
+//   "emmet.includeLanguages": {
+//     "javascript": "javascriptreact",
+//     // "vue-html": "html",
+//     // "razor": "html",
+//     "plaintext": "pug"
+//   },
+//   "emmet.preferences": {
+//     "css.webkitProperties": "border-right,animation",
+//     "css.mozProperties": "",
+//     "css.oProperties": null,
+//     "css.msProperties": null
+//   },
+//   "emmet.syntaxProfiles": {
+//     "html": {
+//       "filters": "bem"
+//     }
+//   },
+//   "sync.autoDownload": true,
+//   "sync.autoUpload": true,
+//   "sync.forceUpload": true,
+//   "sync.quietSync": true,
+//   "sync.forceDownload": true,
+//   "python.jediEnabled": false,
+//   "sync.gist": "55f2a2cc36cb7941f83e20c415a39776",
+//   "jsannotations.enabled": true,
+//   "jsannotations.hideIfEqual": true,
+//   "jsannotations.hideInvalidAnnotation": true,
+//   "jsannotations.hideDiagnostics": true,
+//   "jsannotations.fontStyle": "italic",
+//   "jsannotations.fontWeight": "400",
+//   "workbench.list.smoothScrolling": true,
+//   "tabnine.experimentalAutoImports": true,
+//   "eslint.format.enable": true,
+//   "recommendations": [
+//     "mikael.angular-beastcode",
+//     "angular.ng-template",
+//     "coenraads.bracket-pair-colorizer",
+//     "mikestead.dotenv",
+//     "dsznajder.es7-react-js-snippets",
+//     "dbaeumer.vscode-eslint",
+//     "mkxml.vscode-filesize",
+//     "ritwickdey.liveserver",
+//     "davidanson.vscode-markdownlint",
+//     "pkief.material-icon-theme",
+//     "zhuangtongfa.material-theme",
+//     "esbenp.prettier-vscode",
+//     "syler.sass-indented",
+//     "octref.vetur",
+//     "ms-vscode.vscode-typescript-tslint-plugin",
+//     "visualstudioexptteam.vscodeintellicode",
+//     "formulahendry.code-runner"
+//   ]
+// }
