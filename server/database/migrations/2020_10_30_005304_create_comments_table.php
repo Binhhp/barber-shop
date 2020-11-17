@@ -18,7 +18,6 @@ class CreateCommentsTable extends Migration
             $table->string('content');
             $table->boolean('status');
             $table->integer('cus_id');
-            $table->integer('parent_id');
             $table->integer('blog_id');
             $table->timestamps();
         });

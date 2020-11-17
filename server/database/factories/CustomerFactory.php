@@ -27,7 +27,7 @@ class CustomerFactory extends Factory
             'name' => $this->faker->firstName(),
             'phone_number' => $this->faker->phoneNumber(),
             'email' => $this->faker->regexify('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}'),
-            'password' => Str::random(20)
+            'type' => false
         ];
     }
 }
