@@ -6,10 +6,6 @@ export const fetchTag = () => async (dispatch) => {
     const res = await getTag();
     if (res.success) {
       dispatch({ type: constants.FETCH_TAG, payload: res.data })
-<<<<<<< HEAD
-
-=======
->>>>>>> c579777f6dfcd84e67487acf5128a783b44d3e52
     }
   } catch (error) {
     console.log(error)

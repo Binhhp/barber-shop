@@ -7,41 +7,10 @@ import Newsletter from './components/Newsletter';
 import RecentPost from './components/RecentPost';
 import Search from './components/Search';
 import Tag from './components/Tag';
-<<<<<<< HEAD
 import { getBlogsByPage } from './services';
-import BlogItem from './components/Blogs/BlogItem';
-import Pagination from './components/pagination';
-
-const BlogPage = () => {
-  const [activePage, setActivePage] = useState(1);
-  let { pageId, tagId, categoryId, key } = useParams();
-  const [perPage, setPerPage] = useState();
-  const [totalItem, setTotalItem] = useState();
-  const [blogs, setBlogs] = useState([]);
-  const handlePageChange = (pageNumber) => {
-    setActivePage(pageNumber);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getBlogsByPage(pageId, categoryId, tagId, key);
-      if (data.success) {
-        setBlogs(data.data.data);
-        setPerPage(data.data.per_page);
-        setTotalItem(data.data.total);
-      }
-    };
-    fetchData();
-  }, [pageId, tagId, categoryId, key]);
-
-  useEffect(() => {
-    setActivePage(pageId || 1);
-  }, [pageId]);
-=======
-import { fetchBlogs } from './action';
 import BlogItem from './components/Blogs/BlogItem';
 import Pagination from './components/Pagination';
-import { getBlogsByPage } from './services';
+
 const BlogPage = () => {
   let { pageId, tagId, categoryId, keySearch } = useParams();
   let { path, url } = useRouteMatch();

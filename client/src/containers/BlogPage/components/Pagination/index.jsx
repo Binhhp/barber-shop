@@ -41,6 +41,10 @@ const Pagination = ({ pageActive, perPage, totalItem }) => {
   );
 };
 
-Pagination.propTypes = {};
+Pagination.propTypes = {
+  pageActive: PropTypes.number,
+  perPage: PropTypes.number,
+  totalItem: PropTypes.number,
+};
 
 export default Pagination;
