@@ -18,6 +18,7 @@ const Pagination = ({ perPage, pageActive }) => {
     for (let i = start; i < start + 3; i++) {
       res.push(<PageItem page={i} link='' pageCurrent={pageActive} />);
     }
+
     return res;
   };
 
