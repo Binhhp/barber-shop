@@ -20,4 +20,10 @@ class Customer extends Model
         # code...
         return $this->hasMany(Comment::class, 'cus_id', 'id');
     }
+
+    public function contacts()
+    {
+        # code...
+        return $this->hasMany(Contact::class, 'cus_id', 'id');
+    }
 }

@@ -196,52 +196,56 @@ class ArticleController extends Controller
 
     /**
      * Display the specified resource.
-     * Get blog by search 
+     * Comment blog
      * @param Request
      * @return \Illuminate\Http\Response
      */
     public function comments(Request $request)
     {
         try{
-            if($request->blog_id){
-                $customer = Customer::where('email', '=', $request->email)->first();
+            $data = $request->json()->all();
+            if(!is_null($data)){
+                $customer = Customer::where('email', '=', $data['email'])->first();
                 if(is_null($customer)){
                    Customer::create([
-                       'name' => $request->name,
-                       'phone_number' => $request->phone_number,
-                       'email' => $request->email,
+                       'name' => $data['name'],
+                       'phone_number' => $data['phone_number'],
+                       'email' => $data['email'],
                        'type' => false
                    ]);
 
                    
                    $record = Customer::where([
-                        'name' => $request->name,
-                        'phone_number' => $request->phone_number,
-                        'email' => $request->email,
+                        'name' => $data['name'],
+                        'phone_number' => $data['phone_number'],
+                        'email' => $data['email'],
                         'type' => false
                    ])->first();
 
                    if(!is_null($record)){
 
                         $comment = new Comment([
-                            'content' => $request->content,
+                            'content' => $data['content'],
                             'status' => true,
-                            'blog_id' => $request->blog_id
+                            'blog_id' => $data['blog_id']
                         ]);
                        $record->comments()->save($comment);
                    }
                 }
                 else{
                     $comment = new Comment([
-                        'content' => $request->content,
+                        'content' => $data['content'],
                         'status' => true,
-                        'blog_id' => $request->blog_id
+                        'blog_id' => $data['blog_id']
                     ]);
     
                     $customer->comments()->save($comment);
                 }
 
                 return $this->respondWithSuccess(ApiCode::SUCCESS_COMMENT);
+            }
+            else{
+                return $this->respondRequest(ApiCode::VALIDATION_ERROR);
             }
         }
         catch(Exception $ex){

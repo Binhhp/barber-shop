@@ -45,4 +45,6 @@ Route::get('check-phone/{phone_number}', 'AppointmentController@check_appointmen
 //register newsletter
 Route::get('newsletter', 'ArticleController@register_subscribe')->name('register_subscribe');
 //comment
-Route::get('comment', 'ArticleController@comments')->name('comment');
+Route::post('comments', 'ArticleController@comments')->name('comments');
+//contact
+Route::post('contacts', 'HomeController@contacts')->name('contacts');

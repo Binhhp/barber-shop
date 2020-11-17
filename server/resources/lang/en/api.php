@@ -13,6 +13,7 @@ return [
     'error_credentials' => 'Bản ghi đã tồn tại',
     'success_appointment' => 'Đặt lịch hẹn thành công!',
     'success_newsletter' => 'Đăng kí theo dõi thành công!',
+    'success_contact' => 'Phản hồi thành công!',
     'success_comment' => 'Comment thành công!',
     'error_appointment' => 'Đặt lịch hẹn thất bại!',
     'error_is_credentials' => 'Lịch hẹn đã có người đặt! Bạn vui lòng đặt thời gian khác.',
