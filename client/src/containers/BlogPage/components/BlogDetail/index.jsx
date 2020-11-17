@@ -38,8 +38,8 @@ const BlogDetail = () => {
                 </div>
               </div>
 
-              <Comment />
-              <CommentForm />
+              <Comment blogId={id} />
+              <CommentForm blogId={id} />
             </div>
             <div className='col-lg-4'>
               <div className='blog_right_sidebar'>

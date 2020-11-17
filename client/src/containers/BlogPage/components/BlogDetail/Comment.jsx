@@ -2,7 +2,7 @@ import React from 'react';
 import comment_3 from '../../../../assets/img/comment/comment_3.png';
 import comment_1 from '../../../../assets/img/comment/comment_1.png';
 import comment_2 from '../../../../assets/img/comment/comment_2.png';
-const Comment = () => {
+const Comment = ({ blogId }) => {
   return (
     <div className='comments-area'>
       <h4>05 Comments</h4>

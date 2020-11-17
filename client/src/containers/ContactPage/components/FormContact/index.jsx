@@ -1,11 +1,30 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import { postContact } from '../../service';
+import Swal from 'sweetalert2';
 const FormContact = () => {
+  const [bodyContact, setBodyContact] = useState({});
+  const handleOnChange = (e) => {
+    setBodyContact({ ...bodyContact, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(JSON.stringify(bodyContact));
+      const res = await postContact(bodyContact);
+      if (res.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Your contact has been sent.',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {}
+  };
   return (
     <form
       className='form-contact contact_form'
-      action='contact_process.php'
-      method='post'
+      onSubmit={(e) => handleSubmit(e)}
       id='contactForm'
       noValidate='novalidate'>
       <div className='row'>
@@ -15,6 +34,7 @@ const FormContact = () => {
               className='form-control w-100'
               name='message'
               id='message'
+              onChange={(e) => handleOnChange(e)}
               cols={30}
               rows={9}
               onfocus="this.placeholder = ''"
@@ -30,6 +50,7 @@ const FormContact = () => {
               className='form-control valid'
               name='name'
               id='name'
+              onChange={(e) => handleOnChange(e)}
               type='text'
               onfocus="this.placeholder = ''"
               onblur="this.placeholder = 'Enter your name'"
@@ -41,12 +62,13 @@ const FormContact = () => {
           <div className='form-group'>
             <input
               className='form-control valid'
-              name='email'
-              id='email'
-              type='email'
+              name='phone_number'
+              id='phone_number'
+              onChange={(e) => handleOnChange(e)}
+              type='text'
               onfocus="this.placeholder = ''"
-              onblur="this.placeholder = 'Enter email address'"
-              placeholder='Email'
+              onblur="this.placeholder = 'Enter phone number'"
+              placeholder='Phone'
             />
           </div>
         </div>
@@ -54,12 +76,13 @@ const FormContact = () => {
           <div className='form-group'>
             <input
               className='form-control'
-              name='subject'
-              id='subject'
+              name='email'
+              onChange={(e) => handleOnChange(e)}
+              id='email'
               type='text'
               onfocus="this.placeholder = ''"
-              onblur="this.placeholder = 'Enter Subject'"
-              placeholder='Enter Subject'
+              onblur="this.placeholder = 'Enter email address'"
+              placeholder='Enter email address'
             />
           </div>
         </div>

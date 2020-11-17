@@ -41,3 +41,9 @@ export const getTag = async () => {
   const response = await api.get('tags');
   return response;
 }
+
+
+export const postComment = async (body) => {
+  const response = await api.post('comments', body);
+  return response;
+}
