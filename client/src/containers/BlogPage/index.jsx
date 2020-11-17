@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import Header from '../../components/Header';
@@ -9,17 +9,27 @@ import Search from './components/Search';
 import Tag from './components/Tag';
 import { fetchBlogs } from './action';
 import BlogItem from './components/Blogs/BlogItem';
+import Pagination from './components/Pagination';
+import { getBlogsByPage } from './services';
 const BlogPage = () => {
-  let { pageId, tagId, categoryId, key } = useParams();
-
-  const blogs = useSelector((state) => state.blog.blogs);
+  let { pageId, tagId, categoryId, keySearch } = useParams();
+  let { path, url } = useRouteMatch();
+  const [blogs, setBlogs] = useState([]);
+  const [perPage, setPerPage] = useState(1);
+  const [totalItem, setTotalItem] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (blogs.length === 0) {
-      // console.log(pageId, categoryId, tagId, undefined);
-      dispatch(fetchBlogs(pageId, categoryId, tagId, undefined));
-    }
-  }, [blogs, pageId, tagId, categoryId, key]);
+    const fetchData = async () => {
+      const res = await getBlogsByPage(pageId, categoryId, tagId, keySearch);
+      if (res.success) {
+        setBlogs(res.data.data);
+        setPerPage(res.data.per_page);
+        setTotalItem(res.data.total);
+      }
+    };
+    fetchData();
+    console.log(url, pageId, tagId, categoryId, keySearch);
+  }, [url, pageId, tagId, categoryId, keySearch]);
   return (
     <React.Fragment>
       <Header isHome={false} title='Blog' />
@@ -28,34 +38,15 @@ const BlogPage = () => {
         <div className='container'>
           <div className='row'>
             <div className='col-lg-8 mb-5 mb-lg-0'>
-              {blogs?.map((item) => (
-                <BlogItem item={item} />
-              ))}
               <div className='blog_left_sidebar'>
-                <nav className='blog-pagination justify-content-center d-flex'>
-                  <ul className='pagination'>
-                    <li className='page-item'>
-                      <a href='#' className='page-link' aria-label='Previous'>
-                        <i className='ti-angle-left' />
-                      </a>
-                    </li>
-                    <li className='page-item'>
-                      <a href='#' className='page-link'>
-                        1
-                      </a>
-                    </li>
-                    <li className='page-item active'>
-                      <a href='#' className='page-link'>
-                        2
-                      </a>
-                    </li>
-                    <li className='page-item'>
-                      <a href='#' className='page-link' aria-label='Next'>
-                        <i className='ti-angle-right' />
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+                {blogs?.map((item) => (
+                  <BlogItem item={item} />
+                ))}
+                <Pagination
+                  pageActive={pageId ?? 1}
+                  perPage={perPage}
+                  totalItem={totalItem}
+                />
               </div>
             </div>
             <div className='col-lg-4'>

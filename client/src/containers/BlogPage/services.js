@@ -10,6 +10,12 @@ export const getBlogsByPage = async (page, cateId, tagId, key) => {
   });
   return response;
 }
+
+export const getCommentsByBlogId = async (id) => {
+  const response = await api.get(`/comments/${id}`);
+  return response;
+}
+
 export const getBlogsById = async (id) => {
   const response = await api.get(`/article/${id}`);
   return response;
