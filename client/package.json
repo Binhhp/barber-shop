@@ -7,6 +7,10 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.0",
+<<<<<<< HEAD
+    "bootstrap": "^4.5.3",
+=======
+>>>>>>> c579777f6dfcd84e67487acf5128a783b44d3e52
     "connected-react-router": "^6.8.0",
     "google-maps-react": "^2.0.6",
     "history": "^5.0.0",
@@ -14,6 +18,10 @@
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+<<<<<<< HEAD
+    "react-js-pagination": "^3.0.3",
+=======
+>>>>>>> c579777f6dfcd84e67487acf5128a783b44d3e52
     "react-moment": "^1.0.0",
     "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0",

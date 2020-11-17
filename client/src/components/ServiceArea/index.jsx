@@ -21,7 +21,14 @@ const ServiceArea = ({ services }) => {
           <div className='white_bg_pos'>
             <div className='row'>
               {/* {console.log(Array.from(services),services,'servicesservices')} */}
+<<<<<<< HEAD
+              {services &&
+                services.map((item) => (
+                  <ServiceItem key={item.id} item={item} />
+                ))}
+=======
               {services && services.map((item) => <ServiceItem item={item} />)}
+>>>>>>> c579777f6dfcd84e67487acf5128a783b44d3e52
 
               <div className='col-xl-12'>
                 <div className='book_btn text-center'>
