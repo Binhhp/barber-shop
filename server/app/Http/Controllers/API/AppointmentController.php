@@ -271,7 +271,7 @@ class AppointmentController extends Controller
             }
         }
         catch(Exception $ex){
-            return $this->respondRequest(ApiCode::ERROR_REQUEST);
+            echo($ex->getMessage());
         }
     }
 
@@ -284,7 +284,10 @@ class AppointmentController extends Controller
                 if(!is_null($appointment)){
                     $appointment->status = true;
                     $appointment->save();
-                    return view('notification.success_appointment');
+
+                    $url_base = "http://localhost:3000/";
+                    
+                    return view('notification.success_appointment')->with(['url_base' => $url_base]);
                 }
                 else{
                     return $this->respondRequest(ApiCode::ERROR_GET_DATA);

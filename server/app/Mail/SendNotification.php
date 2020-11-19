@@ -29,7 +29,7 @@ trait SendNotification
                             'Name' => $mail['name']
                             ]
                         ],
-                        'Subject' => "🎉Thông báo từ Barber Shop!",
+                        'Subject' => "✨Notice from Barber Shop!💪",
                         'HTMLPart' => $result
                         ]
                     ]

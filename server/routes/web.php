@@ -64,7 +64,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth'] ], function(){
     Route::group(['prefix' => 'tag'], function(){
         Route::get('', [
             'uses' => 'Admin\TagController@index',
-            'as' => 'tag'
+            'as' => 'tag.index'
         ]);
     
         Route::get('getData', [
@@ -193,7 +193,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth'] ], function(){
         ]);
     });
 
-     //Blog
+     //Service
      Route::group(['prefix' => 'service'], function(){
         Route::get('', [
             'uses' => 'Admin\ServiceController@index',
@@ -225,10 +225,52 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth'] ], function(){
             'as' => 'service.deleteAll'
         ]);
     });
+     //Appointment
+     Route::group(['prefix' => 'appointment'], function(){
+        Route::get('', [
+            'uses' => 'Admin\AppointmentController@index',
+            'as' => 'appointment.index'
+        ]);
+
+        Route::get('getData', [
+            'uses' => 'Admin\AppointmentController@getData',
+            'as' => 'appointment.getData'
+        ]);
+    
+        Route::get('delete/{id}', [
+            'uses' => 'Admin\AppointmentController@delete',
+            'as' => 'appointment.delete'
+        ]);
+    
+        Route::post('deleteAll', [
+            'uses' => 'Admin\AppointmentController@deleteAll',
+            'as' => 'appointment.deleteAll'
+        ]);
+    });
+     //Contact
+     Route::group(['prefix' => 'contact'], function(){
+        Route::get('', [
+            'uses' => 'Admin\ContactController@index',
+            'as' => 'contact.index'
+        ]);
+
+        Route::get('getData', [
+            'uses' => 'Admin\ContactController@getData',
+            'as' => 'contact.getData'
+        ]);
+    
+        Route::get('delete/{id}', [
+            'uses' => 'Admin\ContactController@delete',
+            'as' => 'contact.delete'
+        ]);
+    
+        Route::post('deleteAll', [
+            'uses' => 'Admin\ContactController@deleteAll',
+            'as' => 'contact.deleteAll'
+        ]);
+    });
 });
 
-Route::get('error404', function(){
-    return view('error.page_error');
-});
+Route::get('error404', 'Admin\HomeAdminController@error')->name('error404');
 
 Auth::routes();

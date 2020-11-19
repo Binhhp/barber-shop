@@ -42,6 +42,15 @@ class HomeAdminController extends Controller
             return view('error.error401');
         }
     }
+    public function error()
+    {
+        if(Auth::user())
+        {
+            $name = Auth::user()->name;
+            $role = Auth::user()->role->name;
+        }
+        return view('error.page_error', ['user_name' => $name, 'user_role' => $role]); 
+    }
     //get param
     public function getData()
     {

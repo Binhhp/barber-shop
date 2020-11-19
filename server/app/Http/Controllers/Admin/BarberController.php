@@ -188,7 +188,7 @@ class BarberController extends Controller
                         $record->delete();
                     }
                 }
-                $msg = 'Xóa ' . count($data) . ' thành công!';
+                $msg = 'Delete ' . count($data) . ' success!';
                 return $this->respondAll($array ,$msg);
             }
             else{

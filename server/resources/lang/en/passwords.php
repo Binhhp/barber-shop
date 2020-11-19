@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'reset' => 'Đặt lại mật khẩu thành công!',
+    'reset' => 'Reset password to public!',
     'sent' => 'We have emailed your password reset link!',
-    'throttled' => 'Vui lòng chờ trước khi thử lại.',
+    'throttled' => 'Please wait before trying again.',
     'token' => 'This password reset token is invalid.',
     'user' => "We can't find a user with that email address.",
 

@@ -25,9 +25,9 @@ Route::get('recent-article', 'ArticleController@show_blog_recent')->name('show_b
 //get detail blog
 Route::get('article/{id}', 'ArticleController@show_detail')->name('show_detail');
 //get category blog
-Route::get('cates', 'ArticleController@show_category')->name('cate');
+Route::get('cates', 'ArticleController@show_category')->name('cates');
 //get tag blog
-Route::get('tags', 'ArticleController@show_tag')->name('tag');
+Route::get('tags', 'ArticleController@show_tag')->name('tags');
 //get comment blog
 Route::get('comments/{blog_id}', 'BlogController@show_comment')->name('show_comment');
 //get services

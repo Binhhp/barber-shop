@@ -22,5 +22,12 @@ class UserSeeder extends Seeder
         $user->password = Hash::make('Binhhp20@@');
         $user->role_id = 1;
         $user->save();
+
+        $user = new User();
+        $user->name = 'Khoa';
+        $user->email = 'ltk001@gmail.com';
+        $user->password = Hash::make('123456');
+        $user->role_id = 2;
+        $user->save();
     }
 }

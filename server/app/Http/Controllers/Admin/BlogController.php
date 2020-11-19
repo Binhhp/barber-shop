@@ -21,6 +21,7 @@ class BlogController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('role:Admin');
     }
 
     public function index()
@@ -239,7 +240,7 @@ class BlogController extends Controller
                         $record->delete();
                     }
                 }
-                $msg = 'Xóa ' . count($data) . ' thành công!';
+                $msg = 'Delete ' . count($data) . ' success!';
                 return $this->respondAll($array ,$msg);
             }
             else{
