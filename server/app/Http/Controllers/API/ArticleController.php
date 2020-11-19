@@ -63,7 +63,7 @@ class ArticleController extends Controller
             }
         }
         catch(Exception $ex){
-                return $this->respondWithError(ApiCode::ERROR_GET_DATA, 401);
+                return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);
         }
     }
 
@@ -98,10 +98,14 @@ class ArticleController extends Controller
             if(is_null($record)){
                 return $this->respondNotFound(ApiCode::ERROR_GET_DATA);
             }
+            $article = Blog::find($id);
+            $article->view += 1;
+            $article->save();
+
             return $this->respond($record);
        }
        catch(Exception $ex){
-            return $this->respondWithError(ApiCode::ERROR_GET_DATA, 401);
+            return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);
        }
     }
 
@@ -121,7 +125,7 @@ class ArticleController extends Controller
             return $this->respond($data);
         }
         catch(Exception $ex){
-            return $this->respondWithError(ApiCode::ERROR_GET_DATA, 401);
+            return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);
         }
     }
     /**
@@ -136,7 +140,7 @@ class ArticleController extends Controller
             return $this->respond($data);
         }
         catch(Exception $ex){
-            return $this->respondWithError(ApiCode::ERROR_GET_DATA, 401);
+            return $this->respondWithError(ApiCode::ERROR_REQUEST, 402);
         }
     }
 
