@@ -239,7 +239,6 @@ class ArticleController extends Controller
                 else{
                     $comment = new Comment([
                         'content' => $data['content'],
-                        'status' => true,
                         'blog_id' => $data['blog_id']
                     ]);
     

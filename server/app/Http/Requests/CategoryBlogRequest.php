@@ -33,7 +33,6 @@ class CategoryBlogRequest extends FormRequest
     {
         return array_merge(
             $this->only(['name', 'description']),
-            ['parent_id' => '0'],
         );
     }
 }
