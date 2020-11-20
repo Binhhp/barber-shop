@@ -8,8 +8,8 @@ const MediaContact = () => {
           <i className='ti-home' />
         </span>
         <div className='media-body'>
-          <h3>Buttonwood, California.</h3>
-          <p>Rosemead, CA 91770</p>
+          <h3>Lang Thuong, Đong Đa Ha Noi </h3>
+          <p>99 Nguyen Chi Thanh,</p>
         </div>
       </div>
       <div className='media contact-info'>
@@ -17,8 +17,8 @@ const MediaContact = () => {
           <i className='ti-tablet' />
         </span>
         <div className='media-body'>
-          <h3>+1 253 565 2365</h3>
-          <p>Mon to Fri 9am to 6pm</p>
+          <h3>+084 393 837 623</h3>
+          <p>Mon to Fri 8am to 6pm</p>
         </div>
       </div>
       <div className='media contact-info'>
@@ -26,7 +26,7 @@ const MediaContact = () => {
           <i className='ti-email' />
         </span>
         <div className='media-body'>
-          <h3>support@colorlib.com</h3>
+          <h3>shopbarber346@gmail.com</h3>
           <p>Send us your query anytime!</p>
         </div>
       </div>

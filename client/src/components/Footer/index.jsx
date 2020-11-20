@@ -17,7 +17,7 @@ const Footer = () => {
                       Make Appointment
                     </Link>{' '}
                     <br />
-                    <a href='#'>+10 378 478 2789</a>
+                    <Link to='/appointment'>+084 393 837 623</Link>
                   </p>
                 </div>
               </div>
@@ -26,7 +26,8 @@ const Footer = () => {
                   <h3 className='footer_title'>address</h3>
                   <p className='footer_text'>
                     99 Nguyen Chi Thanh, Lang Thuong, Đong Đa Ha Noi <br />
-                    +10 367 267 2678 <br />
+                    +084 393 837 623
+                    <br />
                     <a className='domain' href='#'>
                       shopbarber346@gmail.com
                     </a>
@@ -57,16 +58,13 @@ const Footer = () => {
                   <h3 className='footer_title'>Navigation</h3>
                   <ul>
                     <li>
-                      <a href='#'>Home</a>
+                      <Link to='/'>Home</Link>
                     </li>
                     <li>
-                      <a href='#'>Rooms</a>
+                      <Link to='/about'>About</Link>
                     </li>
                     <li>
-                      <a href='#'>About</a>
-                    </li>
-                    <li>
-                      <a href='#'>News</a>
+                      <Link to='/blog'>Blog</Link>
                     </li>
                   </ul>
                 </div>
@@ -95,7 +93,9 @@ const Footer = () => {
                   {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
                   Copyright © All rights reserved | This website is licensed by{' '}
                   <i className='fa fa-heart-o' aria-hidden='true' /> by{' '}
-                  <a href='https://colorlib.com' target='_blank'>
+                  <a
+                    href='https://github.com/Binhhp/barber-shop'
+                    target='_blank'>
                     KhoaLT-BinhVT
                   </a>
                   {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}

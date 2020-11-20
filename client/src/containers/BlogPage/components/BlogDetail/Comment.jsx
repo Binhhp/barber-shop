@@ -10,6 +10,7 @@ const Comment = ({ blogId }) => {
       const res = await getComments(blogId);
       if (res.success) {
         setComments(res.data);
+        console.log(res.data);
       }
     };
     fetchComment();
