@@ -17,5 +17,6 @@ return [
     'success_comment' => 'Comment success!',
     'error_appointment' => 'Appointment failed!',
     'error_is_credentials' => 'Appointment has been booked! Please set another time!',
+    'error_credentials_newsletter' => 'You subscribed',
     'error_check_appointment' => 'You do not have an appointment!',
 ];
