@@ -7,22 +7,22 @@ import VideoHome from '../../components/VideoHome';
 import Header from '../../components/Header';
 import ServiceArea from '../../components/ServiceArea';
 import { useEffect } from 'react';
-import { fetchServices } from './action'
+import { fetchServices } from './action';
 import { useDispatch, useSelector } from 'react-redux';
 const HomePage = () => {
   const dispatch = useDispatch();
-  const services = useSelector(state => state.home.services)
+  const services = useSelector((state) => state.home.services);
   useEffect(() => {
     if (services.length === 0) {
       dispatch(fetchServices());
     }
-  }, [services])
+  }, [services]);
   return (
     <>
       <Header />
       <AboutUs />
       <ServiceArea services={services} />
-      <Gallery />
+      {/* <Gallery /> */}
       <VideoHome />
       <CusterMaster />
       <FindUs />

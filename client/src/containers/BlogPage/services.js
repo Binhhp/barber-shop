@@ -53,3 +53,13 @@ export const getComments = async (id) => {
   return response;
 }
 
+
+export const postNewsletter = async (email) => {
+  const response = await api.get(`newsletter`, {
+    params: {
+      email: email
+    }
+  });
+  return response;
+}
+

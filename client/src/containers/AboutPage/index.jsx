@@ -11,7 +11,7 @@ const AboutPage = () => {
     <>
       <Header isHome={false} title='About Us' />
       <AboutUs />
-      <Gallery />
+      {/* <Gallery /> */}
       <VideoHome />
       <CusterMaster />
       <FindUs />

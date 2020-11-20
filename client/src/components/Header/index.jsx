@@ -34,7 +34,7 @@ const Header = ({ isHome, title }) => {
             }
           })
           .catch((error) => {
-            Swal.showValidationMessage(`Request failed: ${error}`);
+            Swal.showValidationMessage(`You don't have an appointment`);
           });
       },
       allowOutsideClick: () => !Swal.isLoading(),

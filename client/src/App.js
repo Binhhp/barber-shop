@@ -31,8 +31,9 @@ function App() {
               <Switch>
                 <PublicRoutes />
                 <Route component={NotFound} />
-                
+
               </Switch>
+              <Footer />
             </BrowserRouter>
           </Suspense>
         </ConnectedRouter>
@@ -46,7 +47,7 @@ function App() {
       <CusterMaster />
       <FindUs />
        */}
-      <Footer />
+
     </React.Fragment>
   );
 }

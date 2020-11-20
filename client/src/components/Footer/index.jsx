@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -12,9 +13,9 @@ const Footer = () => {
                   <h3 className='footer_title'>Join With Us</h3>
                   <p className='footer_text doanar'>
                     {' '}
-                    <a className='first' href='#'>
+                    <Link className='first' to='/appointment'>
                       Make Appointment
-                    </a>{' '}
+                    </Link>{' '}
                     <br />
                     <a href='#'>+10 378 478 2789</a>
                   </p>
@@ -24,10 +25,10 @@ const Footer = () => {
                 <div className='footer_widget'>
                   <h3 className='footer_title'>address</h3>
                   <p className='footer_text'>
-                    200, A-block, Green road, USA <br />
+                    99 Nguyen Chi Thanh, Lang Thuong, Đong Đa Ha Noi <br />
                     +10 367 267 2678 <br />
                     <a className='domain' href='#'>
-                      contact@nonprofit.com
+                      shopbarber346@gmail.com
                     </a>
                   </p>
                   <div className='socail_links'>
