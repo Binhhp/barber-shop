@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TagRequest;
-use App\Models\Tag;
+use App\Models\Appointment;
 use App\Service\ApiCode;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
-class TagController extends Controller
+class AppointmentController extends Controller
 {
     public function __construct()
     {
-        return $this->middleware('auth');
+        $this->middleware('auth');
+        $this->middleware('role:Admin');
     }
 
     public function index()
@@ -26,7 +26,7 @@ class TagController extends Controller
             $name = Auth::user()->name;
             $role = Auth::user()->role->name;
         }
-        return view('tag', ['user_name' => $name, 'user_role' => $role]); 
+        return view('appointment', ['user_name' => $name, 'user_role' => $role]); 
     }
     /**
      * Display the specified resource.
@@ -36,83 +36,47 @@ class TagController extends Controller
     public function getData(Request $request)
     {
         if($request->ajax()){
-            $data = Tag::query()->orderBy('id', 'asc');
+            $data = Appointment::join('services', 'appointments.ser_id', '=', 'services.id')
+                                ->join('barbers', 'appointments.barber_id', '=', 'barbers.id')
+                                ->join('times', 'appointments.time_id', '=', 'times.id')
+                                ->join('customers', 'appointments.cus_id', '=', 'customers.id')
+                                ->get([
+                                    'appointments.*', 'barbers.name as barber_name', 
+                                    'services.name as service_name', 'times.h_des',
+                                    'customers.name as customer_name'
+                                ]);
+                                
             return DataTables::of($data)
-                    ->addColumn('cbox', function(){
+                    ->addColumn('combobox', function(){
                         $checkbox = '<label><input type="checkbox"><span class="label-text"></span></label>';
                         return $checkbox;
                     })
                     ->editColumn('created_at', function ($tag){
                         return $tag->created_at ? with(new Carbon($tag->created_at))->format('d/m/Y') : '';
                     })
+                    ->addColumn('status', function($data){
+                        if($data->status == true){
+                            $statusTrue = '<button type="button" name="st-true" id="'.$data->id.'" class="status btn btn-info btn-sm text-center">Confirmed</button>';
+                            return $statusTrue;
+                        }
+                        else{
+                            $statusFalse = '<button type="button" name="st-false" id="'.$data->id.'" 
+                            class="status btn btn-secondary btn-sm">Not confirm</button>';
+                            return $statusFalse;
+                        }
+                    })
                     ->addColumn('action' ,function($data){
-                        $button = '<a href="javascript:void(0);" data-toggle="modal" data-target="#myModal"
-                        data-id="'.$data->id.'" data-name="'.$data->name.'" data-description="'.$data->description.'"
-                        data-created_at="'.$data->created_at.'" 
-                        data-action="edit" name="edit" class="edit btn btn-primary btn-sm">Edit</a>';
-
-                        $button .= '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteData('.$data->id.')" 
+                        $button 
+                        = '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteData('.$data->id.')" 
                         name="delete" class="delete btn btn-danger btn-sm">Delete</a>';
                         return $button;
                     })         
-                    ->rawColumns(['cbox', 'action'])
+                    ->rawColumns(['combobox', 'status', 'action'])
                     ->make(true);
         }
     }
 
-    /**
-     * Display the specified resource.
-     * Insert tag
-     * @param TagRequest
-     * @return \Illuminate\Http\Response
-     */
-    public function insert(TagRequest $request)
-    {
-        try{
-            if($request->ajax()){
-
-                $data = Tag::where('name', '=', $request->name)->first();
-                
-                if(!is_null($data)){
-                    return $this->respondWithError(ApiCode::ERROR_CREDENTIALS, 404);
-                }
-
-                Tag::create($request->getAttributes());
-                return $this->respondWithSuccess(ApiCode::NOTIFICATION_INSERT_SUCCESS);
-            }
-            else{
-                return $this->respondRequest(ApiCode::ERROR_REQUEST);
-            }
-        }
-        catch(Exception $ex){
-            return $this->respondRequest(ApiCode::ERROR_REQUEST);
-        }
-    }
-    /**
-     * Display the specified resource.
-     * Update tag
-     * @param TagRequest
-     * @return \Illuminate\Http\Response
-     */
-    public function update(TagRequest $request)
-    {
-        if($request->ajax()){
-            $tag_id = $request->id;
-            if($tag_id){
-                $tag = Tag::find($tag_id);
-                if(!is_null($tag)){
-                    $tag->update($request->getAttributes());
-                    return $this->respondWithSuccess(ApiCode::NOTIFICATION_UPDATE_SUCCESS);
-                }
-                return $this->respondWithError(ApiCode::ERROR_GET_DATA, 401);
-            }
-        }
-        else{
-            return $this->respondRequest(ApiCode::ERROR_REQUEST);
-        }
-    }
-
-    /**
+     /**
      * Display the specified resource.
      * Delete tag
      * @param $id
@@ -121,7 +85,7 @@ class TagController extends Controller
     public function delete($id)
     {
        try{
-            $record = Tag::find($id);
+            $record = Appointment::find($id);
             if(!is_null($record)){
                 $record->delete();
                 return $this->respondWithSuccess(ApiCode::NOTIFICATION_DELETE_SUCCESS);
@@ -150,7 +114,7 @@ class TagController extends Controller
             if(is_array($data)){
                 
                 foreach($data as $key){
-                    $record = Tag::where('name', $key)->firstOrFail();
+                    $record = Appointment::find($key);
                     if(!is_null($record)){
                         $record->delete();
                     }

@@ -25,7 +25,6 @@ class CommentFactory extends Factory
     {
         return [
             'content' => $this->faker->text(150),
-            'status' => true,
             'cus_id' => $this->faker->numberBetween(1, 5),
             'blog_id' => $this->faker->numberBetween(1, 20)
         ];

@@ -100,8 +100,11 @@ function showRequired(elements){
 function changeClass(classIndex, classParent, classTree){
 
     $("." + classIndex).removeClass('active');
-    $('.' + classParent).addClass('is-expanded').removeClass(classParent);
-    $('.' + classTree).addClass('active').removeClass(classTree);
+    if(classParent != "")
+    {
+        $('.' + classParent).addClass('is-expanded').removeClass(classParent);
+        $('.' + classTree).addClass('active').removeClass(classTree);
+    }
 };
 
 function settingAjax(){

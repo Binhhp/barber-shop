@@ -123,7 +123,7 @@ class CategoryBlogController extends Controller
                         $record->delete();
                     }
                 }
-                $msg = 'Xóa ' . count($data) . ' thành công!';
+                $msg = 'Delete ' . count($data) . ' success!';
                 return $this->respondWithMessage($msg);
             }
             else{

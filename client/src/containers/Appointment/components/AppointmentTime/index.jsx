@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import TimeItem from './TimeItem';

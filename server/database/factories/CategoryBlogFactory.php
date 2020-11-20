@@ -25,8 +25,7 @@ class CategoryBlogFactory extends Factory
         return [
             'name' => $this->faker->randomElement(
                 array('Travel news', 'Resaurant food', 'Modern technology', 'Product', 'Inspiration')),
-            'description' => $this->faker->title(),
-            'parent_id' => $this->faker->randomDigitNot(5),
+            'description' => $this->faker->title()
         ];
     }
 }

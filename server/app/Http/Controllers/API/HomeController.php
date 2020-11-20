@@ -62,7 +62,8 @@ class HomeController extends Controller
                     if(!is_null($record)){
  
                          $contacts = new Contact([
-                             'message' => $data['message']
+                             'message' => $data['message'],
+                             'status' => false
                          ]);
                         $record->contacts()->save($contacts);
                     }

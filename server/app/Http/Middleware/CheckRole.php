@@ -16,9 +16,9 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, $role)
     {
-        
+  
         if(!$request->user()->hasRole($role)){
-            return redirect()->back()->with('err','Tài khoản bị từ chối truy cập!');
+            return redirect()->route('error404');
         }
         return $next($request);
     }

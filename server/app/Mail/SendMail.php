@@ -12,7 +12,7 @@ trait SendMail
     {
         try{
 
-                $temp = Http::get('https://firebasestorage.googleapis.com/v0/b/barber-store-cadce.appspot.com/o/mail.txt?alt=media&token=365a824e-37ca-4502-9c7a-cf46f2bbeea2');
+                $temp = Http::get('https://firebasestorage.googleapis.com/v0/b/barber-store-cadce.appspot.com/o/mail.txt?alt=media&token=1e64e70b-7771-480f-981d-ec946245ae25');
                 $search = [
                     '{{ name }}', 
                     '{{ phone_number }}', 
@@ -49,7 +49,7 @@ trait SendMail
                             'Name' => $mail['name']
                             ]
                         ],
-                        'Subject' => "Thanks you from Barber Shop!",
+                        'Subject' => "🎉Thanks you from Barber Shop!🧐❤️",
                         'HTMLPart' => $result
                         ]
                     ]

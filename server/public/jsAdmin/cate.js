@@ -85,13 +85,13 @@ $(document).ready(function(){
     //delete checkbox all
     $('#actionDialogCardPrimaryButton').on('click', function(){
         Swal.fire({
-            title: "Bạn có muốn xóa không?",
+            title: "Do you want to delete?",
             icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            cancelButtonText: "Thoát",
-            confirmButtonText: "Xóa",
+            cancelButtonText: "Exit",
+            confirmButtonText: "Delete",
         }).then(result => {
             if(result.value){
                 deleteCheckBox();
@@ -216,13 +216,13 @@ function updateData(form_data){
 //Delete menu
 function deleteData(id){
     Swal.fire({
-        title: "Bạn có muốn xóa không?",
+        title: "Do you want to delete?",
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        cancelButtonText: "Thoát",
-        confirmButtonText: "Xóa",
+        cancelButtonText: "Exit",
+        confirmButtonText: "Delete",
     }).then(result => {
         if(result.value){
             $.get('/admin/cate/delete/' + id).then(msg => {
