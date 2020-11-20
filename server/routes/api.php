@@ -29,7 +29,7 @@ Route::get('cates', 'ArticleController@show_category')->name('cates');
 //get tag blog
 Route::get('tags', 'ArticleController@show_tag')->name('tags');
 //get comment blog
-Route::get('comments/{blog_id}', 'BlogController@show_comment')->name('show_comment');
+Route::get('comments/{blog_id}', 'ArticleController@show_comment')->name('show_comment');
 //get services
 Route::get('services', 'AppointmentController@show_services')->name('service');
 //get barbers

@@ -86,7 +86,6 @@ function loadTables(){
             { data: 'combobox', name: 'combobox', 'className': 'animated-checkbox text-center' , orderable: false, 'searchable': false },   
             { data: 'customer_name', name: 'customer_name', 'className': 'text-center', orderable: false },
             { data: 'message', name: 'message', 'className': 'text-center', orderable: false },
-            { data: 'status', name: 'status', 'className': 'text-center', orderable: false },
             { data: 'created_at', name: 'created_at', 'className': 'text-center', orderable: false }, 
             { data: 'action', name: 'action', 'className': 'text-center' ,  orderable: false, 'searchable': false }
         ]

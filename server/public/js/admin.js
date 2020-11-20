@@ -55,20 +55,20 @@ $(document).ready(function(){
 					}
 				]
 			};
-			var pdata = [
-				{
-					value: result.appointmentsTrue,
-					color: "#46BFBD",
-					highlight: "#5AD3D1",
-					label: "Complete"
-				},
-				{
-					value: result.appointmentsFalse,
-					color:"#F7464A",
-					highlight: "#FF5A5E",
-					label: "Do not complete"
-				}
-			];
+			var pdata = [];
+			
+			var services = result['0'];
+			var colors = ['#28a745', '#5AD3D1', '#009688', '#ffc107', '#FF5E00', '#e83e8c', '#FF9999', '#fd7e14', '#ffc107'];
+			var c = 0;
+			services.map(item => {
+				pdata.push({
+					value: item.count,
+					color: colors[c],
+					highlight: "#e83e8c",
+					label: item.name
+				});
+				c += 1;
+			});
 			
 			var ctxl = $("#lineChartDemo").get(0).getContext("2d");
 			var lineChart = new Chart(ctxl).Line(data);

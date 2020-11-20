@@ -55,7 +55,7 @@ class ContactController extends Controller
                         name="delete" class="delete btn btn-danger btn-sm">Delete</a>';
                         return $button;
                     })         
-                    ->rawColumns(['combobox', 'status', 'action'])
+                    ->rawColumns(['combobox', 'action'])
                     ->make(true);
         }
     }

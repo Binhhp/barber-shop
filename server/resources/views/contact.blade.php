@@ -25,7 +25,7 @@
                     <table class="table table-hover table-bordered dataTable no-footer" width="100%" id="myTable">
                         <thead>
                             <tr>
-                                <th width="5%">
+                                <th width="10%">
                                     <div class="animated-checkbox">
                                         <label>
                                             <input type="checkbox" class="checkAll">
@@ -33,9 +33,8 @@
                                         </label>
                                     </div>  
                                 </th>
-                                <th width="15%">Customer</th>
-                                <th width="25%">Message</th>
-                                <th width="20%">Status</th>
+                                <th width="20%">Customer</th>
+                                <th width="35%">Message</th>
                                 <th width="15%">Date create</th>
                                 <th width="25%">Action</th>
                             </tr>
