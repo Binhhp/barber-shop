@@ -43,6 +43,7 @@ return [
         ApiCode::SUCCESS_CONTACT => 'api.success_contact',
         ApiCode::ERROR_APPOINTMENT => 'api.error_appointment',
         ApiCode::ERROR_IS_CREDENTIALS => 'api.error_is_credentials',
+        ApiCode::ERROR_CREDENTIALS_NEWSLETTER => 'api.error_credentials_newsletter',
         ApiCode::ERROR_CHECK_APPOINTMENT => 'api.error_check_appointment',
     ],
 

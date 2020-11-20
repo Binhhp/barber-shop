@@ -174,8 +174,12 @@ class ArticleController extends Controller
     public function register_subscribe(Request $request)
     {
         try{
+
             $customer = Customer::where('email', '=', $request->email)->first();
             if(!is_null($customer)){
+                if($customer->type == true){
+                    return $this->respondWithError(ApiCode::ERROR_CREDENTIALS_NEWSLETTER, 405);
+                }
                 $customer->type = true;
                 $customer->save();
             }
