@@ -7,10 +7,15 @@ use App\Models\Appointment;
 use App\Models\Barber;
 use App\Models\Blog;
 use App\Models\Customer;
+use App\Models\Service;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
+class serviceClass{
+    public $name;
+    public $count;
+}
 class HomeAdminController extends Controller
 {
     public function __construct()
@@ -115,6 +120,16 @@ class HomeAdminController extends Controller
             
         ];
 
+        $service = Service::all();
+        $arrayService = [];
+        foreach($service as $item){
+            $class = new serviceClass();
+                $class->name = $item->name;
+                $class->count = $item->appointments()->where('status', '=', true)->count();
+
+                $arrayService[] = $class;
+        }
+        $array[] = $arrayService;
         return $this->respond($array);
     }
 }

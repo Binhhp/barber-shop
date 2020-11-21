@@ -1,5 +1,5 @@
 <aside class="app-sidebar">
-      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="{{ URL::asset('image/12-512.png')}}" alt="User Image">
         <div>
           @guest
           @else
