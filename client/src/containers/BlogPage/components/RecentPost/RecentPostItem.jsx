@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Moment from 'react-moment';
 
 const RecentPostItem = ({ img, title, dateAt, link }) => {
   return (
@@ -9,7 +10,11 @@ const RecentPostItem = ({ img, title, dateAt, link }) => {
         <a href={link}>
           <h3>{title}</h3>
         </a>
-        <p>{dateAt}</p>
+        <p>
+          <Moment fromNow ago>
+            {dateAt}
+          </Moment>
+        </p>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { getComments } from '../../services';
 import comment_3 from '../../../../assets/img/comment/comment_3.png';
 import comment_1 from '../../../../assets/img/comment/comment_1.png';
 import comment_2 from '../../../../assets/img/comment/comment_2.png';
+import Moment from 'react-moment';
 const Comment = ({ blogId }) => {
   const [comments, setComments] = useState([]);
   useEffect(() => {
@@ -32,7 +33,10 @@ const Comment = ({ blogId }) => {
                     <h5>
                       <a href='#'>{e.name}</a>
                     </h5>
-                    <p className='date'>{e.created_at}</p>
+                    &nbsp;
+                    <Moment fromNow ago>
+                      {e.created_at}
+                    </Moment>
                   </div>
                   <div className='reply-btn'>
                     <a href='#' className='btn-reply text-uppercase'>

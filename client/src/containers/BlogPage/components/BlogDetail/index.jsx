@@ -8,22 +8,31 @@ import Category from '../Category';
 import Search from '../Search';
 import Header from '../../../../components/Header';
 import CommentForm from './CommentForm';
-import { fetchBlogById } from '../../action';
+import { getBlogsById } from '../../services';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 const BlogDetail = () => {
-  const blog = useSelector((state) => state.blog.blog);
+  const [blog, setBlog] = useState();
   const { id } = useParams();
-  const dispatch = useDispatch();
   useEffect(() => {
-    console.log(blog, 'blog');
-    if (!blog) {
-      dispatch(fetchBlogById(id));
+    const fetchBlogs = async () => {
+      try {
+        const res = await getBlogsById(id);
+        if (res.success) {
+          setBlog(res.data[0]);
+          console.log(res.data[0]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (id) {
+      fetchBlogs();
     }
-  }, [blog]);
+  }, [id]);
   return (
     <React.Fragment>
-      <Header isHome={false} title={blog?.title} />
+      <Header isHome={false} title='Blog' />
       <section className='blog_area section-padding'>
         <div className='container'>
           <div className='row'>
@@ -33,7 +42,11 @@ const BlogDetail = () => {
                   <img className='img-fluid' src={blog?.imgPath} alt='' />
                 </div>
                 <div className='blog_details'>
-                  <h2>{blog?.description}</h2>
+                  <h2>{blog?.title}</h2>
+                  <i>{blog?.description}</i>
+                  <br />
+                  <br />
+
                   {blog?.content}
                 </div>
               </div>

@@ -63,3 +63,9 @@ export const postNewsletter = async (email) => {
   return response;
 }
 
+
+export const getRecentBlog = async () => {
+  const response = await api.get(`recent-article`);
+  return response;
+}
+

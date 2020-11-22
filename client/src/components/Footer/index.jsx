@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
+import { postNewsletter } from '../../containers/BlogPage/services';
 const Footer = () => {
+  const [email, setMail] = useState();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await postNewsletter(email);
+      console.log(res);
+      if (res.code === 200) {
+        Swal.fire('Success!', 'Subscribe success.', 'success');
+      } else if (res.code === 405) {
+      }
+    } catch (error) {
+      console.log(error, 'error onHandleSubmit Newsletter');
+      Swal.fire('Success!', 'You have already registered', 'error');
+    }
+  };
   return (
     <React.Fragment>
       <footer className='footer'>
@@ -72,8 +88,14 @@ const Footer = () => {
               <div className='col-xl-4 col-md-6 col-lg-4'>
                 <div className='footer_widget'>
                   <h3 className='footer_title'>Newsletter</h3>
-                  <form action='#' className='newsletter_form'>
-                    <input type='text' placeholder='Enter your mail' />
+                  <form
+                    onSubmit={(e) => handleSubmit(e)}
+                    className='newsletter_form'>
+                    <input
+                      type='text'
+                      onChange={(e) => setMail(e.target.value)}
+                      placeholder='Enter your mail'
+                    />
                     <button type='submit'>Sign Up</button>
                   </form>
                   <p className='newsletter_text'>
