@@ -3,17 +3,14 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { postComment } from '../../services';
 import Swal from 'sweetalert2';
-const CommentForm = ({ blogId }) => {
+const CommentForm = ({ blogId, loadNewComment }) => {
   const [comment, setComment] = useState({ blog_id: blogId });
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(comment);
     try {
       console.log(JSON.stringify(comment));
-
       const res = await postComment(comment);
-      console.log(comment);
-      console.log(comment);
       if (res.success) {
         Swal.fire({
           icon: 'success',
@@ -21,6 +18,7 @@ const CommentForm = ({ blogId }) => {
           showConfirmButton: false,
           timer: 1500,
         });
+        loadNewComment();
       }
     } catch (error) {
       console.log(error);
@@ -102,6 +100,7 @@ const CommentForm = ({ blogId }) => {
 
 CommentForm.propTypes = {
   blogId: PropTypes.number,
+  loadNewComment: PropTypes.func,
 };
 
 export default CommentForm;

@@ -36,12 +36,15 @@ const Appointment = (props) => {
       barber_id: appointment.barberId,
     };
     try {
+      console.log(data);
+      console.log(JSON.stringify(data))
       const res = await makeAppointment(data);
+      console.log(res)
       if (res.success) {
         Swal.fire('Success!', 'Your appointment has been accept.', 'success');
       }
     } catch (error) {
-      // console.log(error);
+      Swal.fire('Faild!', 'Appointment failed!', 'error');
     }
   };
   const getInfoUser = (e) => {
