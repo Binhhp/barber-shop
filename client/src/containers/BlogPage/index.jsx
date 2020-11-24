@@ -28,8 +28,7 @@ const BlogPage = () => {
       }
     };
     fetchData();
-    console.log(url, pageId, tagId, categoryId, keySearch);
-  }, [url, pageId, tagId, categoryId, keySearch]);
+  }, [pageId, tagId, categoryId, keySearch]);
   return (
     <React.Fragment>
       <Header isHome={false} title='Blog' />

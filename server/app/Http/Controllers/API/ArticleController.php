@@ -56,7 +56,7 @@ class ArticleController extends Controller
             }
             else{
                 $data = Blog::join('category_blogs', 'category_blogs.id', '=', 'blogs.cate_id')
-                            ->orderBy('created_at', 'DESC')
+                            ->orderBy('updated_at', 'DESC')
                             ->orderBY('view', 'DESC')
                             ->paginate(5 ,['blogs.*', 'category_blogs.name']);
                 return $this->respond($data);

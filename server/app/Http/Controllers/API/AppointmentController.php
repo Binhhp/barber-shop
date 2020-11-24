@@ -93,6 +93,26 @@ class AppointmentController extends Controller
                 return $this->respondWithError(ApiCode::ERROR_IS_CREDENTIALS, 406);
             }
 
+            $find_ser = Service::find($data['ser_id']);
+            $find_time = Time::find($data['time_id']);
+
+            $total_time = $find_ser->time + $find_time->h;
+
+            $find_appointment = Appointment::where([
+                'date' => $data['date'],
+                'barber_id' => $data['barber_id'],
+                'status' => true,
+            ])->get();
+            
+            foreach($find_appointment as $item){
+                $time_item = Time::find($item->time_id);
+                if($time_item->h - $find_time->h > 0){
+                    
+                    if($time_item->h - $total_time < 0){
+                        return $this->respondWithError(ApiCode::ERROR_APPOINTMENT, 405);
+                    }
+                }
+            }
             $cus_id = $this->find_cus($data['email']);
 
             $appointment = new Appointment([

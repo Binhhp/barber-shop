@@ -11,9 +11,21 @@ import CommentForm from './CommentForm';
 import { getBlogsById } from '../../services';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { getComments } from '../../services';
 const BlogDetail = () => {
   const [blog, setBlog] = useState();
+  const [comments, setComments] = useState([]);
   const { id } = useParams();
+  const fetchComment = async () => {
+    try {
+      const res = await getComments(id);
+      if (res.success) {
+        setComments(res.data);
+      }
+    } catch (error) {
+      console.log('BlogDetail comments error', error);
+    }
+  };
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
@@ -28,6 +40,7 @@ const BlogDetail = () => {
     };
     if (id) {
       fetchBlogs();
+      fetchComment();
     }
   }, [id]);
   return (
@@ -51,8 +64,8 @@ const BlogDetail = () => {
                 </div>
               </div>
 
-              <Comment blogId={id} />
-              <CommentForm blogId={id} />
+              <Comment blogId={id} comments={comments} />
+              <CommentForm blogId={id} loadNewComment={fetchComment} />
             </div>
             <div className='col-lg-4'>
               <div className='blog_right_sidebar'>

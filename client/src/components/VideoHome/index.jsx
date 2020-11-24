@@ -1,5 +1,6 @@
 import React from 'react';
 import VideoImg from '../../assets/img/gallery/video.png';
+import { Link } from 'react-router-dom';
 const VideoHome = () => {
   return (
     <>
@@ -24,9 +25,9 @@ const VideoHome = () => {
                     that are <br />
                     changing our world.
                   </p>
-                  <a href='#' className='boxed-btn3'>
+                  <Link to='/appointment' className='boxed-btn3'>
                     book now
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

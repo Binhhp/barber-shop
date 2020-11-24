@@ -4,18 +4,10 @@ import comment_3 from '../../../../assets/img/comment/comment_3.png';
 import comment_1 from '../../../../assets/img/comment/comment_1.png';
 import comment_2 from '../../../../assets/img/comment/comment_2.png';
 import Moment from 'react-moment';
-const Comment = ({ blogId }) => {
-  const [comments, setComments] = useState([]);
-  useEffect(() => {
-    const fetchComment = async () => {
-      const res = await getComments(blogId);
-      if (res.success) {
-        setComments(res.data);
-        console.log(res.data);
-      }
-    };
-    fetchComment();
-  }, []);
+const Comment = ({ blogId, comments }) => {
+  // useEffect(() => {
+  //   fetchComment();
+  // }, []);
   return (
     <div className='comments-area'>
       <h4>{comments.length} Comments</h4>
